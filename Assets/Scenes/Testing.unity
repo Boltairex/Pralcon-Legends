@@ -1036,7 +1036,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d2dddebe86163e4d8d671f0536bf8c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cam: {fileID: 0}
+  cam: {fileID: 787656604}
   agent: {fileID: 1081199805}
 --- !u!195 &1081199805
 NavMeshAgent:
