@@ -9,14 +9,18 @@ public class CameraMovement : MonoBehaviour
     public float cameraMargin;
     public Camera cam;
     public GameObject player;
-
     //Wartosci sluzace do dzialan/ustawien NIE ZMIENIAC I NIE BAWIC SIE
     bool BlockedCamera;
     Vector3 vec3;
 
+    void Start()
+    {
+        gameObject.transform.rotation = Quaternion.Euler(40f, 0, 0);
+    }
+
     void Update()
     {
-        if(BlockedCamera == false)
+        if (BlockedCamera == false)
         {
             vec3 = cam.transform.position;
 
