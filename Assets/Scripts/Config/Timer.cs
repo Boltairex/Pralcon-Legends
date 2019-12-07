@@ -12,12 +12,10 @@ public class Timer : MonoBehaviour
         GC = GameObject.Find("GameClock").GetComponent<GameClock>();
     }
 
-
     void Update()
     {
         string a;
         string b;
-        string c;
 
         if (GC.GSTime > 9)
         { a = null; }

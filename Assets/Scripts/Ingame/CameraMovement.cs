@@ -15,7 +15,7 @@ public class CameraMovement : MonoBehaviour
 
     void Start()
     {
-        gameObject.transform.rotation = Quaternion.Euler(40f, 0, 0);
+        gameObject.transform.rotation = Quaternion.Euler(60f, 0, 0);
     }
 
     void Update()
