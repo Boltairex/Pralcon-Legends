@@ -21,10 +21,11 @@ public class PlayerStats : MonoBehaviour
     public float REN; // Resistr penetration percentage
 
     [Header("Staty")]
+    public int Mon; //Money
     public int K; // Kills
     public int D; // Deaths
     public int A; // Assists
-    public int M; // Miniony
+    public int M; // Minions
     
 
 

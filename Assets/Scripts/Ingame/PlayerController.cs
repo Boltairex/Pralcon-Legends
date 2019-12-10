@@ -6,7 +6,6 @@ using UnityEngine.AI;
 public class PlayerController : MonoBehaviour
 {
     public Camera cam;
-    public NavMeshAgent agent;
 
     Ray ray;
     RaycastHit hit;
@@ -20,7 +19,7 @@ public class PlayerController : MonoBehaviour
 
             if(Physics.Raycast(ray, out hit))
             {
-                agent.SetDestination(hit.point);
+                gameObject.GetComponent<NavMeshAgent>().SetDestination(hit.point);
             }
         }
     }
