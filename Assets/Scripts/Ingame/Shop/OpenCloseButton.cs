@@ -6,19 +6,7 @@ public class OpenCloseButton : MonoBehaviour
 {
     public GameObject shoppanel;
 
-    bool isNearShop;
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.name == "ShopCollider")
-            isNearShop = true;
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.gameObject.name == "ShopCollider")
-            isNearShop = false;        
-    }
+    public bool isNearShop;
 
     public void OpenShop()
     {
