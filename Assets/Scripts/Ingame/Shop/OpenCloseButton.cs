@@ -8,12 +8,25 @@ public class OpenCloseButton : MonoBehaviour
 
     public bool isNearShop;
 
+    void Update()
+    {
+        if (isNearShop == true && Input.GetButtonDown("ShopOpen"))
+        {
+            shoppanel.SetActive(true);
+            GameObject.Find("Character").GetComponent<PlayerController>().enabled = false;
+        }
+        else if (isNearShop == false && Input.GetButtonDown("ShopOpen"))
+        {
+            shoppanel.SetActive(false);
+            GameObject.Find("Character").GetComponent<PlayerController>().enabled = true;
+        }
+    }
+
     public void OpenShop()
     {
         if(isNearShop == true)
         {
             shoppanel.SetActive(true);
-            GameObject.Find("MainCamera").GetComponent<CameraMovement>().enabled = false;
             GameObject.Find("Character").GetComponent<PlayerController>().enabled = false;
         }
     }
@@ -21,7 +34,6 @@ public class OpenCloseButton : MonoBehaviour
     public void CloseShop()
     {
         shoppanel.SetActive(false);
-        GameObject.Find("MainCamera").GetComponent<CameraMovement>().enabled = true;
         GameObject.Find("Character").GetComponent<PlayerController>().enabled = true;
     }
 }
