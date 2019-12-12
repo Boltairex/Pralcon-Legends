@@ -23,7 +23,7 @@ public class GameClock : MonoBehaviour
         GHTime = 0; // Czas w godzinach
     }
 
-    void Update()
+    void FixedUpdate()
     {
         if (GMTime >= 31 && !HTime)
         {

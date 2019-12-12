@@ -27,10 +27,9 @@ public class PlayerStats : MonoBehaviour
     public int A; // Assists
     public int M; // Minions
     
-
-
     void Start()
     {
+        gameObject.AddComponent<Placeholder>();
         GC = GameObject.Find("GameClock").GetComponent<GameClock>();
     }
 
