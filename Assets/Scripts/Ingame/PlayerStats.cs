@@ -13,12 +13,14 @@ public class PlayerStats : MonoBehaviour
     public float Resist; // Resist Percentage
     public int Health; // Health
     public int Mana;  // Mana
+    public float AT; // Attack speed
     public float MV; // Movement Speed
     public float AR; // Attack Range
     public float HR; // Health Regen
     public float MR; // Mana Regen
     public float ARP; // Armor penetration percentage
     public float REN; // Resistr penetration percentage
+    public float CDR; // Cooldown Reduction
 
     [Header("Staty")]
     public int Mon; //Money

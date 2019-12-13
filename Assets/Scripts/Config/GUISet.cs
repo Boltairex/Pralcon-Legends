@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class GUISet : MonoBehaviour
 {
@@ -12,12 +13,24 @@ public class GUISet : MonoBehaviour
     public GameObject ChampBarFront;
     GameObject CR;
 
-    [Header("Do ustawienia grafik")]
+    [Header("Do ustawienia grafik i opisów")]
     public GameObject Avatar;
     public GameObject QSkill;
     public GameObject WSkill;
     public GameObject ESkill;
     public GameObject RSkill;
+    public GameObject DescIM;
+    public GameObject Desc;
+
+    public string PassiveD;
+    public string SkillQD;
+    public string SkillWD;
+    public string SkillED;
+    public string SkillRD;
+
+    public string CursorOn;
+
+    public bool IsOn;
 
     Scrollbar Red;
     Scrollbar Green;
@@ -67,5 +80,38 @@ public class GUISet : MonoBehaviour
         ChampBar.GetComponent<Image>().color = GUIColor;
         ChampBarFront.GetComponent<Image>().color = GUIColor;
         CR.GetComponent<RawImage>().color = GUIColor;
+
+        if (IsOn == true)
+        {
+            DescIM.SetActive(true);
+            if (CursorOn == "Passive")
+            {
+                Desc.GetComponent<TextMeshProUGUI>().text = PassiveD;
+            }
+
+            else if (CursorOn == "Slot1C")
+            {
+                Desc.GetComponent<TextMeshProUGUI>().text = SkillQD;
+            }
+
+            else if (CursorOn == "Slot2C")
+            {
+                Desc.GetComponent<TextMeshProUGUI>().text = SkillWD;
+            }
+
+            else if (CursorOn == "Slot3C")
+            {
+                Desc.GetComponent<TextMeshProUGUI>().text = SkillED;
+            }
+
+            else if (CursorOn == "Slot4C")
+            {
+                Desc.GetComponent<TextMeshProUGUI>().text = SkillRD;
+            }
+        }
+        else if (IsOn == false)
+        {
+            DescIM.SetActive(false);
+        }
     }
 }
