@@ -22,6 +22,13 @@ public class GUISet : MonoBehaviour
     public GameObject DescIM;
     public GameObject Desc;
 
+    public float sizeP;
+    public float sizeQ;
+    public float sizeW;
+    public float sizeE;
+    public float sizeR;
+    public float size;
+
     public string PassiveD;
     public string SkillQD;
     public string SkillWD;
@@ -35,6 +42,19 @@ public class GUISet : MonoBehaviour
     Scrollbar Red;
     Scrollbar Green;
     Scrollbar Blue;
+
+    [Header("Części cooldownowe")]
+    public float PTime;
+    public float QTime;
+    public float WTime;
+    public float ETime;
+    public float RTime;
+
+    public GameObject STimeGUIP;
+    public GameObject STimeGUIQ;
+    public GameObject STimeGUIW;
+    public GameObject STimeGUIE;
+    public GameObject STimeGUIR;
 
     Animator anim;
     bool click;
@@ -51,12 +71,79 @@ public class GUISet : MonoBehaviour
 
         anim = gameObject.GetComponent<Animator>();
         anim.Play("EscapeOFF");
+    }
 
-        Avatar.GetComponent<Image>().color = new Color(255, 255, 255, 1);
-        QSkill.GetComponent<Image>().color = new Color(255, 255, 255, 1);
-        WSkill.GetComponent<Image>().color = new Color(255, 255, 255, 1);
-        ESkill.GetComponent<Image>().color = new Color(255, 255, 255, 1);
-        RSkill.GetComponent<Image>().color = new Color(255, 255, 255, 1);
+    void FixedUpdate()
+    {
+        if (PTime > 0)
+        {
+            float CD = Time.time - PTime;
+            STimeGUIP.SetActive(true);
+            Avatar.GetComponent<Image>().color = new Color32(200, 100, 100, 150); 
+            CD = -CD;
+            STimeGUIP.GetComponent<TextMeshProUGUI>().text = CD.ToString("f1") + "s";
+        }
+        else if (PTime >= 0)
+        {
+            STimeGUIP.SetActive(false);
+            Avatar.GetComponent<Image>().color = new Color32(255, 255, 255, 255);
+        }
+
+        if (QTime > 0)
+        {
+            float CD = Time.time - QTime;
+            STimeGUIQ.SetActive(true);
+            QSkill.GetComponent<Image>().color = new Color32(200, 100, 100, 150);
+            CD = -CD;
+            STimeGUIQ.GetComponent<TextMeshProUGUI>().text = CD.ToString("f1") + "s";
+        }
+        else if (QTime >= 0)
+        {
+            STimeGUIQ.SetActive(false);
+            QSkill.GetComponent<Image>().color = new Color32(255, 255, 255, 255);
+        }
+
+        if (WTime > 0)
+        {
+            float CD = Time.time - WTime;
+            STimeGUIW.SetActive(true);
+            WSkill.GetComponent<Image>().color = new Color32(200, 100, 100, 150);
+            CD = -CD;
+            STimeGUIW.GetComponent<TextMeshProUGUI>().text = CD.ToString("f1") + "s";
+        }
+        else if (WTime >= 0)
+        {
+            STimeGUIW.SetActive(false);
+            WSkill.GetComponent<Image>().color = new Color32(255, 255, 255, 255);
+        }
+
+        if (ETime > 0)
+        {
+            float CD = Time.time - ETime;
+            STimeGUIE.SetActive(true); 
+            ESkill.GetComponent<Image>().color = new Color32(200, 100, 100, 150);
+            CD = -CD;
+            STimeGUIE.GetComponent<TextMeshProUGUI>().text = CD.ToString("f1") + "s";
+        }
+        else if (ETime >= 0)
+        {
+            STimeGUIE.SetActive(false);
+            ESkill.GetComponent<Image>().color = new Color32(255, 255, 255, 255);
+        }
+
+        if (RTime > 0)
+        {
+            float CD = Time.time - RTime;
+            STimeGUIR.SetActive(true);
+            RSkill.GetComponent<Image>().color = new Color32(200, 100, 100, 150);
+            CD = -CD;
+            STimeGUIR.GetComponent<TextMeshProUGUI>().text = CD.ToString("f1") + "s";
+        }
+        else if (RTime >= 0)
+        {
+            STimeGUIR.SetActive(false);
+            RSkill.GetComponent<Image>().color = new Color32(255, 255, 255, 255);
+        }
     }
 
     void Update()
@@ -87,26 +174,31 @@ public class GUISet : MonoBehaviour
             if (CursorOn == "Passive")
             {
                 Desc.GetComponent<TextMeshProUGUI>().text = PassiveD;
+                //DescIM.transform.localScale = new Vector3(1 * sizeP, 1 * sizeP, 1);
             }
 
             else if (CursorOn == "Slot1C")
             {
                 Desc.GetComponent<TextMeshProUGUI>().text = SkillQD;
+                //DescIM.transform.localScale = new Vector3(1 * sizeQ, 1 * sizeQ, 1);
             }
 
             else if (CursorOn == "Slot2C")
             {
                 Desc.GetComponent<TextMeshProUGUI>().text = SkillWD;
+                //DescIM.transform.localScale = new Vector3(1 * sizeW, 1 * sizeW, 1);
             }
 
             else if (CursorOn == "Slot3C")
             {
                 Desc.GetComponent<TextMeshProUGUI>().text = SkillED;
+                //DescIM.transform.localScale = new Vector3(1 * sizeE, 1 * sizeE, 1);
             }
 
             else if (CursorOn == "Slot4C")
             {
                 Desc.GetComponent<TextMeshProUGUI>().text = SkillRD;
+                //DescIM.transform.localScale = new Vector3(1 * sizeR, 1 * sizeR, 1);
             }
         }
         else if (IsOn == false)

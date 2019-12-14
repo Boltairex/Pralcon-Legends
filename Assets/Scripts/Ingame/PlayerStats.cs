@@ -12,7 +12,9 @@ public class PlayerStats : MonoBehaviour
     public float Armor; // Armor Percentage
     public float Resist; // Resist Percentage
     public int Health; // Health
-    public int Mana;  // Mana
+    public int MHealth; // Max Helth
+    public int Mana; // Mana
+    public int MMana; // Max Mana
     public float AT; // Attack speed
     public float MV; // Movement Speed
     public float AR; // Attack Range
@@ -28,6 +30,8 @@ public class PlayerStats : MonoBehaviour
     public int D; // Deaths
     public int A; // Assists
     public int M; // Minions
+
+    public string CharacterName;
     
     void Start()
     {
