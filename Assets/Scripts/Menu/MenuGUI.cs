@@ -10,7 +10,7 @@ public class MenuGUI : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetButtonDown("Close") && IA.activeInHierarchy)
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
             IA.SetActive(false);
         }
@@ -20,6 +20,7 @@ public class MenuGUI : MonoBehaviour
     {
         Buttons.SetActive(false);
         List.SetActive(true);
+        IA.SetActive(false);
     }
 
     public void ListClose()
@@ -31,5 +32,15 @@ public class MenuGUI : MonoBehaviour
     public void InputArea()
     {
         IA.SetActive(true);
+    }
+
+    public void CheckJoin()
+    {
+
+    }
+
+    public void SceneChange()
+    {
+
     }
 }
