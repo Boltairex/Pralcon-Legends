@@ -4,7 +4,7 @@ using UnityEngine.UI;
 public class Placeholder : MonoBehaviour
 {
     GameObject GSet;
-    GameObject Character;
+    PlayerStats Character;
     string Path;
     string Name;
 
@@ -25,20 +25,34 @@ public class Placeholder : MonoBehaviour
 
     void Start()
     {
-        Character = GameObject.Find("PlayerStuff");
+        Character = GameObject.Find("PlayerStuff").GetComponent<PlayerStats>();
         GSet = GameObject.Find("GUIMenu");
 
         //DO ZMIANY W RAZIE TEMPLATE! w "Name" Wpisać nazwę postaci. Będzie ona wyświetlana.
 
         //Character.AddComponent<Placeholder>();
-        Character.AddComponent<PlaceholderSkills>();
+        Character.gameObject.AddComponent<PlaceholderSkills>();
         Path = "Champions/Placeholder/";
         Name = "Placeholder";
 
         //Wszystkie "Placeholder" zamienić na tekst z "Name". Nie ważne gdzie się znajdują, po prostu zamienić. Można do tego użyć narzędzia szybkiej zamiany w edytorze tekstu.
         //Path oznacza ścieżkę do tekstur postaci, oraz potrzebnych zasobów (skrypt do skilli, ewentualnie modele).
 
-        Character.AddComponent<PlayerStats>().CharacterName = Name;
+        Character.CharacterName = Name;
+        Character.AD = AD;
+        Character.AP = AP;
+        Character.Armor = Armor;
+        Character.Resist = Resist;
+        Character.MHealth = MHealth;
+        Character.MMana = MMana;
+        Character.AT = AT;
+        Character.MV = MV;
+        Character.AR = AR;
+        Character.HR = HR;
+        Character.MR = MR;
+        Character.LS = LS;
+        Character.CT = CT;
+
         Passive();
         SkillQ();   
         SkillW();

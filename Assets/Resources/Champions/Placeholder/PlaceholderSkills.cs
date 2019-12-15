@@ -7,11 +7,11 @@ public class PlaceholderSkills : MonoBehaviour
     GameObject Champion;
     GameObject MGUI;
 
-    public float CDP = 0;
-    public float CDQ = 0;
-    public float CDW = 0;
-    public float CDE = 0;
-    public float CDR = 0;
+    float CDP = 0;
+    float CDQ = 0;
+    float CDW = 0;
+    float CDE = 0;
+    float CDR = 0;
 
     public float Reduction = 1.45f; // Nie zmieniać
 

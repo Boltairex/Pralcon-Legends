@@ -21,6 +21,7 @@ public class GUISet : MonoBehaviour
     public GameObject RSkill;
     public GameObject DescIM;
     public GameObject Desc;
+    public GameObject FPS;
 
     public float sizeP;
     public float sizeQ;
@@ -73,13 +74,13 @@ public class GUISet : MonoBehaviour
         anim.Play("EscapeOFF");
     }
 
-    void FixedUpdate()
+    void Update()
     {
         if (PTime > 0)
         {
             float CD = Time.time - PTime;
             STimeGUIP.SetActive(true);
-            Avatar.GetComponent<Image>().color = new Color32(200, 100, 100, 150); 
+            Avatar.GetComponent<Image>().color = new Color32(200, 100, 100, 150);
             CD = -CD;
             STimeGUIP.GetComponent<TextMeshProUGUI>().text = CD.ToString("f1") + "s";
         }
@@ -120,7 +121,7 @@ public class GUISet : MonoBehaviour
         if (ETime > 0)
         {
             float CD = Time.time - ETime;
-            STimeGUIE.SetActive(true); 
+            STimeGUIE.SetActive(true);
             ESkill.GetComponent<Image>().color = new Color32(200, 100, 100, 150);
             CD = -CD;
             STimeGUIE.GetComponent<TextMeshProUGUI>().text = CD.ToString("f1") + "s";
@@ -144,10 +145,7 @@ public class GUISet : MonoBehaviour
             STimeGUIR.SetActive(false);
             RSkill.GetComponent<Image>().color = new Color32(255, 255, 255, 255);
         }
-    }
 
-    void Update()
-    {
         GUIColor = new Color(Red.value, Green.value, Blue.value, 1);
 
         if (Input.GetButtonDown("Cancel") && click == false)

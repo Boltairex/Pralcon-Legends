@@ -23,6 +23,8 @@ public class PlayerStats : MonoBehaviour
     public float ARP; // Armor penetration percentage
     public float REN; // Resistr penetration percentage
     public float CDR; // Cooldown Reduction
+    public float LS; // Lifesteal
+    public float CT; // Critical Chance
 
     [Header("Staty")]
     public int Mon; //Money
@@ -37,11 +39,5 @@ public class PlayerStats : MonoBehaviour
     {
         gameObject.AddComponent<Placeholder>();
         GC = GameObject.Find("GameClock").GetComponent<GameClock>();
-    }
-
-
-    void Update()
-    {
-        
     }
 }
