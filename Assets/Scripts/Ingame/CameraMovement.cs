@@ -8,13 +8,14 @@ public class CameraMovement : MonoBehaviour
     public float speed;
     public float cameraMargin;
     public Camera cam;
-    public GameObject player;
+    GameObject Character;
     //Wartosci sluzace do dzialan/ustawien NIE ZMIENIAC I NIE BAWIC SIE
     bool BlockedCamera;
     Vector3 vec3;
 
     void Start()
     {
+        Character = GameObject.Find("Character");
         gameObject.transform.rotation = Quaternion.Euler(60f, 0, 0);
     }
 
@@ -39,10 +40,11 @@ public class CameraMovement : MonoBehaviour
             if (Input.GetButtonDown("BlockCamera"))
                 BlockedCamera = true;
         }
-        else
+        else if (BlockedCamera == true && Character != null)
+
         {
-            vec3.z = player.transform.position.z - 10;
-            vec3.x = player.transform.position.x;
+            vec3.z = Character.transform.position.z - 10;
+            vec3.x = Character.transform.position.x;
             cam.transform.position = vec3;
 
             if (Input.GetButtonDown("BlockCamera"))

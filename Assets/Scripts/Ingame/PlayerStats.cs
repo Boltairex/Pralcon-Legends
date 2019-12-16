@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerStats : MonoBehaviour
 {
     GameClock GC;
+    GameObject Character;
 
     [Header("Statystyki")]
     public int AD; // Attack DMG
@@ -37,7 +38,12 @@ public class PlayerStats : MonoBehaviour
     
     void Start()
     {
+        if (GameObject.Find("Character"))
+        {
+            Character = GameObject.Find("Character");
+            Character.AddComponent<PlayerController>();
+        }
         gameObject.AddComponent<Placeholder>();
-        GC = GameObject.Find("GameClock").GetComponent<GameClock>();
+        GC = GameObject.Find("GameClock").GetComponent<GameClock>(); 
     }
 }
