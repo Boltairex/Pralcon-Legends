@@ -1,11 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.AI;
 
 public class PlayerController : MonoBehaviour
 {
-    public Camera cam;
+    Camera cam;
 
     Ray ray;
     RaycastHit hit;
@@ -13,10 +11,9 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
+        cam = GameObject.Find("MainCamera").GetComponent<Camera>();
         ocb = GameObject.Find("ButtonHandler").GetComponent<OpenCloseButton>();
     }
-
-    // Update is called once per frame
     void Update()
     {
         if (Input.GetMouseButtonDown(1))
