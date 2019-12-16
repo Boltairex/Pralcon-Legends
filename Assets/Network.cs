@@ -1,16 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Lidgren;
 
 public class Network : MonoBehaviour
 {
-    void Start()
-    {
-        
-    }
+    public GameObject EIP;
+    public GameObject EPort;
 
-    void Update()
+    public void NetChange()
     {
-        
+
     }
 }
