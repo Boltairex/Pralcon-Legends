@@ -19,5 +19,7 @@ public class MenuController : MonoBehaviour
     {
         Name.GetComponent<TextMeshProUGUI>().text = Discord.Nickname;
         Avatar.GetComponent<Image>().sprite = Discord.Avatar;
+        if (Avatar.GetComponent<Image>().sprite != null)
+        { Avatar.GetComponent<Image>().color = new Color(1, 1, 1, 1); }
     }
 }
