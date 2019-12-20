@@ -6,18 +6,26 @@ using TMPro;
 
 public class MenuController : MonoBehaviour
 {
-    public GameObject Avatar;
-    public GameObject Name;
+    #region List
+    [Header("Główne")]
+    public GameObject Content;
+    [Header("Lista")]
+    public TMP_InputField IP;
+    public TMP_InputField Port;
+    [Header("Prawa Ramka")]
     public GameObject Game;
-    public GameObject Lobby;
+    public GameObject Checkbox;
     public GameObject GameOpt;
     public GameObject LobbyOpt;
-    public GameObject Content;
-    public GameObject Checkbox;
-
+    public GameObject Lobby;
+    [Header("Menu")]
+    public GameObject Avatar;
+    public GameObject Name;
+    [Header("Inne")]
     public Sprite DSAvatar;
     public string DSName;
 
+    #endregion List
     public Animator anim;
 
     bool ArrowSide;
@@ -30,7 +38,7 @@ public class MenuController : MonoBehaviour
     {
         anim.Play("Exit");
         Discord = gameObject.GetComponent<PRDiscordRPC>();
-        InfoLobby();  
+        InfoLobby();
     }
 
     void Update()
@@ -49,6 +57,11 @@ public class MenuController : MonoBehaviour
         Avatar.GetComponent<Image>().sprite = DSAvatar;
         if (Avatar.GetComponent<Image>().sprite != null)
         { Avatar.GetComponent<Image>().color = new Color(1, 1, 1, 1); }
+
+        if (Input.GetKeyDown(KeyCode.Semicolon) || Input.GetKeyUp(KeyCode.Semicolon))
+        {
+            Port.ActivateInputField();
+        }
     }
 
     public void RightMenu()

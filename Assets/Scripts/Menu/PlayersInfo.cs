@@ -19,13 +19,13 @@ public class PlayersInfo : NetworkBehaviour
     private void Start()
     {
         GameObject[] Players = GameObject.FindGameObjectsWithTag("PlayerBar");
-
         Menu = GameObject.Find("MenuController").GetComponent<MenuController>();
         NetC = GameObject.Find("LobbyManager").GetComponent<NetworkController>();
         for (int i = 0; i < Players.Length; i++)
         {
             Destroy(Players[i]);
         }
+
         NetC.Range = 0;
         if (isLocalPlayer)
         {

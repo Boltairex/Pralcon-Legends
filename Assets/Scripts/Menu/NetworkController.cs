@@ -5,12 +5,17 @@ using UnityEngine.Networking;
 using UnityEngine.UI;
 using TMPro;
 
-public class NetworkController : NetworkBehaviour
+public class NetworkController : NetworkManager
 {
     public MenuController MenuC;
     public GameObject BarPref;
-    public PlayersInfo LocalPlayer;
-    public int Range = 0;
+
+    #region List
+    [HideInInspector] public PlayersInfo LocalPlayer;
+    [HideInInspector] public int Range = 0;
+    [HideInInspector] public bool Hosting = false;
+    [HideInInspector] public bool Connect = false;
+    #endregion List
 
     void Start()
     {
@@ -28,5 +33,40 @@ public class NetworkController : NetworkBehaviour
         PlayerJoin.GetComponentInChildren<Image>().sprite = PImage;
         PlayerJoin.GetComponentInChildren<TextMeshProUGUI>().text = name;
         owner.GetComponent<PlayersInfo>().Bar = PlayerJoin;
+    }
+
+    public void ServerStart()
+    {
+        if (!Hosting && !Connect)
+        {
+            if (MenuC.Port.text == "" || MenuC.Port.text == null)
+            { networkPort = 7777; }
+            else
+            { networkPort = int.Parse(MenuC.Port.text); }
+
+            networkAddress = "localhost";
+
+            Connect = false;
+            Hosting = true;
+            StartHost();
+        }
+    }
+
+    public void ServerConnection()
+    {
+        if (!Hosting && !Connect)
+        {
+            if (MenuC.Port.text == "" || MenuC.Port.text == null)
+            { networkPort = 7777; }
+            else
+            { networkPort = int.Parse(MenuC.Port.text); }
+
+            networkAddress = MenuC.IP.text;
+            if (MenuC.IP.text == "") { networkAddress = "localhost"; }
+
+            Connect = true;
+            Hosting = false;
+            StartClient();
+        }
     }
 }
