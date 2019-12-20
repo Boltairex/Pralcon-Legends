@@ -26,7 +26,7 @@ public class PlayersInfo : NetworkBehaviour
         {
             Destroy(Players[i]);
         }
-
+        NetC.Range = 0;
         if (isLocalPlayer)
         {
             NetC.LocalPlayer = GetComponent<PlayersInfo>();
@@ -49,12 +49,13 @@ public class PlayersInfo : NetworkBehaviour
     public void CmdInfoSync(string SendName, byte[] SendAvatar)
     {
         Name = SendName;
-        RpcInfoSync(SendAvatar);
+        RpcInfoSync(SendName, SendAvatar);
     }
 
     [ClientRpc]
-    void RpcInfoSync(byte[] GetAvatar)
+    void RpcInfoSync(string GetName, byte[] GetAvatar)
     {
+        Name = GetName;
         Texture2D recAv = new Texture2D(1, 1);
         recAv.LoadImage(GetAvatar);
         Avatar = Sprite.Create(recAv, new Rect(new Rect(0.0f, 0.0f, recAv.width, recAv.height)), new Vector2(0.5f, 0.5f), 100.0f);
