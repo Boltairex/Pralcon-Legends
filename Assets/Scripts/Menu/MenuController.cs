@@ -15,10 +15,10 @@ public class MenuController : MonoBehaviour
     public GameObject Content;
     public GameObject Checkbox;
 
-    public GameObject BarPref;
+    public Sprite DSAvatar;
+    public string DSName;
 
     public Animator anim;
-    public int Range = 0;
 
     bool ArrowSide;
     bool Check;
@@ -35,13 +35,20 @@ public class MenuController : MonoBehaviour
 
     void Update()
     {
-        Name.GetComponent<TextMeshProUGUI>().text = Discord.Nickname;
-        Avatar.GetComponent<Image>().sprite = Discord.Avatar;
+        if (Discord.Nickname == "")
+        {
+            DSName = "Connecting...";
+        }
+        else
+        {
+            DSName = Discord.Nickname; 
+        }
+
+        Name.GetComponent<TextMeshProUGUI>().text = DSName;
+        DSAvatar = Discord.Avatar;
+        Avatar.GetComponent<Image>().sprite = DSAvatar;
         if (Avatar.GetComponent<Image>().sprite != null)
         { Avatar.GetComponent<Image>().color = new Color(1, 1, 1, 1); }
-
-        if (Input.GetMouseButtonDown(1))
-        { OnPlayerJoin(); }
     }
 
     public void RightMenu()
@@ -72,15 +79,6 @@ public class MenuController : MonoBehaviour
         LobbyOpt.SetActive(false);
         Lobby.GetComponent<Image>().color = new Color32(170, 170, 170, 230);
         Game.GetComponent<Image>().color = new Color32(255, 255, 255, 255);
-    }
-
-    public void OnPlayerJoin()
-    {
-        GameObject PlayerJoin = Instantiate<GameObject>(BarPref);
-        PlayerJoin.transform.SetParent(Content.transform);
-        PlayerJoin.GetComponent<RectTransform>().anchoredPosition = new Vector3(-210f, 90f + -140 * Range, 0);
-        Range++;
-        PlayerJoin.transform.localScale = new Vector3(1, 1, 1);
     }
 
     public void OnCheckboxClick()

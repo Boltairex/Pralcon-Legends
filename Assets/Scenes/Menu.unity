@@ -862,7 +862,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.33490568, g: 0.36634377, b: 1, a: 1}
+  m_Color: {r: 0.38199428, g: 0.28648987, b: 0.6981132, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -1595,7 +1595,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.000036792524, y: 44.54822}
+  m_AnchoredPosition: {x: -0.000036792524, y: 0.000019692518}
   m_SizeDelta: {x: 0, y: 300}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &251159212
@@ -1732,7 +1732,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 252097820}
+  - component: {fileID: 252097822}
   - component: {fileID: 252097821}
+  - component: {fileID: 252097823}
   m_Layer: 0
   m_Name: LobbyManager
   m_TagString: Untagged
@@ -1763,11 +1765,112 @@ MonoBehaviour:
   m_GameObject: {fileID: 252097819}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 916de4ed610598d419d63250c326adf0, type: 3}
+  m_Script: {fileID: 11500000, guid: 988fcdbfc2a09b64b92dc93a0e3dbdaf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  EIP: {fileID: 1198358523}
-  EPort: {fileID: 2063383764}
+  MenuC: {fileID: 1658830010}
+  BarPref: {fileID: 7624567612700135524, guid: c689266017fb76441bfc9855b550c973, type: 3}
+  Range: 0
+--- !u!114 &252097822
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 252097819}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -822479833, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_NetworkPort: 7777
+  m_ServerBindToIP: 0
+  m_ServerBindAddress: 
+  m_NetworkAddress: localhost
+  m_DontDestroyOnLoad: 1
+  m_RunInBackground: 1
+  m_ScriptCRCCheck: 1
+  m_MaxDelay: 0.01
+  m_LogLevel: 2
+  m_PlayerPrefab: {fileID: 1759673236577665197, guid: 567828884589c354da99eda444a7de60,
+    type: 3}
+  m_AutoCreatePlayer: 1
+  m_PlayerSpawnMethod: 0
+  m_OfflineScene: Menu
+  m_OnlineScene: Menu
+  m_SpawnPrefabs:
+  - {fileID: 1759673236577665197, guid: 567828884589c354da99eda444a7de60, type: 3}
+  m_CustomConfig: 0
+  m_MaxConnections: 4
+  m_ConnectionConfig:
+    m_PacketSize: 1440
+    m_FragmentSize: 500
+    m_ResendTimeout: 1200
+    m_DisconnectTimeout: 2000
+    m_ConnectTimeout: 2000
+    m_MinUpdateTimeout: 10
+    m_PingTimeout: 500
+    m_ReducedPingTimeout: 100
+    m_AllCostTimeout: 20
+    m_NetworkDropThreshold: 5
+    m_OverflowDropThreshold: 5
+    m_MaxConnectionAttempt: 10
+    m_AckDelay: 33
+    m_SendDelay: 10
+    m_MaxCombinedReliableMessageSize: 100
+    m_MaxCombinedReliableMessageCount: 10
+    m_MaxSentMessageQueueSize: 512
+    m_AcksType: 1
+    m_UsePlatformSpecificProtocols: 0
+    m_InitialBandwidth: 0
+    m_BandwidthPeakFactor: 2
+    m_WebSocketReceiveBufferMaxSize: 0
+    m_UdpSocketReceiveBufferMaxSize: 0
+    m_SSLCertFilePath: 
+    m_SSLPrivateKeyFilePath: 
+    m_SSLCAFilePath: 
+    m_Channels: []
+  m_GlobalConfig:
+    m_ThreadAwakeTimeout: 1
+    m_ReactorModel: 0
+    m_ReactorMaximumReceivedMessages: 1024
+    m_ReactorMaximumSentMessages: 1024
+    m_MaxPacketSize: 2000
+    m_MaxHosts: 16
+    m_ThreadPoolSize: 1
+    m_MinTimerTimeout: 1
+    m_MaxTimerTimeout: 12000
+    m_MinNetSimulatorTimeout: 1
+    m_MaxNetSimulatorTimeout: 12000
+  m_Channels: 0500000000000000
+  m_UseWebSockets: 0
+  m_UseSimulator: 0
+  m_SimulatedLatency: 1
+  m_PacketLossPercentage: 0
+  m_MaxBufferedPackets: 16
+  m_AllowFragmentation: 1
+  m_MatchHost: mm.unet.unity3d.com
+  m_MatchPort: 443
+  matchName: default
+  matchSize: 4
+  isNetworkActive: 0
+  matchMaker: {fileID: 0}
+--- !u!114 &252097823
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 252097819}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 227461547, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  manager: {fileID: 0}
+  showGUI: 1
+  offsetX: 0
+  offsetY: 0
 --- !u!1 &284659023
 GameObject:
   m_ObjectHideFlags: 0
@@ -3270,7 +3373,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1487284633}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0.76263607
+  m_Size: 0.99999803
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -4551,10 +4654,10 @@ RectTransform:
   m_Father: {fileID: 342382901}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 960, y: 0}
+  m_SizeDelta: {x: 100, y: -980}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &940736692
 GameObject:
@@ -4859,10 +4962,10 @@ RectTransform:
   m_Father: {fileID: 342382901}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 1}
+  m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -218.78, y: -90.48}
-  m_SizeDelta: {x: 546.94, y: 228.3}
+  m_AnchoredPosition: {x: -218.78, y: 449.52}
+  m_SizeDelta: {x: 546.94, y: -851.7}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1012407460
 MonoBehaviour:
@@ -6882,9 +6985,9 @@ MonoBehaviour:
   LobbyOpt: {fileID: 2004693423}
   Content: {fileID: 191277380}
   Checkbox: {fileID: 921554117}
-  BarPref: {fileID: 7624567612700135524, guid: c689266017fb76441bfc9855b550c973, type: 3}
+  DSAvatar: {fileID: 0}
+  DSName: 
   anim: {fileID: 855319279}
-  Range: 0
 --- !u!1 &1664661498
 GameObject:
   m_ObjectHideFlags: 0
@@ -8523,7 +8626,7 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 252097821}
+      - m_Target: {fileID: 0}
         m_MethodName: NetChange
         m_Mode: 1
         m_Arguments:
