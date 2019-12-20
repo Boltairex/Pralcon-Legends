@@ -9,6 +9,7 @@ public class NetworkController : NetworkBehaviour
 {
     public MenuController MenuC;
     public GameObject BarPref;
+    public PlayersInfo LocalPlayer;
     public int Range = 0;
 
     void Start()
