@@ -4743,7 +4743,7 @@ MonoBehaviour:
   creaturesList: []
   bossesList: []
   detectRange: 450
-  autoAttackRange: 0
+  autoAttackRange: 1000
 --- !u!114 &1467498341
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4757,6 +4757,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 0}
+  fireRate: 5
+  bulletSpeed: 2
 --- !u!1 &1501196454
 GameObject:
   m_ObjectHideFlags: 0
