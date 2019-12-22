@@ -13,6 +13,12 @@ public class PRDiscordRPC : MonoBehaviour
     public string Nickname;
     public string UserID;
 
+    public int Players;
+    public int MaxPlayers;
+    public string RoomName;
+    public string Team = "First";
+    public bool InLobby;
+
     DiscordRpc.RichPresence presence;
 
     string gamestate;
@@ -52,30 +58,30 @@ public class PRDiscordRPC : MonoBehaviour
     {
         DiscordRpc.RunCallbacks();
 
-        if(SceneManager.GetActiveScene().name == "Menu" && gamestate != "menu")
+        if(SceneManager.GetActiveScene().name == "Menu" && !InLobby)
         {
-            presence.largeImageKey = "ymhicon";
-            presence.largeImageText = "You're my Hope";
-            presence.state = "In Menu";
-            presence.details = "";
+            presence.largeImageKey = "logo";
+            presence.largeImageText = "Pralcon Legends";
+            presence.state = "In Menu, waiting for friends";
+            presence.details = "The best fanmade MOBA!";
             gamestate = "menu";
             presence.startTimestamp = 0;
 
-            presence.smallImageKey = "";
-            presence.smallImageText = "";
+            presence.smallImageKey = "plogo";
+            presence.smallImageText = "Pralcon Legends";
         }
-        else if (SceneManager.GetActiveScene().name == "Menu")
+        else if (SceneManager.GetActiveScene().name == "Menu" && InLobby)
         {
 
-            presence.largeImageKey = "ymhicon";
-            presence.largeImageText = "In Lobby";
-            presence.state = 0 + "/5 Players";
-            presence.details = "In Lobby";
+            presence.largeImageKey = "logo";
+            presence.largeImageText = RoomName;
+            presence.state = Players + "/"+MaxPlayers+" Players";
+            presence.details = Team+" Team";
             gamestate = "lobby";
             presence.startTimestamp = 0;
 
-            presence.smallImageKey = "";
-            presence.smallImageText = "";
+            presence.smallImageKey = "plogo";
+            presence.smallImageText = "In Lobby";
         }
 
     }

@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -32,8 +33,10 @@ public class MenuController : MonoBehaviour
     public Slider Green;
     public Slider Blue;
     public GameObject ColorPicker;
-    public Color32 FirstColour = new Color32(255, 0, 0, 255);
-    public Color32 SecondColour = new Color32(0, 0, 255, 255);
+    public Color FirstColour = new Color(1, 0, 0, 1);
+    public Color SecondColour = new Color(0, 0, 1, 1);
+    public TMP_InputField Team1;
+    public TMP_InputField Team2;
     [Header("Inne")]
     public Sprite DSAvatar;
     public string DSName;
@@ -53,6 +56,8 @@ public class MenuController : MonoBehaviour
     {
         anim.Play("Exit");
         Discord = gameObject.GetComponent<PRDiscordRPC>();
+        First.color = FirstColour;
+        Second.color = SecondColour;
     }
 
     void Update()
@@ -75,6 +80,11 @@ public class MenuController : MonoBehaviour
         Name.GetComponent<TextMeshProUGUI>().text = DSName;
         DSAvatar = Discord.Avatar;
         Avatar.GetComponent<Image>().sprite = DSAvatar;
+        Discord.RoomName = GameName.text;
+        Discord.MaxPlayers = int.Parse(PlayerSize.text);
+
+        First.color = new Color(Red.value, Green.value, Blue.value, 1);
+
         if (Avatar.GetComponent<Image>().sprite != null)
         { Avatar.GetComponent<Image>().color = new Color(1, 1, 1, 1); }
 
@@ -113,6 +123,9 @@ public class MenuController : MonoBehaviour
             GamePass.readOnly = false;
             PlayerSize.readOnly = false;
             Checkbox.GetComponent<Button>().interactable = true;
+            Red.interactable = true;
+            Green.interactable = true;
+            Blue.interactable = true;
         }
         else
         {
@@ -120,11 +133,19 @@ public class MenuController : MonoBehaviour
             GamePass.readOnly = true;
             PlayerSize.readOnly = true;
             Checkbox.GetComponent<Button>().interactable = false;
+            Red.interactable = false;
+            Green.interactable = false;
+            Blue.interactable = false;
         }
 
         if (Input.GetKeyDown(KeyCode.R) && NetC.Hosting)
         {
             SyncInfo();
+        }
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            ColorPicker.SetActive(false);
         }
     }
 
@@ -174,19 +195,53 @@ public class MenuController : MonoBehaviour
     public void SyncInfo()
     {
         Data.RpcGameInfo(GameName.text, GamePass.text, PlayerSize.text, Checkbox);
+        Data.RpcTeamSynchronise(Team1.text, Team2.text, FirstColour, SecondColour);
     }
-    public void SwitchFirst() { Switch = false; ChangeColor(); } //1 Team
-    public void SwitchSecond() { Switch = true; ChangeColor(); } //2 Team
+    public void SwitchFirst()
+    {
+        if (NetC.Hosting)
+        {
+            Switch = false;
+            ChangeColor();
+        }
+    }
+    public void SwitchSecond()
+    {
+        if (NetC.Hosting)
+        {
+            Switch = true;
+            ChangeColor();
+        }
+    }
     public void ChangeColor()
     {
         if (!Switch) //1 Team
         {
             ColorPicker.SetActive(true);
+            Red.value = FirstColour.r;
+            Green.value = FirstColour.g;
+            Blue.value = FirstColour.b;
             First.color = FirstColour;
         }
         else //2 Team
         {
             ColorPicker.SetActive(true);
+            Red.value = SecondColour.r;
+            Green.value = SecondColour.g;
+            Blue.value = SecondColour.b;
+            Second.color = SecondColour;
+        }
+    }
+    public void UpdateColor()
+    {
+        if (!Switch)
+        {
+            FirstColour = new Color(Red.value, Green.value, Blue.value, 1);
+            First.color = FirstColour;
+        }
+        else
+        {
+            SecondColour = new Color(Red.value, Green.value, Blue.value, 1);
             Second.color = SecondColour;
         }
     }

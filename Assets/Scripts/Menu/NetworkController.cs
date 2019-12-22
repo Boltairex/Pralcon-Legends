@@ -11,6 +11,7 @@ public class NetworkController : NetworkManager
     public GameObject BarPref;
     public DataManagement Data;
     public MenuGUI MenuG;
+    public PRDiscordRPC Discord;
 
     #region List
     [HideInInspector] public PlayersInfo LocalPlayer;
@@ -19,9 +20,16 @@ public class NetworkController : NetworkManager
     [HideInInspector] public bool Connect = false;
     #endregion List
 
-    void Start()
+    void Update()
     {
-
+        if (Hosting || Connect)
+        {
+            Discord.InLobby = true;
+        }
+        else
+        {
+            Discord.InLobby = false;
+        }
     }
 
     public void CreateBar(string name, Sprite PImage, GameObject owner)

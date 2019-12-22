@@ -10,6 +10,7 @@ public class PlayersInfo : NetworkBehaviour
     NetworkController NetC;
     public GameObject Bar;
     public Sprite Avatar;
+    PRDiscordRPC Discord;
 
     [SyncVar]
     public string Name;
@@ -21,6 +22,8 @@ public class PlayersInfo : NetworkBehaviour
         GameObject[] Players = GameObject.FindGameObjectsWithTag("PlayerBar");
         Menu = GameObject.Find("MenuController").GetComponent<MenuController>();
         NetC = GameObject.Find("LobbyManager").GetComponent<NetworkController>();
+        Discord = GameObject.Find("MenuController").GetComponent<PRDiscordRPC>();
+        Discord.Players = Players.Length + 1;
         for (int i = 0; i < Players.Length; i++)
         {
             Destroy(Players[i]);

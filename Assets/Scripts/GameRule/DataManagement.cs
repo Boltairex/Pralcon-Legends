@@ -21,4 +21,16 @@ public class DataManagement : NetworkBehaviour
             MenuC.OnCheckboxClick();
         }
     }
+
+    [ClientRpc(channel = 1)]
+    public void RpcTeamSynchronise(string Team1, string Team2, Color CTeam1, Color CTeam2)
+    {
+        if (NetC.Connect && NetC.Hosting == false)
+        {
+            MenuC.FirstColour = CTeam1;
+            MenuC.SecondColour = CTeam2;
+            MenuC.Team1.text = Team1;
+            MenuC.Team2.text = Team2;
+        }
+    }
 }

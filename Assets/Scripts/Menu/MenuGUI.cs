@@ -33,14 +33,4 @@ public class MenuGUI : MonoBehaviour
     {
         IA.SetActive(true);
     }
-
-    public void CheckJoin()
-    {
-
-    }
-
-    public void SceneChange()
-    {
-
-    }
 }
