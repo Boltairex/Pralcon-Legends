@@ -25,6 +25,15 @@ public class MenuController : MonoBehaviour
     public Image Dot;
     public GameObject Avatar;
     public GameObject Name;
+    [Header("TeamColors")]
+    public Image First;
+    public Image Second;
+    public Slider Red;
+    public Slider Green;
+    public Slider Blue;
+    public GameObject ColorPicker;
+    public Color32 FirstColour = new Color32(255, 0, 0, 255);
+    public Color32 SecondColour = new Color32(0, 0, 255, 255);
     [Header("Inne")]
     public Sprite DSAvatar;
     public string DSName;
@@ -36,6 +45,7 @@ public class MenuController : MonoBehaviour
     public bool Check;
     bool Mode;
     bool Block;
+    bool Switch;
 
     PRDiscordRPC Discord;
 
@@ -112,7 +122,7 @@ public class MenuController : MonoBehaviour
             Checkbox.GetComponent<Button>().interactable = false;
         }
 
-        if (Input.GetKeyDown(KeyCode.R))
+        if (Input.GetKeyDown(KeyCode.R) && NetC.Hosting)
         {
             SyncInfo();
         }
@@ -164,6 +174,21 @@ public class MenuController : MonoBehaviour
     public void SyncInfo()
     {
         Data.RpcGameInfo(GameName.text, GamePass.text, PlayerSize.text, Checkbox);
+    }
+    public void SwitchFirst() { Switch = false; ChangeColor(); } //1 Team
+    public void SwitchSecond() { Switch = true; ChangeColor(); } //2 Team
+    public void ChangeColor()
+    {
+        if (!Switch) //1 Team
+        {
+            ColorPicker.SetActive(true);
+            First.color = FirstColour;
+        }
+        else //2 Team
+        {
+            ColorPicker.SetActive(true);
+            Second.color = SecondColour;
+        }
     }
 }
 

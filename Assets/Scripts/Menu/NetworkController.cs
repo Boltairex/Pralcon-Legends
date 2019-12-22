@@ -35,6 +35,7 @@ public class NetworkController : NetworkManager
         PlayerJoin.GetComponentInChildren<Image>().sprite = PImage;
         PlayerJoin.GetComponentInChildren<TextMeshProUGUI>().text = name;
         owner.GetComponent<PlayersInfo>().Bar = PlayerJoin;
+        PlayerJoin.GetComponent<BarSync>().NetC = gameObject.GetComponent<NetworkController>();
     }
 
     public void ServerStart()
@@ -51,7 +52,6 @@ public class NetworkController : NetworkManager
             Connect = false;
             Hosting = true;
             StartHost();
-            Data.gameObject.SetActive(true);
             MenuG.ListClose();
         }
     }

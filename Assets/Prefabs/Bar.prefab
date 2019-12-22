@@ -1,5 +1,75 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &7280544919166129702
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1567651615632590814}
+  - component: {fileID: 1832993068020900181}
+  - component: {fileID: 5272297606208581553}
+  m_Layer: 5
+  m_Name: colorteam
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1567651615632590814
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7280544919166129702}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 7624567612700135525}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 78, y: 0}
+  m_SizeDelta: {x: -418, y: -82}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &1832993068020900181
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7280544919166129702}
+  m_CullTransparentMesh: 0
+--- !u!114 &5272297606208581553
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7280544919166129702}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -98529514, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Texture: {fileID: 0}
+  m_UVRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
 --- !u!1 &7624567612546223813
 GameObject:
   m_ObjectHideFlags: 0
@@ -32,10 +102,10 @@ RectTransform:
   m_Father: {fileID: 7624567612700135525}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.5}
-  m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 196.89, y: -19.24}
-  m_SizeDelta: {x: 140, y: 140}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 164.5, y: -0.29999924}
+  m_SizeDelta: {x: -327, y: 8}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7624567612546223816
 CanvasRenderer:
@@ -102,13 +172,14 @@ RectTransform:
   m_Children:
   - {fileID: 7624567612546223818}
   - {fileID: 7624567612887454012}
+  - {fileID: 1567651615632590814}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -209, y: -214}
-  m_SizeDelta: {x: 100, y: 100}
+  m_AnchoredPosition: {x: -233.5, y: 65.75}
+  m_SizeDelta: {x: 467, y: 131.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &567121870392886308
 MonoBehaviour:
@@ -123,6 +194,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Owner: {fileID: 0}
+  NetC: {fileID: 0}
 --- !u!1 &7624567612887454015
 GameObject:
   m_ObjectHideFlags: 0
@@ -155,10 +227,10 @@ RectTransform:
   m_Father: {fileID: 7624567612700135525}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.5}
-  m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: -31.800003, y: 31.1}
-  m_SizeDelta: {x: 286.59998, y: 106}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: -105.5, y: -2}
+  m_SizeDelta: {x: -180.40002, y: -26}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7624567612887453986
 CanvasRenderer:
@@ -214,7 +286,7 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 65
+  m_fontSize: 64.6
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -252,7 +324,7 @@ MonoBehaviour:
   m_firstVisibleCharacter: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 46.531197, z: -21.922478, w: -89.70332}
+  m_margin: {x: 0, y: -0.2547569, z: -1.6783379, w: -2.8700712}
   m_textInfo:
     textComponent: {fileID: 7624567612887454013}
     characterCount: 8
