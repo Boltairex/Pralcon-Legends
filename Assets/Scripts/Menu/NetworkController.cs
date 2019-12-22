@@ -10,6 +10,7 @@ public class NetworkController : NetworkManager
     public MenuController MenuC;
     public GameObject BarPref;
     public DataManagement Data;
+    public MenuGUI MenuG;
 
     #region List
     [HideInInspector] public PlayersInfo LocalPlayer;
@@ -51,6 +52,7 @@ public class NetworkController : NetworkManager
             Hosting = true;
             StartHost();
             Data.gameObject.SetActive(true);
+            MenuG.ListClose();
         }
     }
 
@@ -69,6 +71,7 @@ public class NetworkController : NetworkManager
             Connect = true;
             Hosting = false;
             StartClient();
+            MenuG.ListClose();
         }
     }
 
