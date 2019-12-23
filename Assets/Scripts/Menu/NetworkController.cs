@@ -21,12 +21,11 @@ public class NetworkController : NetworkManager
     [HideInInspector] public bool Connect = false;
     public GameObject PlayerJoin;
     public bool PTeam;
+    public Color FirstTeam;
+    public Color SecondTeam;
+    public string Team1;
+    public string Team2;
     #endregion List
-
-    void Start()
-    {
-        DontDestroyOnLoad(gameObject); 
-    }
 
     void Update()
     {
@@ -121,6 +120,14 @@ public class NetworkController : NetworkManager
     }
     public void LobbyRun()
     {
+        FirstTeam = MenuC.FirstColour;
+        SecondTeam = MenuC.SecondColour;
+        Team1 = MenuC.Team1.text;
+        Team2 = MenuC.Team2.text;
         ServerChangeScene("Lobby");
+    }
+    public void GameRun()
+    {
+        ServerChangeScene("Game");
     }
 }
