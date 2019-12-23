@@ -26,6 +26,7 @@ public class MenuController : MonoBehaviour
     public Image Dot;
     public GameObject Avatar;
     public GameObject Name;
+    public RawImage MenuTeamColor;
     [Header("TeamColors")]
     public Image First;
     public Image Second;
@@ -49,6 +50,7 @@ public class MenuController : MonoBehaviour
     bool Mode;
     bool Block;
     bool Switch;
+    bool Colour;
 
     PRDiscordRPC Discord;
 
@@ -58,6 +60,7 @@ public class MenuController : MonoBehaviour
         Discord = gameObject.GetComponent<PRDiscordRPC>();
         First.color = FirstColour;
         Second.color = SecondColour;
+        print("Zmiana na " + FirstColour + " i " + SecondColour);
     }
 
     void Update()
@@ -69,7 +72,14 @@ public class MenuController : MonoBehaviour
         }
         else
         {
-            DSName = Discord.Nickname; 
+            DSName = Discord.Nickname;
+            Name.GetComponent<TextMeshProUGUI>().text = DSName;
+        }
+
+        if (Discord.Avatar != null)
+        {
+            DSAvatar = Discord.Avatar;
+            Avatar.GetComponent<Image>().sprite = DSAvatar; ;
         }
 
         if (DSName != "Connecting..." && NetC.Hosting == false && NetC.Connect == false)
@@ -77,16 +87,8 @@ public class MenuController : MonoBehaviour
         else if (NetC.Hosting == true || NetC.Connect == true)
         { Dot.color = new Color32(0, 255, 0, 255); }
 
-        Name.GetComponent<TextMeshProUGUI>().text = DSName;
-        DSAvatar = Discord.Avatar;
-        Avatar.GetComponent<Image>().sprite = DSAvatar;
         Discord.RoomName = GameName.text;
         Discord.MaxPlayers = int.Parse(PlayerSize.text);
-
-        First.color = new Color(Red.value, Green.value, Blue.value, 1);
-
-        if (Avatar.GetComponent<Image>().sprite != null)
-        { Avatar.GetComponent<Image>().color = new Color(1, 1, 1, 1); }
 
         if (Input.GetKeyDown(KeyCode.Semicolon) || Input.GetKeyUp(KeyCode.Semicolon))
         {
@@ -155,11 +157,13 @@ public class MenuController : MonoBehaviour
         {
             anim.Play("MenuOpen");
             ArrowSide = false;
+            ColorPicker.SetActive(false);
         }
         else if (!ArrowSide)
         {
             anim.Play("MenuClose");
             ArrowSide = true;
+            ColorPicker.SetActive(false);
         }
     }
 
@@ -217,33 +221,44 @@ public class MenuController : MonoBehaviour
     {
         if (!Switch) //1 Team
         {
+            Colour = false;
             ColorPicker.SetActive(true);
             Red.value = FirstColour.r;
             Green.value = FirstColour.g;
             Blue.value = FirstColour.b;
-            First.color = FirstColour;
+            print("Zmiana na " + FirstColour);
+            Colour = true;
         }
         else //2 Team
         {
+            Colour = false;
             ColorPicker.SetActive(true);
             Red.value = SecondColour.r;
             Green.value = SecondColour.g;
             Blue.value = SecondColour.b;
-            Second.color = SecondColour;
+            print("Zmiana na "+ SecondColour);
+            Colour = true;
         }
     }
     public void UpdateColor()
     {
-        if (!Switch)
+        if (!Switch && Colour)
         {
             FirstColour = new Color(Red.value, Green.value, Blue.value, 1);
-            First.color = FirstColour;
+            First.color = FirstColour; //Ustawianie bloczku 1
+            print("Zmiana na " + FirstColour);
         }
-        else
+        else if (Switch && Colour)
         {
             SecondColour = new Color(Red.value, Green.value, Blue.value, 1);
-            Second.color = SecondColour;
+            Second.color = SecondColour; //Ustawianie bloczku 2
+            print("Zmiana na " + SecondColour);
         }
+    }
+    public void TeamSynchro()
+    {
+        First.color = FirstColour;
+        Second.color = SecondColour;
     }
 }
 

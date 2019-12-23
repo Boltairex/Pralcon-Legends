@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 170076734}
-  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657892, g: 0.4964128, b: 0.5748173, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2647,11 +2647,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1908154431}
     m_Modifications:
-    - target: {fileID: 3489869818916441985, guid: d2da6c7975ca0704d9fee48b3e228a0e,
-        type: 3}
-      propertyPath: m_Name
-      value: Wall2
-      objectReference: {fileID: 0}
     - target: {fileID: 3489869818916017057, guid: d2da6c7975ca0704d9fee48b3e228a0e,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2716,6 +2711,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.z
       value: 342.05823
+      objectReference: {fileID: 0}
+    - target: {fileID: 3489869818916441985, guid: d2da6c7975ca0704d9fee48b3e228a0e,
+        type: 3}
+      propertyPath: m_Name
+      value: Wall2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d2da6c7975ca0704d9fee48b3e228a0e, type: 3}
@@ -4055,7 +4055,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 285846243}
   m_Direction: 3
   m_Value: 0
-  m_Size: 0.8350333
+  m_Size: 0.8350298
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -5831,11 +5831,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1908154431}
     m_Modifications:
-    - target: {fileID: 3489869818916441985, guid: d2da6c7975ca0704d9fee48b3e228a0e,
-        type: 3}
-      propertyPath: m_Name
-      value: Wall2
-      objectReference: {fileID: 0}
     - target: {fileID: 3489869818916017057, guid: d2da6c7975ca0704d9fee48b3e228a0e,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -5900,6 +5895,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.z
       value: 342.05823
+      objectReference: {fileID: 0}
+    - target: {fileID: 3489869818916441985, guid: d2da6c7975ca0704d9fee48b3e228a0e,
+        type: 3}
+      propertyPath: m_Name
+      value: Wall2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d2da6c7975ca0704d9fee48b3e228a0e, type: 3}
@@ -9982,11 +9982,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1908154431}
     m_Modifications:
-    - target: {fileID: 919748322186983018, guid: 6f4690b429f9fa542aaeaec81b8f50d0,
-        type: 3}
-      propertyPath: m_Name
-      value: Wall1
-      objectReference: {fileID: 0}
     - target: {fileID: 919748322186553930, guid: 6f4690b429f9fa542aaeaec81b8f50d0,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -10041,6 +10036,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 90.00001
+      objectReference: {fileID: 0}
+    - target: {fileID: 919748322186983018, guid: 6f4690b429f9fa542aaeaec81b8f50d0,
+        type: 3}
+      propertyPath: m_Name
+      value: Wall1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6f4690b429f9fa542aaeaec81b8f50d0, type: 3}
@@ -10875,7 +10875,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.000034688048, y: 49.49001}
+  m_AnchoredPosition: {x: -0.000034688048, y: 49.489986}
   m_SizeDelta: {x: 0, y: 300}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &1884083380
@@ -11086,7 +11086,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 246238877}
   m_Direction: 0
   m_Value: 0
-  m_Size: 0.99999994
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:

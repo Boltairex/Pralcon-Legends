@@ -31,6 +31,7 @@ public class DataManagement : NetworkBehaviour
             MenuC.SecondColour = CTeam2;
             MenuC.Team1.text = Team1;
             MenuC.Team2.text = Team2;
+            MenuC.TeamSynchro();
         }
     }
 }

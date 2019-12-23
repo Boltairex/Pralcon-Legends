@@ -6,9 +6,8 @@ public class BarSync : MonoBehaviour
 {
     public GameObject Owner;
     public NetworkController NetC;
-
-    void Update()
+    private void Start()
     {
-        gameObject.GetComponentInChildren<RawImage>();
+        Owner.GetComponent<PlayersInfo>().Bar = gameObject;
     }
 }

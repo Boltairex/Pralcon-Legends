@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1832993068020900181}
   - component: {fileID: 5272297606208581553}
   m_Layer: 5
-  m_Name: colorteam
+  m_Name: barcolorteam
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -34,8 +34,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 78, y: 0}
-  m_SizeDelta: {x: -418, y: -82}
+  m_AnchoredPosition: {x: 73.7, y: -1.21}
+  m_SizeDelta: {x: -376.31, y: -48.43}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1832993068020900181
 CanvasRenderer:
@@ -58,12 +58,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 0, b: 0, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Texture: {fileID: 0}
+  m_Texture: {fileID: 10912, guid: 0000000000000000f000000000000000, type: 0}
   m_UVRect:
     serializedVersion: 2
     x: 0
@@ -104,7 +104,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 164.5, y: -0.29999924}
+  m_AnchoredPosition: {x: 164.5, y: -0.30000305}
   m_SizeDelta: {x: -327, y: 8}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7624567612546223816

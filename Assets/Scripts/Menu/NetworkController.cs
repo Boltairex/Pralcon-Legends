@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
@@ -18,7 +19,14 @@ public class NetworkController : NetworkManager
     [HideInInspector] public int Range = 0;
     [HideInInspector] public bool Hosting = false;
     [HideInInspector] public bool Connect = false;
+    public GameObject PlayerJoin;
+    public bool PTeam;
     #endregion List
+
+    void Start()
+    {
+        DontDestroyOnLoad(gameObject); 
+    }
 
     void Update()
     {
@@ -34,7 +42,7 @@ public class NetworkController : NetworkManager
 
     public void CreateBar(string name, Sprite PImage, GameObject owner)
     {
-        GameObject PlayerJoin = Instantiate(BarPref);
+        PlayerJoin = Instantiate(BarPref);
         PlayerJoin.transform.SetParent(MenuC.Content.transform);
         PlayerJoin.GetComponent<RectTransform>().anchoredPosition = new Vector3(-210f, 90f + -140 * Range, 0);
         Range++;
@@ -48,7 +56,7 @@ public class NetworkController : NetworkManager
 
     public void ServerStart()
     {
-        if (!Hosting && !Connect)
+        if (!Hosting && !Connect && MenuC.DSName != "Connecting...")
         {
             if (MenuC.Port.text == "" || MenuC.Port.text == null)
             { networkPort = 7777; }
@@ -66,7 +74,7 @@ public class NetworkController : NetworkManager
 
     public void ServerConnection()
     {
-        if (!Hosting && !Connect)
+        if (!Hosting && !Connect && MenuC.DSName != "Connecting...")
         {
             if (MenuC.Port.text == "" || MenuC.Port.text == null)
             { networkPort = 7777; }
@@ -88,7 +96,31 @@ public class NetworkController : NetworkManager
         if (Hosting || Connect)
         {
             if (!Hosting) { StopClient(); }
-            else { StopHost(); }         
+            else { StopHost(); }
         }
+    }
+
+    public void ChangeTeam()
+    {
+        if (!PTeam)
+        {
+            PTeam = true;
+            if (PlayerJoin != null)
+            {
+                PlayerJoin.GetComponent<PlayersInfo>().CmdInfoSender(PTeam);
+            }
+        }
+        else if (PTeam)
+        {
+            PTeam = false;
+            if (PlayerJoin != null)
+            {
+                PlayerJoin.GetComponent<PlayersInfo>().CmdInfoSender(PTeam);
+            }
+        }
+    }
+    public void LobbyRun()
+    {
+        ServerChangeScene("Lobby");
     }
 }
