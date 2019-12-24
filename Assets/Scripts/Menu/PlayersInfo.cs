@@ -12,6 +12,7 @@ public class PlayersInfo : NetworkBehaviour
     public Sprite Avatar;
     public RawImage Color;
     PRDiscordRPC Discord;
+    public GameObject[] Players;
 
     [SyncVar]
     public bool Team;
@@ -22,7 +23,7 @@ public class PlayersInfo : NetworkBehaviour
     private void Start()
     {
         DontDestroyOnLoad(gameObject);
-        GameObject[] Players = GameObject.FindGameObjectsWithTag("PlayerBar");
+        Players = GameObject.FindGameObjectsWithTag("PlayerBar");
         Menu = GameObject.Find("MenuController").GetComponent<MenuController>();
         NetC = GameObject.Find("LobbyManager").GetComponent<NetworkController>();
         Discord = GameObject.Find("MenuController").GetComponent<PRDiscordRPC>();

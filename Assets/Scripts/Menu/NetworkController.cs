@@ -13,6 +13,7 @@ public class NetworkController : NetworkManager
     public DataManagement Data;
     public MenuGUI MenuG;
     public PRDiscordRPC Discord;
+    public GameObject[] Players;
 
     #region List
     [HideInInspector] public PlayersInfo LocalPlayer;
@@ -124,6 +125,7 @@ public class NetworkController : NetworkManager
         SecondTeam = MenuC.SecondColour;
         Team1 = MenuC.Team1.text;
         Team2 = MenuC.Team2.text;
+        Players = GameObject.FindGameObjectsWithTag("Player");
         ServerChangeScene("Lobby");
     }
     public void GameRun()

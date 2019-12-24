@@ -20,10 +20,13 @@ public class LobbyController : MonoBehaviour
     public GameObject ChatList;
     [Header("Wybór Postaci")]
     public RawImage CenterCharacter;
+    [Header("Inne")]
+    public NetworkController NetC;
 
     void Start()
     {
-        Players = GameObject.FindGameObjectsWithTag("PlayerBar");
+        NetC = GameObject.Find("LobbyManager").GetComponent<NetworkController>();
+        Players = NetC.Players;
     }
     // Update is called once per frame
     void Update()
