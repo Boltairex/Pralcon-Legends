@@ -1,13 +1,19 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.Networking;
+using TMPro;
 
 public class BarSync : MonoBehaviour
 {
-    public GameObject Owner;
-    public NetworkController NetC;
+    public PlayersInfo Owner;
+
     private void Start()
     {
-        Owner.GetComponent<PlayersInfo>().Bar = gameObject;
+        Owner.Bar = gameObject;
+    }
+
+    public void Update()
+    {
+        gameObject.GetComponentInChildren<Image>().sprite = Owner.Avatar;
+        gameObject.GetComponentInChildren<TextMeshProUGUI>().text = Owner.name;
     }
 }

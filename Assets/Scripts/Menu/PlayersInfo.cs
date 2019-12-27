@@ -3,48 +3,31 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Networking;
+using UnityEngine.SceneManagement;
+using TMPro;
 
 public class PlayersInfo : NetworkBehaviour
 {
     MenuController Menu;
     NetworkController NetC;
-    public GameObject Bar;
-    public Sprite Avatar;
-    public RawImage Color;
-    PRDiscordRPC Discord;
-    public GameObject[] Players;
+    NetworkContainer NetR;
+    LobbyController LobbyC;
 
-    [SyncVar]
+    public GameObject Bar;
+    public Sprite Avatar; 
+    public RawImage Color;
+
     public bool Team;
-    public string Name;
     public bool Ready;
-    bool Init;
+    public bool Init;
 
     private void Start()
     {
         DontDestroyOnLoad(gameObject);
-        Players = GameObject.FindGameObjectsWithTag("PlayerBar");
         Menu = GameObject.Find("MenuController").GetComponent<MenuController>();
         NetC = GameObject.Find("LobbyManager").GetComponent<NetworkController>();
-        Discord = GameObject.Find("MenuController").GetComponent<PRDiscordRPC>();
-        Discord.Players = Players.Length + 1;
-        for (int i = 0; i < Players.Length; i++) //Odświeżanie listy graczy
-        {
-            Destroy(Players[i]);
-        }
-
-        NetC.Range = 0;
-        if (isLocalPlayer) //Synchronizowanie u klienta i update serwerowi
-        {
-            NetC.LocalPlayer = GetComponent<PlayersInfo>();
-            Avatar = Menu.DSAvatar;
-            Name = Menu.DSName;
-            CmdInfoSync(Name, Avatar.texture.EncodeToJPG());
-        }
-        else //Synchronizowanie profilu klienta u graczy i update serwerowi
-        {
-            NetC.LocalPlayer.CmdInfoSync(NetC.LocalPlayer.Name, NetC.LocalPlayer.Avatar.texture.EncodeToJPG());
-        }
+        NetR = GameObject.Find("NetworkContainer").GetComponent<NetworkContainer>();
+        NetR.LocalPlayer = gameObject.GetComponent<PlayersInfo>();
     }
 
     private void OnDestroy() //Usuwanie gracza
@@ -52,37 +35,22 @@ public class PlayersInfo : NetworkBehaviour
         Destroy(Bar);
     }
 
-    [Command] //Wysyłanie z klienta do serwera (Wysyłanie danych z gracza)
-    public void CmdInfoSync(string SendName, byte[] SendAvatar)
-    {
-        Name = SendName;
-        RpcInfoSync(SendName, SendAvatar);
-    }
-
-    [ClientRpc] //Wysyłanie z serwera do klienta (Odbieranie danych u gracza)
-    void RpcInfoSync(string GetName, byte[] GetAvatar)
-    {
-        Name = GetName;
-        Texture2D recAv = new Texture2D(1, 1);
-        recAv.LoadImage(GetAvatar);
-        Avatar = Sprite.Create(recAv, new Rect(new Rect(0.0f, 0.0f, recAv.width, recAv.height)), new Vector2(0.5f, 0.5f), 100.0f);
-        Ready = true;
-        Init = false;
-    }
-
     void Update()
     {
-        if (!isLocalPlayer && Ready && !Init)
+        if (!Ready && !isLocalPlayer)
         {
-            NetC.CreateBar(Name, Avatar, gameObject);
-            Init = true;
+            NetR.BarSync(gameObject.GetComponent<PlayersInfo>());
+            NetR.Players = GameObject.FindGameObjectsWithTag("Player");
+            Ready = true;
         }
 
         if (Color == null && !isLocalPlayer)
-        { Color = Bar.GetComponentInChildren<RawImage>(); }
+        {
+            Color = Bar.GetComponentInChildren<RawImage>();
+        }
         else if (Color != null && !isLocalPlayer)
         {
-            if (!Team) //Synchronizacja koloru w Baru
+            if (!Team) //Synchronizacja koloru w Barze
             {
                 Color.color = Menu.FirstColour;
             }
@@ -94,7 +62,7 @@ public class PlayersInfo : NetworkBehaviour
 
         if (Menu.MenuTeamColor != null && isLocalPlayer)
         {
-            Team = NetC.PTeam;
+            Team = NetR.Team;
             if (!Team) //Kolor klienta
             {
                 Menu.MenuTeamColor.color = Menu.FirstColour;
@@ -104,18 +72,5 @@ public class PlayersInfo : NetworkBehaviour
                 Menu.MenuTeamColor.color = Menu.SecondColour;
             }
         }
-    }
-
-    [Command] //Wysyłanie z klienta do serwera (Wysyłanie danych z gracza) SERVER ONLY
-    public void CmdInfoSender(bool SendTeam)
-    {
-        Team = SendTeam;
-        RpcInfoGet(SendTeam);
-    }
-
-    [ClientRpc]
-    public void RpcInfoGet(bool GetTeam) //odbieranie
-    {
-        Team = GetTeam;
     }
 }

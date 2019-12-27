@@ -44,12 +44,13 @@ public class MenuController : MonoBehaviour
     public Animator anim;
     public NetworkController NetC;
     public DataManagement Data;
+    public NetworkContainer NetR;
     #endregion List
     bool ArrowSide;
     public bool Check;
     bool Mode;
     bool Block;
-    bool Switch;
+    public bool Switch;
     bool Colour;
 
     PRDiscordRPC Discord;
@@ -128,6 +129,8 @@ public class MenuController : MonoBehaviour
             Red.interactable = true;
             Green.interactable = true;
             Blue.interactable = true;
+            Data.FirstTeamColor = FirstColour;
+            Data.SecondTeamColor = SecondColour;
         }
         else
         {
@@ -140,9 +143,13 @@ public class MenuController : MonoBehaviour
             Blue.interactable = false;
         }
 
-        if (Input.GetKeyDown(KeyCode.R) && NetC.Hosting)
+        if (Check)
         {
-            SyncInfo();
+            Checkbox.GetComponent<Image>().sprite = Resources.Load<Sprite>("CheckOn");
+        }
+        else if (!Check)
+        {
+            Checkbox.GetComponent<Image>().sprite = Resources.Load<Sprite>("CheckOff");
         }
 
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -186,21 +193,11 @@ public class MenuController : MonoBehaviour
     public void OnCheckboxClick()
     {
         if (Check)
-        {
-            Check = false;
-            Checkbox.GetComponent<Image>().sprite = Resources.Load<Sprite>("CheckOn");
-        }
+        { Check = false; }
         else if (!Check)
-        {
-            Check = true;
-            Checkbox.GetComponent<Image>().sprite = Resources.Load<Sprite>("CheckOff");
-        }
+        { Check = true; }
     }
-    public void SyncInfo()
-    {
-        Data.RpcGameInfo(GameName.text, GamePass.text, PlayerSize.text, Checkbox);
-        Data.RpcTeamSynchronise(Team1.text, Team2.text, FirstColour, SecondColour);
-    }
+
     public void SwitchFirst()
     {
         if (NetC.Hosting)

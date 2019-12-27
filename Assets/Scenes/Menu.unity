@@ -2012,7 +2012,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.000036792524, y: -0.00007592148}
+  m_AnchoredPosition: {x: -0.000036792524, y: 0.000046616085}
   m_SizeDelta: {x: 0, y: 300}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &219210749
@@ -2239,7 +2239,9 @@ Transform:
   m_LocalRotation: {x: 0.40821788, y: -0.23456968, z: 0.10938163, w: 0.8754261}
   m_LocalPosition: {x: 0, y: 3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 1976918702}
+  - {fileID: 275880582}
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2329,20 +2331,13 @@ MonoBehaviour:
   isNetworkActive: 0
   matchMaker: {fileID: 0}
   MenuC: {fileID: 1658830010}
-  BarPref: {fileID: 7624567612700135524, guid: c689266017fb76441bfc9855b550c973, type: 3}
   Data: {fileID: 275880581}
   MenuG: {fileID: 733261774}
   Discord: {fileID: 1658830008}
-  LocalPlayer: {fileID: 0}
-  Range: 0
+  Init: 0
   Hosting: 0
   Connect: 0
-  PlayerJoin: {fileID: 0}
-  PTeam: 0
-  FirstTeam: {r: 0, g: 0, b: 0, a: 0}
-  SecondTeam: {r: 0, g: 0, b: 0, a: 0}
-  Team1: 
-  Team2: 
+  Online: 0
 --- !u!1 &275880580
 GameObject:
   m_ObjectHideFlags: 0
@@ -2375,6 +2370,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MenuC: {fileID: 1658830010}
   NetC: {fileID: 252097821}
+  NetR: {fileID: 1976918703}
+  Players: []
+  BarPref: {fileID: 7624567612700135524, guid: c689266017fb76441bfc9855b550c973, type: 3}
+  FirstTeamName: 
+  SecondTeamName: 
+  FirstTeamColor: {r: 0, g: 0, b: 0, a: 0}
+  SecondTeamColor: {r: 0, g: 0, b: 0, a: 0}
+  GameName: 
+  GamePass: 
+  PlayerMax: 
+  Check: 0
+  Range: 0
 --- !u!4 &275880582
 Transform:
   m_ObjectHideFlags: 0
@@ -2382,11 +2389,11 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 275880580}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 1658830009}
+  m_Father: {fileID: 252097820}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &275880583
@@ -4256,7 +4263,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.000049637456, y: 0.0005458888}
+  m_AnchoredPosition: {x: -0.000010078586, y: 0.0005458888}
   m_SizeDelta: {x: 0, y: 1079.6}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &582089764
@@ -4530,7 +4537,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1487284633}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0.9999998
+  m_Size: 0.99999994
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -6786,7 +6793,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 284659025}
   m_HandleRect: {fileID: 284659024}
   m_Direction: 0
-  m_Value: 1
+  m_Value: 0
   m_Size: 0.99999994
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -7088,8 +7095,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 252097821}
-        m_MethodName: ChangeTeam
+      - m_Target: {fileID: 1976918703}
+        m_MethodName: ChangeColor
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -10456,7 +10463,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 733261773}
-  - {fileID: 275880582}
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -10502,7 +10508,9 @@ MonoBehaviour:
   anim: {fileID: 344291628}
   NetC: {fileID: 252097821}
   Data: {fileID: 275880581}
+  NetR: {fileID: 1976918703}
   Check: 0
+  Switch: 0
 --- !u!1 &1664661498
 GameObject:
   m_ObjectHideFlags: 0
@@ -12552,6 +12560,95 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1969738141}
   m_CullTransparentMesh: 0
+--- !u!1 &1976918701
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1976918702}
+  - component: {fileID: 1976918704}
+  - component: {fileID: 1976918703}
+  m_Layer: 0
+  m_Name: NetworkContainer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1976918702
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1976918701}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 252097820}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1976918703
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1976918701}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 017229f0e89112e42ab003130e367b39, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Discord: {fileID: 1658830008}
+  MenuC: {fileID: 1658830010}
+  NetC: {fileID: 252097821}
+  Data: {fileID: 275880581}
+  Team: 0
+  Name: 
+  Avatar: {fileID: 0}
+  FirstTeam: {r: 0, g: 0, b: 0, a: 0}
+  SecondTeam: {r: 0, g: 0, b: 0, a: 0}
+  Init: 0
+  Players: []
+  LocalPlayer: {fileID: 0}
+--- !u!114 &1976918704
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1976918701}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SceneId:
+    m_Value: 0
+  m_AssetId:
+    i0: 0
+    i1: 0
+    i2: 0
+    i3: 0
+    i4: 0
+    i5: 0
+    i6: 0
+    i7: 0
+    i8: 0
+    i9: 0
+    i10: 0
+    i11: 0
+    i12: 0
+    i13: 0
+    i14: 0
+    i15: 0
+  m_ServerOnly: 0
+  m_LocalPlayerAuthority: 0
 --- !u!1 &2004693423
 GameObject:
   m_ObjectHideFlags: 0
