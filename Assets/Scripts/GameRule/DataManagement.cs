@@ -56,14 +56,20 @@ public class DataManagement : NetworkBehaviour
         }
     }
 
-    public void CreatePlayer(PlayersInfo Owner)
+    public void CreatePlayer(NetworkContainer Owner)
     {
         GameObject Player = Instantiate(BarPref);
         Player.transform.SetParent(MenuC.Content.transform);
         Player.GetComponent<RectTransform>().anchoredPosition = new Vector3(-210f, 90f + -140 * Range, 0);
         Range++;
         Player.transform.localScale = new Vector3(1, 1, 1);
-        Owner.Bar = Player;
+        Owner.LocalPlayerBar = Player.GetComponent<BarSync>();
         Player.GetComponent<BarSync>().Owner = Owner;
+    }
+
+    [ClientRpc]
+    public void RpcPlayerTeamSynchro(GameObject GetPlayer, bool GetTeam)
+    {
+        GetPlayer.GetComponent<PlayersInfo>().Team = GetTeam;
     }
 }

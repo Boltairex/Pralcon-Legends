@@ -194,7 +194,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Owner: {fileID: 0}
-  NetC: {fileID: 0}
+  Avatar: {fileID: 7624567612546223819}
+  Name: {fileID: 7624567612887454013}
+  Color: {fileID: 5272297606208581553}
 --- !u!1 &7624567612887454015
 GameObject:
   m_ObjectHideFlags: 0

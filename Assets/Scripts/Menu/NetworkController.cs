@@ -73,8 +73,18 @@ public class NetworkController : NetworkManager
     {
         if (Hosting || Connect)
         {
-            if (!Hosting) { StopClient(); }
-            else { StopHost(); }
+            if (!Hosting)
+            {
+                Connect = false;
+                Online = false;
+                StopClient();
+            }
+            else
+            {
+                Hosting = false;
+                Online = false;
+                StopHost();
+            }
         }
     }
 

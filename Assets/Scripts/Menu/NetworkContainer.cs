@@ -22,6 +22,7 @@ public class NetworkContainer : NetworkBehaviour
     public bool Init;
 
     public GameObject[] Players;
+    public BarSync LocalPlayerBar;
     public PlayersInfo LocalPlayer;
 
     void Start()
@@ -35,14 +36,11 @@ public class NetworkContainer : NetworkBehaviour
 
     void Update()
     {
-        if (!Init && Name != "Connecting..." && Avatar != null)
+        if (LocalPlayer != null)
         {
-            Name = MenuC.DSName;
-            Avatar = MenuC.DSAvatar;
-            Init = true;
+            LocalPlayer.Name = Name;
+            LocalPlayer.Avatar = Avatar;
         }
-        LocalPlayer.name = Name;
-        LocalPlayer.Avatar = Avatar;
     }
 
     public void ChangeColor()
@@ -60,20 +58,23 @@ public class NetworkContainer : NetworkBehaviour
 
     public void RefreshLobby()
     {
+        Players = GameObject.FindGameObjectsWithTag("Player");
         for (int i = 0; i < Players.Length; i++) //Odświeżanie listy graczy
         {
             Destroy(Players[i]);
         }
+        LocalPlayer.Ready = false;
     }
 
     [Command]
     public void CmdTeamSynchro(bool SendTeam)
     {
         SendTeam = Team;
+        Data.RpcPlayerTeamSynchro(LocalPlayer.gameObject, SendTeam);
     }
 
     public void BarSync(PlayersInfo LP)
     {
-        Data.CreatePlayer(LocalPlayer);
+        Data.CreatePlayer(gameObject.GetComponent<NetworkContainer>());
     }
 }

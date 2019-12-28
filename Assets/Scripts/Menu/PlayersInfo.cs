@@ -13,13 +13,13 @@ public class PlayersInfo : NetworkBehaviour
     NetworkContainer NetR;
     LobbyController LobbyC;
 
-    public GameObject Bar;
-    public Sprite Avatar; 
-    public RawImage Color;
+    public string Name;
+    public Sprite Avatar;
+    public Color TeamColor;
 
-    public bool Team;
     public bool Ready;
     public bool Init;
+    public bool Team;
 
     private void Start()
     {
@@ -27,12 +27,13 @@ public class PlayersInfo : NetworkBehaviour
         Menu = GameObject.Find("MenuController").GetComponent<MenuController>();
         NetC = GameObject.Find("LobbyManager").GetComponent<NetworkController>();
         NetR = GameObject.Find("NetworkContainer").GetComponent<NetworkContainer>();
-        NetR.LocalPlayer = gameObject.GetComponent<PlayersInfo>();
+        if (isLocalPlayer)
+        { NetR.LocalPlayer = gameObject.GetComponent<PlayersInfo>(); }
     }
 
     private void OnDestroy() //Usuwanie gracza
     {
-        Destroy(Bar);
+        Destroy(NetR.LocalPlayerBar);
     }
 
     void Update()
@@ -44,22 +45,6 @@ public class PlayersInfo : NetworkBehaviour
             Ready = true;
         }
 
-        if (Color == null && !isLocalPlayer)
-        {
-            Color = Bar.GetComponentInChildren<RawImage>();
-        }
-        else if (Color != null && !isLocalPlayer)
-        {
-            if (!Team) //Synchronizacja koloru w Barze
-            {
-                Color.color = Menu.FirstColour;
-            }
-            else if (Team)
-            {
-                Color.color = Menu.SecondColour;
-            }
-        }
-
         if (Menu.MenuTeamColor != null && isLocalPlayer)
         {
             Team = NetR.Team;
@@ -67,7 +52,7 @@ public class PlayersInfo : NetworkBehaviour
             {
                 Menu.MenuTeamColor.color = Menu.FirstColour;
             }
-            else if (Team)
+            else
             {
                 Menu.MenuTeamColor.color = Menu.SecondColour;
             }

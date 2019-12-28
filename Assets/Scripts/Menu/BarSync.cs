@@ -4,16 +4,24 @@ using TMPro;
 
 public class BarSync : MonoBehaviour
 {
-    public PlayersInfo Owner;
+    public NetworkContainer Owner;
+
+    public Image Avatar;
+    public TextMeshProUGUI Name;
+    public RawImage Color;
 
     private void Start()
     {
-        Owner.Bar = gameObject;
+        Owner.LocalPlayerBar = gameObject.GetComponent<BarSync>();
     }
 
     public void Update()
     {
-        gameObject.GetComponentInChildren<Image>().sprite = Owner.Avatar;
-        gameObject.GetComponentInChildren<TextMeshProUGUI>().text = Owner.name;
+        Avatar.sprite = Owner.Avatar;
+        Name.text = Owner.Name;
+        if (!Owner.Team)
+        { Color.color = Owner.FirstTeam; }
+        else
+        { Color.color = Owner.SecondTeam; }
     }
 }
