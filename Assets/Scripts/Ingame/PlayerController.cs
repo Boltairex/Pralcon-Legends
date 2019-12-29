@@ -25,6 +25,8 @@ public class PlayerController : MonoBehaviour
                 gameObject.GetComponent<NavMeshAgent>().SetDestination(hit.point);
             }
         }
+
+        gameObject.GetComponent<NavMeshAgent>().speed = GameObject.Find("PlayerStuff").GetComponent<PlayerStats>().MV;
     }
 
     private void OnTriggerEnter(Collider other)
