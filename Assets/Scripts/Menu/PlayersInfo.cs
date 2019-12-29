@@ -42,7 +42,12 @@ public class PlayersInfo : NetworkBehaviour
         {
             Destroy(Players[i]);
         }
-        CmdRefreshBars();
+        NetR.Range = 0;
+
+        if (!isLocalPlayer)
+        {
+            NetR.LocalPlayer.GetComponent<PlayersInfo>().Ready = false;
+        }
     }
 
     private void OnDestroy() //Usuwanie gracza
