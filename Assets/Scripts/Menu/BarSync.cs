@@ -4,7 +4,7 @@ using TMPro;
 
 public class BarSync : MonoBehaviour
 {
-    public NetworkContainer Owner;
+    public GameObject Owner;
 
     public Image Avatar;
     public TextMeshProUGUI Name;
@@ -12,16 +12,19 @@ public class BarSync : MonoBehaviour
 
     private void Start()
     {
-        Owner.LocalPlayerBar = gameObject.GetComponent<BarSync>();
+        Owner.GetComponent<PlayersInfo>().Bar = gameObject;
     }
 
     public void Update()
     {
-        Avatar.sprite = Owner.Avatar;
-        Name.text = Owner.Name;
-        if (!Owner.Team)
-        { Color.color = Owner.FirstTeam; }
-        else
-        { Color.color = Owner.SecondTeam; }
+        Avatar.sprite = Owner.GetComponent<PlayersInfo>().Avatar;
+        Name.text = Owner.GetComponent<PlayersInfo>().Name;
+        Color.color = Owner.GetComponent<PlayersInfo>().TeamColor;
+
+        if (Owner == null)
+        {
+            Destroy(gameObject);
+            print("Nie wykryto Parenta sterującego");
+        }
     }
 }

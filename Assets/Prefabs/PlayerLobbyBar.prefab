@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 114027039769014226}
   m_Layer: 0
   m_Name: PlayerLobbyBar
-  m_TagString: Untagged
+  m_TagString: PlayerBar
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

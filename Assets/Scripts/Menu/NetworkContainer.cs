@@ -13,17 +13,16 @@ public class NetworkContainer : NetworkBehaviour
     public NetworkController NetC;
     public DataManagement Data;
 
-    public bool Team;
-    public string Name;
-    public Sprite Avatar;
-    public Color FirstTeam;
-    public Color SecondTeam;
+    public GameObject BarPref;
 
+    public bool Team;
     public bool Init;
 
     public GameObject[] Players;
     public BarSync LocalPlayerBar;
-    public PlayersInfo LocalPlayer;
+    public GameObject LocalPlayer;
+
+    public int Range = 0;
 
     void Start()
     {
@@ -36,10 +35,9 @@ public class NetworkContainer : NetworkBehaviour
 
     void Update()
     {
-        if (LocalPlayer != null)
+        if (!Init && LocalPlayer != null)
         {
-            LocalPlayer.Name = Name;
-            LocalPlayer.Avatar = Avatar;
+            LocalPlayer.name = "host";//LocalPlayer.GetComponent<PlayersInfo>().Name;
         }
     }
 
@@ -53,28 +51,23 @@ public class NetworkContainer : NetworkBehaviour
         {
             Team = true;
         }
-        CmdTeamSynchro(Team);
-    }
 
-    public void RefreshLobby()
-    {
-        Players = GameObject.FindGameObjectsWithTag("Player");
-        for (int i = 0; i < Players.Length; i++) //Odświeżanie listy graczy
+        if(LocalPlayer != null)
         {
-            Destroy(Players[i]);
+            LocalPlayer.GetComponent<PlayersInfo>().CmdTeamSynchro(Team, LocalPlayer);
         }
-        LocalPlayer.Ready = false;
+        else
+        { LocalPlayer = GameObject.Find("host"); }
     }
 
-    [Command]
-    public void CmdTeamSynchro(bool SendTeam)
+    public void CreatePlayer(GameObject Owner)
     {
-        SendTeam = Team;
-        Data.RpcPlayerTeamSynchro(LocalPlayer.gameObject, SendTeam);
-    }
-
-    public void BarSync(PlayersInfo LP)
-    {
-        Data.CreatePlayer(gameObject.GetComponent<NetworkContainer>());
+        GameObject Player = Instantiate(BarPref);
+        Player.transform.SetParent(MenuC.Content.transform);
+        Player.GetComponent<RectTransform>().anchoredPosition = new Vector3(-210f, 90f + -140 * Range, 0);
+        Range++;
+        Player.transform.localScale = new Vector3(1, 1, 1);
+        Owner.GetComponent<PlayersInfo>().Bar = Player;
+        Player.GetComponent<BarSync>().Owner = Owner;
     }
 }

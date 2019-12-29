@@ -74,14 +74,12 @@ public class MenuController : MonoBehaviour
         else
         {
             DSName = Discord.Nickname;
-            NetR.Name = DSName;
             Name.GetComponent<TextMeshProUGUI>().text = DSName;
         }
 
         if (Discord.Avatar != null)
         {
             DSAvatar = Discord.Avatar;
-            NetR.Avatar = DSAvatar;
             Avatar.GetComponent<Image>().sprite = DSAvatar; ;
         }
 

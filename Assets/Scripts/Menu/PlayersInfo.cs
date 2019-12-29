@@ -12,7 +12,11 @@ public class PlayersInfo : NetworkBehaviour
     NetworkController NetC;
     NetworkContainer NetR;
     LobbyController LobbyC;
+    DataManagement Data;
 
+    public GameObject[] Players;
+
+    public GameObject Bar;
     public string Name;
     public Sprite Avatar;
     public Color TeamColor;
@@ -27,22 +31,49 @@ public class PlayersInfo : NetworkBehaviour
         Menu = GameObject.Find("MenuController").GetComponent<MenuController>();
         NetC = GameObject.Find("LobbyManager").GetComponent<NetworkController>();
         NetR = GameObject.Find("NetworkContainer").GetComponent<NetworkContainer>();
+        Data = GameObject.Find("DataManager").GetComponent<DataManagement>();
+        Name = Menu.DSName;
+        Avatar = Menu.DSAvatar;
         if (isLocalPlayer)
-        { NetR.LocalPlayer = gameObject.GetComponent<PlayersInfo>(); }
+        { NetR.LocalPlayer = gameObject; }
+
+        Players = GameObject.FindGameObjectsWithTag("PlayerBar");
+        for (int i = 0; i < Players.Length; i++)
+        {
+            Destroy(Players[i]);
+        }
+        CmdRefreshBars();
     }
 
     private void OnDestroy() //Usuwanie gracza
     {
-        Destroy(NetR.LocalPlayerBar);
+        Destroy(Bar);
+        CmdRefreshBars();
     }
 
-    void Update()
+    public void Update()
     {
         if (!Ready && !isLocalPlayer)
         {
-            NetR.BarSync(gameObject.GetComponent<PlayersInfo>());
-            NetR.Players = GameObject.FindGameObjectsWithTag("Player");
+            if (Name == null || Avatar == null)
+            {
+                Name = Menu.DSName;
+                Avatar = Menu.DSAvatar;
+            }
+            NetR.CreatePlayer(gameObject);
             Ready = true;
+        }
+
+        if (!isLocalPlayer)
+        {
+            if (!Team)
+            {
+                TeamColor = Menu.FirstColour;
+            }
+            else
+            {
+                TeamColor = Menu.SecondColour;
+            }
         }
 
         if (Menu.MenuTeamColor != null && isLocalPlayer)
@@ -57,5 +88,28 @@ public class PlayersInfo : NetworkBehaviour
                 Menu.MenuTeamColor.color = Menu.SecondColour;
             }
         }
+    }
+
+    [Command]
+    public void CmdTeamSynchro(bool SendTeam, GameObject SendPlayer)
+    {
+        if (!isLocalPlayer)
+        {
+            Team = SendTeam;
+        }
+        Data.RpcTeamSynchro(SendTeam, SendPlayer);
+    }
+
+    [Command]
+    public void CmdRefreshBars()
+    {
+        RpcRefreshBars();
+    }
+
+    [ClientRpc]
+    public void RpcRefreshBars()
+    {
+        NetR.Range = 0;
+        Ready = false;
     }
 }

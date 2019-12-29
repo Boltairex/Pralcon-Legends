@@ -13,10 +13,6 @@ public class DataManagement : NetworkBehaviour
     public NetworkController NetC;
     public NetworkContainer NetR;
 
-    public GameObject[] Players;
-
-    public GameObject BarPref;
-
     [Header("Menu")]
     [SyncVar] public string FirstTeamName;
     [SyncVar] public string SecondTeamName;
@@ -26,7 +22,6 @@ public class DataManagement : NetworkBehaviour
     [SyncVar] public string GamePass;
     [SyncVar] public string PlayerMax;
     [SyncVar] public bool Check;
-    [SyncVar] public int Range = 0;
     //[Header("Menu")]
 
     void Update()
@@ -56,19 +51,8 @@ public class DataManagement : NetworkBehaviour
         }
     }
 
-    public void CreatePlayer(NetworkContainer Owner)
-    {
-        GameObject Player = Instantiate(BarPref);
-        Player.transform.SetParent(MenuC.Content.transform);
-        Player.GetComponent<RectTransform>().anchoredPosition = new Vector3(-210f, 90f + -140 * Range, 0);
-        Range++;
-        Player.transform.localScale = new Vector3(1, 1, 1);
-        Owner.LocalPlayerBar = Player.GetComponent<BarSync>();
-        Player.GetComponent<BarSync>().Owner = Owner;
-    }
-
     [ClientRpc]
-    public void RpcPlayerTeamSynchro(GameObject GetPlayer, bool GetTeam)
+    public void RpcTeamSynchro(bool GetTeam, GameObject GetPlayer)
     {
         GetPlayer.GetComponent<PlayersInfo>().Team = GetTeam;
     }

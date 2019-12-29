@@ -2012,7 +2012,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.000036792524, y: 269.11426}
+  m_AnchoredPosition: {x: -0.000036792524, y: -0.0000071743048}
   m_SizeDelta: {x: 0, y: 300}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &219210749
@@ -2371,8 +2371,6 @@ MonoBehaviour:
   MenuC: {fileID: 1658830010}
   NetC: {fileID: 252097821}
   NetR: {fileID: 1976918703}
-  Players: []
-  BarPref: {fileID: 7624567612700135524, guid: c689266017fb76441bfc9855b550c973, type: 3}
   FirstTeamName: 
   SecondTeamName: 
   FirstTeamColor: {r: 0, g: 0, b: 0, a: 0}
@@ -2381,7 +2379,6 @@ MonoBehaviour:
   GamePass: 
   PlayerMax: 
   Check: 0
-  Range: 0
 --- !u!4 &275880582
 Transform:
   m_ObjectHideFlags: 0
@@ -4537,7 +4534,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1487284633}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0.6319283
+  m_Size: 0.99999267
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -12608,15 +12605,13 @@ MonoBehaviour:
   MenuC: {fileID: 1658830010}
   NetC: {fileID: 252097821}
   Data: {fileID: 275880581}
+  BarPref: {fileID: 7624567612700135524, guid: c689266017fb76441bfc9855b550c973, type: 3}
   Team: 0
-  Name: 
-  Avatar: {fileID: 0}
-  FirstTeam: {r: 0, g: 0, b: 0, a: 0}
-  SecondTeam: {r: 0, g: 0, b: 0, a: 0}
   Init: 0
   Players: []
   LocalPlayerBar: {fileID: 0}
   LocalPlayer: {fileID: 0}
+  Range: 0
 --- !u!114 &1976918704
 MonoBehaviour:
   m_ObjectHideFlags: 0
