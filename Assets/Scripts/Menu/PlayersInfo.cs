@@ -1,10 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
+﻿using UnityEngine;
 using UnityEngine.Networking;
-using UnityEngine.SceneManagement;
-using TMPro;
 
 public class PlayersInfo : NetworkBehaviour
 {
@@ -21,52 +16,80 @@ public class PlayersInfo : NetworkBehaviour
     public Sprite Avatar;
     public Color TeamColor;
 
+    [SyncVar] public bool Team;
+
     public bool Ready;
     public bool Init;
-    public bool Team;
 
     private void Start()
     {
         DontDestroyOnLoad(gameObject);
+
         Menu = GameObject.Find("MenuController").GetComponent<MenuController>();
         NetC = GameObject.Find("LobbyManager").GetComponent<NetworkController>();
         NetR = GameObject.Find("NetworkContainer").GetComponent<NetworkContainer>();
         Data = GameObject.Find("DataManager").GetComponent<DataManagement>();
+
         Name = Menu.DSName;
         Avatar = Menu.DSAvatar;
-        if (isLocalPlayer)
-        { NetR.LocalPlayer = gameObject; }
 
-        Players = GameObject.FindGameObjectsWithTag("PlayerBar");
-        for (int i = 0; i < Players.Length; i++)
+        if (isLocalPlayer)
         {
-            Destroy(Players[i]);
+            NetR.LocalPlayer = gameObject;
+        }
+        else
+        {
+            Ready = false;
         }
         NetR.Range = 0;
-
-        if (!isLocalPlayer)
-        {
-            NetR.LocalPlayer.GetComponent<PlayersInfo>().Ready = false;
-        }
+        OnRefreshBarsCount();
     }
 
     private void OnDestroy() //Usuwanie gracza
     {
-        Destroy(Bar);
-        CmdRefreshBars();
+        NetR.Range = 0;
+        OnRefreshBarsCount();
+    }
+
+    [Command]
+    public void CmdTeamSynchro(bool SendTeam, GameObject SendPlayer)
+    {
+        if (!isLocalPlayer)
+        {
+            Team = SendTeam;
+        }
+        Data.RpcTeamSynchro(SendTeam, SendPlayer);
+    }
+
+    public void OnRefreshBarsCount()
+    {
+        Players = GameObject.FindGameObjectsWithTag("PlayerBar");
+        GameObject[] PlayersINF = GameObject.FindGameObjectsWithTag("Player");
+        for (int i = 0; i < Players.Length; i++)
+        {
+            Destroy(Players[i]);
+            PlayersINF[i].GetComponent<PlayersInfo>().Ready = false;
+
+        }
+        NetR.Range = 0;
     }
 
     public void Update()
     {
         if (!Ready && !isLocalPlayer)
         {
+            Ready = true;
             if (Name == null || Avatar == null)
             {
                 Name = Menu.DSName;
                 Avatar = Menu.DSAvatar;
             }
             NetR.CreatePlayer(gameObject);
-            Ready = true;
+        }
+
+        if (Bar == null)
+        {
+            Ready = false;
         }
 
         if (!isLocalPlayer)
@@ -93,28 +116,5 @@ public class PlayersInfo : NetworkBehaviour
                 Menu.MenuTeamColor.color = Menu.SecondColour;
             }
         }
-    }
-
-    [Command]
-    public void CmdTeamSynchro(bool SendTeam, GameObject SendPlayer)
-    {
-        if (!isLocalPlayer)
-        {
-            Team = SendTeam;
-        }
-        Data.RpcTeamSynchro(SendTeam, SendPlayer);
-    }
-
-    [Command]
-    public void CmdRefreshBars()
-    {
-        RpcRefreshBars();
-    }
-
-    [ClientRpc]
-    public void RpcRefreshBars()
-    {
-        NetR.Range = 0;
-        Ready = false;
     }
 }
