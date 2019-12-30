@@ -56,4 +56,12 @@ public class DataManagement : NetworkBehaviour
     {
         GetPlayer.GetComponent<PlayersInfo>().Team = GetTeam;
     }
+
+    [ClientRpc]
+    public void RpcResendAvatar(byte[] SendAvatar, GameObject Owner)
+    {
+        Texture2D recAv = new Texture2D(1, 1);
+        recAv.LoadImage(SendAvatar);
+        Owner.GetComponent<PlayersInfo>().Avatar = Sprite.Create(recAv, new Rect(new Rect(0.0f, 0.0f, recAv.width, recAv.height)), new Vector2(0.5f, 0.5f), 100.0f);
+    }
 }

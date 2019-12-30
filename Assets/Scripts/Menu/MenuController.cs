@@ -52,6 +52,7 @@ public class MenuController : MonoBehaviour
     bool Block;
     public bool Switch;
     bool Colour;
+    public bool DevMode;
 
     PRDiscordRPC Discord;
 
@@ -66,21 +67,31 @@ public class MenuController : MonoBehaviour
 
     void Update()
     {
-        if (Discord.Nickname == "")
+        if (Discord.Nickname == "" && !DevMode)
         {
             DSName = "Connecting...";
             Dot.color = new Color32(255, 0, 0, 255);
         }
-        else
+        else if (Discord.Nickname != "" && !DevMode)
         {
             DSName = Discord.Nickname;
             Name.GetComponent<TextMeshProUGUI>().text = DSName;
         }
+        else if (DevMode)
+        {
+            DSName = "Testowa nazwa";
+            Name.GetComponent<TextMeshProUGUI>().text = DSName;
+        }
 
-        if (Discord.Avatar != null)
+        if (Discord.Avatar != null && !DevMode)
         {
             DSAvatar = Discord.Avatar;
-            Avatar.GetComponent<Image>().sprite = DSAvatar; ;
+            Avatar.GetComponent<Image>().sprite = DSAvatar;
+        }
+        else if (DevMode)
+        {
+            DSAvatar = Resources.Load<Sprite>("Checkoff");
+            Avatar.GetComponent<Image>().sprite = DSAvatar;
         }
 
         if (DSName != "Connecting..." && NetC.Hosting == false && NetC.Connect == false)
@@ -155,6 +166,11 @@ public class MenuController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             ColorPicker.SetActive(false);
+        }
+
+        if (Input.GetKey(KeyCode.D) && Input.GetKey(KeyCode.V))
+        {
+            DevMode = true;
         }
     }
 

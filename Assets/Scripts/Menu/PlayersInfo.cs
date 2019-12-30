@@ -12,10 +12,10 @@ public class PlayersInfo : NetworkBehaviour
     public GameObject[] Players;
 
     public GameObject Bar;
-    public string Name;
     public Sprite Avatar;
     public Color TeamColor;
 
+    [SyncVar] public string Name;
     [SyncVar] public bool Team;
 
     public bool Ready;
@@ -29,9 +29,6 @@ public class PlayersInfo : NetworkBehaviour
         NetC = GameObject.Find("LobbyManager").GetComponent<NetworkController>();
         NetR = GameObject.Find("NetworkContainer").GetComponent<NetworkContainer>();
         Data = GameObject.Find("DataManager").GetComponent<DataManagement>();
-
-        Name = Menu.DSName;
-        Avatar = Menu.DSAvatar;
 
         if (isLocalPlayer)
         {
@@ -69,7 +66,6 @@ public class PlayersInfo : NetworkBehaviour
         {
             Destroy(Players[i]);
             PlayersINF[i].GetComponent<PlayersInfo>().Ready = false;
-
         }
         NetR.Range = 0;
     }
@@ -85,6 +81,12 @@ public class PlayersInfo : NetworkBehaviour
                 Avatar = Menu.DSAvatar;
             }
             NetR.CreatePlayer(gameObject);
+        }
+
+        if (!Ready && isLocalPlayer)
+        {
+            byte[] ByteAvatar = Avatar.texture.EncodeToJPG();
+            CmdAvatarSync(ByteAvatar, gameObject, Name);
         }
 
         if (Bar == null)
@@ -116,5 +118,11 @@ public class PlayersInfo : NetworkBehaviour
                 Menu.MenuTeamColor.color = Menu.SecondColour;
             }
         }
+    }
+    [Command]
+    public void CmdAvatarSync(byte[] GetAvatar, GameObject GetOwner, string GetName)
+    {
+        Name = GetName;
+        Data.RpcResendAvatar(GetAvatar, GetOwner);
     }
 }

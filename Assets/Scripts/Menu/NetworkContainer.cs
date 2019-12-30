@@ -38,6 +38,8 @@ public class NetworkContainer : NetworkBehaviour
         if (!Init && LocalPlayer != null)
         {
             LocalPlayer.name = "host";//LocalPlayer.GetComponent<PlayersInfo>().Name;
+            LocalPlayer.GetComponent<PlayersInfo>().Name = MenuC.DSName;
+            LocalPlayer.GetComponent<PlayersInfo>().Avatar = MenuC.DSAvatar;
         }
     }
 
