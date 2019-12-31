@@ -76,7 +76,7 @@ public class PRDiscordRPC : MonoBehaviour
             presence.largeImageKey = "logo";
             presence.largeImageText = RoomName;
             presence.state = Players + "/"+MaxPlayers+" Players";
-            presence.details = Team+" Team";
+            presence.details = Team;
             gamestate = "lobby";
             presence.startTimestamp = 0;
 

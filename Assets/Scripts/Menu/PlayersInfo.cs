@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.Networking;
+using System.Collections;
 
 public class PlayersInfo : NetworkBehaviour
 {
@@ -9,8 +10,6 @@ public class PlayersInfo : NetworkBehaviour
     LobbyController LobbyC;
     DataManagement Data;
 
-    public GameObject[] Players;
-
     public GameObject Bar;
     public Sprite Avatar;
     public Color TeamColor;
@@ -18,8 +17,9 @@ public class PlayersInfo : NetworkBehaviour
     [SyncVar] public string Name;
     [SyncVar] public bool Team;
 
-    public bool Ready;
-    public bool Init;
+    byte[] ByteAvatar;
+    public bool Ready = false;
+    public bool Init = false;
 
     private void Start()
     {
@@ -30,13 +30,12 @@ public class PlayersInfo : NetworkBehaviour
         NetR = GameObject.Find("NetworkContainer").GetComponent<NetworkContainer>();
         Data = GameObject.Find("DataManager").GetComponent<DataManagement>();
 
+        StartCoroutine(ClientUpdates());
+
         if (isLocalPlayer)
         {
+            ByteAvatar = Menu.DSAvatar.texture.EncodeToJPG();
             NetR.LocalPlayer = gameObject;
-        }
-        else
-        {
-            Ready = false;
         }
         NetR.Range = 0;
         OnRefreshBarsCount();
@@ -46,6 +45,7 @@ public class PlayersInfo : NetworkBehaviour
     {
         NetR.Range = 0;
         OnRefreshBarsCount();
+        StartCoroutine(ClientUpdates());
     }
 
     [Command]
@@ -60,7 +60,7 @@ public class PlayersInfo : NetworkBehaviour
 
     public void OnRefreshBarsCount()
     {
-        Players = GameObject.FindGameObjectsWithTag("PlayerBar");
+        GameObject[] Players = GameObject.FindGameObjectsWithTag("PlayerBar");
         GameObject[] PlayersINF = GameObject.FindGameObjectsWithTag("Player");
         for (int i = 0; i < Players.Length; i++)
         {
@@ -72,29 +72,27 @@ public class PlayersInfo : NetworkBehaviour
 
     public void Update()
     {
-        if (!Ready && !isLocalPlayer)
+        if (!Ready)
         {
-            Ready = true;
-            if (Name == null || Avatar == null)
+            if (!isLocalPlayer)
             {
-                Name = Menu.DSName;
-                Avatar = Menu.DSAvatar;
+                NetR.CreatePlayer(gameObject);
+                Ready = true;
             }
-            NetR.CreatePlayer(gameObject);
         }
 
-        if (!Ready && isLocalPlayer)
+        if (!Init && isLocalPlayer)
         {
-            byte[] ByteAvatar = Avatar.texture.EncodeToJPG();
             CmdAvatarSync(ByteAvatar, gameObject, Name);
+            Init = true;
         }
 
-        if (Bar == null)
+        if (Bar == null && !isLocalPlayer)
         {
             Ready = false;
         }
 
-        if (!isLocalPlayer)
+        if (!isLocalPlayer) 
         {
             if (!Team)
             {
@@ -119,10 +117,18 @@ public class PlayersInfo : NetworkBehaviour
             }
         }
     }
+
     [Command]
     public void CmdAvatarSync(byte[] GetAvatar, GameObject GetOwner, string GetName)
     {
         Name = GetName;
         Data.RpcResendAvatar(GetAvatar, GetOwner);
+    }
+
+    public IEnumerator ClientUpdates()
+    {
+        yield return new WaitForSeconds(3f);
+        NetC.Players = GameObject.FindGameObjectsWithTag("Player").Length;
+        CmdAvatarSync(ByteAvatar, gameObject, Name);
     }
 }

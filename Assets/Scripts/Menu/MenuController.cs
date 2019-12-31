@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
@@ -62,7 +59,6 @@ public class MenuController : MonoBehaviour
         Discord = gameObject.GetComponent<PRDiscordRPC>();
         First.color = FirstColour;
         Second.color = SecondColour;
-        print("Zmiana na " + FirstColour + " i " + SecondColour);
     }
 
     void Update()
@@ -72,7 +68,7 @@ public class MenuController : MonoBehaviour
             DSName = "Connecting...";
             Dot.color = new Color32(255, 0, 0, 255);
         }
-        else if (Discord.Nickname != "" && !DevMode)
+        else if (Discord.Nickname != "" && !DevMode && Discord.Nickname != DSName)
         {
             DSName = Discord.Nickname;
             Name.GetComponent<TextMeshProUGUI>().text = DSName;
@@ -83,7 +79,7 @@ public class MenuController : MonoBehaviour
             Name.GetComponent<TextMeshProUGUI>().text = DSName;
         }
 
-        if (Discord.Avatar != null && !DevMode)
+        if (Discord.Avatar != null && !DevMode && Discord.Avatar != DSAvatar)
         {
             DSAvatar = Discord.Avatar;
             Avatar.GetComponent<Image>().sprite = DSAvatar;
@@ -101,6 +97,11 @@ public class MenuController : MonoBehaviour
 
         Discord.RoomName = GameName.text;
         Discord.MaxPlayers = int.Parse(PlayerSize.text);
+
+        if (int.Parse(PlayerSize.text) > 10)
+        { PlayerSize.text = "10"; }
+        else if (PlayerSize.text == "")
+        { PlayerSize.text = "2"; }
 
         if (Input.GetKeyDown(KeyCode.Semicolon) || Input.GetKeyUp(KeyCode.Semicolon))
         {
@@ -125,11 +126,6 @@ public class MenuController : MonoBehaviour
             GameOpt.SetActive(false);
             LobbyOpt.SetActive(false);
         }
-
-        if (int.Parse(PlayerSize.text) > 10)
-        { PlayerSize.text = "10"; }
-        else if (PlayerSize.text == "")
-        { PlayerSize.text = "2"; }
 
         if (NetC.Hosting)
         {
@@ -168,9 +164,14 @@ public class MenuController : MonoBehaviour
             ColorPicker.SetActive(false);
         }
 
-        if (Input.GetKey(KeyCode.D) && Input.GetKey(KeyCode.V))
+        if (Input.GetKey(KeyCode.D) && Input.GetKey(KeyCode.V) && !DevMode)
         {
             DevMode = true;
+        }
+        else if (Input.GetKey(KeyCode.D) && Input.GetKey(KeyCode.V) && DevMode)
+        {
+
+            DevMode = false;
         }
     }
 
@@ -274,4 +275,3 @@ public class MenuController : MonoBehaviour
         Second.color = SecondColour;
     }
 }
-

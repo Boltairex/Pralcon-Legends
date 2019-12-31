@@ -1,10 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine.SceneManagement;
-using UnityEngine;
-using UnityEngine.Networking;
-using UnityEngine.UI;
-using TMPro;
+﻿using UnityEngine.Networking;
 
 public class NetworkController : NetworkManager
 {
@@ -12,6 +6,8 @@ public class NetworkController : NetworkManager
     public DataManagement Data;
     public MenuGUI MenuG;
     public PRDiscordRPC Discord;
+
+    public int Players;
 
     public bool Init = false;
     public bool Hosting = false;
@@ -22,6 +18,7 @@ public class NetworkController : NetworkManager
     {
         if (Hosting || Connect)
         {
+            Discord.Players = Players;
             Discord.InLobby = true;
             Online = true;
         }

@@ -1,10 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Networking;
-using UnityEngine.UI;
-using TMPro;
 
 public class DataManagement : NetworkBehaviour
 {
@@ -22,23 +18,12 @@ public class DataManagement : NetworkBehaviour
     [SyncVar] public string GamePass;
     [SyncVar] public string PlayerMax;
     [SyncVar] public bool Check;
-    //[Header("Menu")]
+    public Texture2D recAv;
+    //[Header("Lobby")]
 
     void Update()
     {
-        if (!NetC.Hosting && SceneManager.GetActiveScene().name == "Menu")
-        {
-            MenuC.Team1.text = FirstTeamName;
-            MenuC.Team2.text = SecondTeamName;
-            MenuC.FirstColour = FirstTeamColor;
-            MenuC.SecondColour = SecondTeamColor;
-            MenuC.TeamSynchro();
-            MenuC.GameName.text = GameName;
-            MenuC.GamePass.text = GamePass;
-            MenuC.PlayerSize.text = PlayerMax;
-            MenuC.Check = Check;
-        }
-        else if (NetC.Hosting && SceneManager.GetActiveScene().name == "Menu")
+        if (NetC.Hosting && SceneManager.GetActiveScene().name == "Menu")
         {
             FirstTeamName = MenuC.Team1.text;
             SecondTeamName = MenuC.Team2.text;
@@ -48,6 +33,21 @@ public class DataManagement : NetworkBehaviour
             GamePass = MenuC.GamePass.text;
             PlayerMax = MenuC.PlayerSize.text;
             Check = MenuC.Check;
+        }
+        else if (!NetC.Hosting && SceneManager.GetActiveScene().name == "Menu")
+        {
+            MenuC.Team1.text = FirstTeamName;
+            MenuC.Team2.text = SecondTeamName;
+            MenuC.FirstColour = FirstTeamColor;
+            MenuC.SecondColour = SecondTeamColor;
+            MenuC.GameName.text = GameName;
+            MenuC.GamePass.text = GamePass;
+            MenuC.PlayerSize.text = PlayerMax;
+            MenuC.Check = Check;
+            if (MenuC.First.color != FirstTeamColor || MenuC.Second.color != SecondTeamColor)
+            {
+                MenuC.TeamSynchro();
+            }
         }
     }
 
@@ -60,8 +60,11 @@ public class DataManagement : NetworkBehaviour
     [ClientRpc]
     public void RpcResendAvatar(byte[] SendAvatar, GameObject Owner)
     {
-        Texture2D recAv = new Texture2D(1, 1);
-        recAv.LoadImage(SendAvatar);
-        Owner.GetComponent<PlayersInfo>().Avatar = Sprite.Create(recAv, new Rect(new Rect(0.0f, 0.0f, recAv.width, recAv.height)), new Vector2(0.5f, 0.5f), 100.0f);
+        if(SendAvatar != null || Owner != null)
+        {
+            recAv = new Texture2D(1, 1);
+            recAv.LoadImage(SendAvatar);
+            Owner.GetComponent<PlayersInfo>().Avatar = Sprite.Create(recAv, new Rect(new Rect(0.0f, 0.0f, recAv.width, recAv.height)), new Vector2(0.5f, 0.5f), 100.0f);
+        }
     }
 }

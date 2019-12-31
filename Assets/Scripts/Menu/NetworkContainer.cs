@@ -1,6 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.Networking;
 
 public class NetworkContainer : NetworkBehaviour
@@ -18,28 +17,28 @@ public class NetworkContainer : NetworkBehaviour
     public bool Team;
     public bool Init;
 
-    public GameObject[] Players;
     public BarSync LocalPlayerBar;
     public GameObject LocalPlayer;
 
     public int Range = 0;
 
-    void Start()
-    {
-        /*
-        Texture2D recAv = new Texture2D(1, 1);
-        //recAv.LoadImage(GetAvatar);
-        Avatar = Sprite.Create(recAv, new Rect(new Rect(0.0f, 0.0f, recAv.width, recAv.height)), new Vector2(0.5f, 0.5f), 100.0f);
-        */
-    }
-
     void Update()
     {
         if (!Init && LocalPlayer != null)
         {
-            LocalPlayer.name = "host";//LocalPlayer.GetComponent<PlayersInfo>().Name;
+            LocalPlayer.name = "LocalPlayer";
             LocalPlayer.GetComponent<PlayersInfo>().Name = MenuC.DSName;
             LocalPlayer.GetComponent<PlayersInfo>().Avatar = MenuC.DSAvatar;
+        }
+
+        if (!Team)
+        { Discord.Team = Data.FirstTeamName; }
+        else
+        { Discord.Team = Data.SecondTeamName; }
+
+        if (MenuC != null && SceneManager.GetActiveScene().name != "Menu")
+        {
+            Destroy(MenuC);
         }
     }
 
