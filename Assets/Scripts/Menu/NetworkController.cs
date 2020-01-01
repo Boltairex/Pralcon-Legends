@@ -63,6 +63,9 @@ public class NetworkController : NetworkManager
             Hosting = false;
             StartClient();
             MenuG.ListClose();
+
+            DontDestroyOnLoad(Data.gameObject);
+            DontDestroyOnLoad(Data.NetR.gameObject);
         }
     }
 
@@ -87,7 +90,7 @@ public class NetworkController : NetworkManager
 
     public void LobbyRun()
     {
-        Init = true;
+        Data.Identity();
         ServerChangeScene("Lobby");
     }
 

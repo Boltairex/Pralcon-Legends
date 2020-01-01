@@ -14,8 +14,13 @@ public class PlayersInfo : NetworkBehaviour
     public Sprite Avatar;
     public Color TeamColor;
 
+    [SyncVar] public int PIdentity = 0;
     [SyncVar] public string Name;
     [SyncVar] public bool Team;
+
+    GameObject[] Players;
+    GameObject[] PlayersINF;
+
 
     byte[] ByteAvatar;
     public bool Ready = false;
@@ -60,8 +65,7 @@ public class PlayersInfo : NetworkBehaviour
 
     public void OnRefreshBarsCount()
     {
-        GameObject[] Players = GameObject.FindGameObjectsWithTag("PlayerBar");
-        GameObject[] PlayersINF = GameObject.FindGameObjectsWithTag("Player");
+        StartCoroutine(PlayersUpdate());
         for (int i = 0; i < Players.Length; i++)
         {
             Destroy(Players[i]);
@@ -130,5 +134,11 @@ public class PlayersInfo : NetworkBehaviour
         yield return new WaitForSeconds(3f);
         NetC.Players = GameObject.FindGameObjectsWithTag("Player").Length;
         CmdAvatarSync(ByteAvatar, gameObject, Name);
+    }
+
+    public IEnumerator PlayersUpdate()
+    {
+        yield return Players = GameObject.FindGameObjectsWithTag("PlayerBar");
+        yield return PlayersINF = GameObject.FindGameObjectsWithTag("Player");
     }
 }

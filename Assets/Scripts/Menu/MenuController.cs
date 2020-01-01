@@ -103,6 +103,21 @@ public class MenuController : MonoBehaviour
         else if (PlayerSize.text == "")
         { PlayerSize.text = "2"; }
 
+        if(Data == null)
+        {
+            Data = GameObject.Find("DataManager").GetComponent<DataManagement>();
+        }
+
+        if(NetC == null)
+        {
+            NetC = GameObject.Find("LobbyManager").GetComponent<NetworkController>();
+        }
+
+        if(NetR == null)
+        {
+            NetR = GameObject.Find("NetworkContainer").GetComponent<NetworkContainer>();
+        }
+
         if (Input.GetKeyDown(KeyCode.Semicolon) || Input.GetKeyUp(KeyCode.Semicolon))
         {
             Port.ActivateInputField();

@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Networking;
+using System.Collections;
 
 public class DataManagement : NetworkBehaviour
 {
@@ -8,6 +9,8 @@ public class DataManagement : NetworkBehaviour
     public MenuController MenuC;
     public NetworkController NetC;
     public NetworkContainer NetR;
+
+    public GameObject[] Players;
 
     [Header("Menu")]
     [SyncVar] public string FirstTeamName;
@@ -66,5 +69,19 @@ public class DataManagement : NetworkBehaviour
             recAv.LoadImage(SendAvatar);
             Owner.GetComponent<PlayersInfo>().Avatar = Sprite.Create(recAv, new Rect(new Rect(0.0f, 0.0f, recAv.width, recAv.height)), new Vector2(0.5f, 0.5f), 100.0f);
         }
+    }
+
+    public void Identity()
+    {
+        StartCoroutine(SearchAwait());
+        for (int i = 0; i < Players.Length; i++)
+        {
+            Players[i].GetComponent<PlayersInfo>().PIdentity = i;
+        }
+    }
+
+    public IEnumerator SearchAwait()
+    {
+        yield return Players = GameObject.FindGameObjectsWithTag("Player");
     }
 }
