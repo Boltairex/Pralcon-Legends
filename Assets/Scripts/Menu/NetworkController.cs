@@ -1,13 +1,18 @@
 ﻿using UnityEngine.Networking;
+using UnityEngine;
 
 public class NetworkController : NetworkManager
 {
+    [Header("Menu")]
     public MenuController MenuC;
-    public DataManagement Data;
     public MenuGUI MenuG;
-    public PRDiscordRPC Discord;
 
-    public int Players;
+    [Header("Unbreakable")]
+    public PRDiscordRPC Discord;
+    public DataManagement Data;
+
+    [Header("Variables")]
+    public int Players = 0;
 
     public bool Init = false;
     public bool Hosting = false;
@@ -88,9 +93,9 @@ public class NetworkController : NetworkManager
         }
     }
 
-    public void LobbyRun()
+    public void RpcLobbyRun()
     {
-        Data.Identity();
+        Data.RpcIdentity();
         ServerChangeScene("Lobby");
     }
 

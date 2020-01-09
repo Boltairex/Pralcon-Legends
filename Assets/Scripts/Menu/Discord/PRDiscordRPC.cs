@@ -26,6 +26,11 @@ public class PRDiscordRPC : MonoBehaviour
     [HideInInspector]
     public bool lplyInitiated;
 
+    private void Start()
+    {
+        DontDestroyOnLoad(gameObject);
+    }
+
     void OnEnable()
     {
         presence = new DiscordRpc.RichPresence();

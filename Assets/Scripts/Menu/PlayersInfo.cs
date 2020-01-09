@@ -131,6 +131,7 @@ public class PlayersInfo : NetworkBehaviour
 
     public IEnumerator ClientUpdates()
     {
+
         yield return new WaitForSeconds(3f);
         NetC.Players = GameObject.FindGameObjectsWithTag("Player").Length;
         CmdAvatarSync(ByteAvatar, gameObject, Name);

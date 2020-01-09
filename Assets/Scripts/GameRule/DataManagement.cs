@@ -71,7 +71,8 @@ public class DataManagement : NetworkBehaviour
         }
     }
 
-    public void Identity()
+    [ClientRpc]
+    public void RpcIdentity()
     {
         StartCoroutine(SearchAwait());
         for (int i = 0; i < Players.Length; i++)
