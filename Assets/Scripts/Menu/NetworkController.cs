@@ -93,7 +93,7 @@ public class NetworkController : NetworkManager
         }
     }
 
-    public void RpcLobbyRun()
+    public void LobbyRun()
     {
         Data.RpcIdentity();
         ServerChangeScene("Lobby");

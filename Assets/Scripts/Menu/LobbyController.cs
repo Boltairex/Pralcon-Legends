@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Collections;
 using TMPro;
 using UnityEngine.UI;
 
@@ -25,23 +26,33 @@ public class LobbyController : MonoBehaviour
         NetC = GameObject.Find("LobbyManager").GetComponent<NetworkController>();
         Data = GameObject.Find("DataManager").GetComponent<DataManagement>();
         NetR = GameObject.Find("NetworkContainer").GetComponent<NetworkContainer>();
-        Players = Data.Players;
+        StartCoroutine(GetPlayers());
     }
     // Update is called once per frame
     void Update()
     {
-        for (int i = 0; i < Players.Length; i++)
+        if (Players.Length >= 1 && Players.Length <= 10)
         {
-            if(!Players[i].GetComponent<PlayersInfo>().Team) //lewa strona
+            for (int i = 0; i < Players.Length; i++)
             {
-                GameObject LBar = Instantiate(LeftBar);
-                LBar.transform.parent = FirstTeam.transform;
-            }
-            else if(Players[i].GetComponent<PlayersInfo>().Team) //prawa strona
-            {
-                GameObject RBar = Instantiate(RightBar);
-                RBar.transform.parent = SecondTeam.transform;
+                print(i + "Obecna, i " + Players.Length + "Maksymalna");
+                if (!Players[i].GetComponent<PlayersInfo>().Team) //lewa strona
+                {
+                    GameObject LBar = Instantiate(LeftBar);
+                    LBar.transform.SetParent(FirstTeam.transform);
+                    Players[i].GetComponent<PlayersInfo>().Bar = LBar;
+                }
+                else if (Players[i].GetComponent<PlayersInfo>().Team) //prawa strona
+                {
+                    GameObject RBar = Instantiate(RightBar);
+                    RBar.transform.SetParent(SecondTeam.transform);
+                    Players[i].GetComponent<PlayersInfo>().Bar = RBar;
+                }
             }
         }
+    }
+    IEnumerator GetPlayers()
+    {
+        yield return Players = Data.Players;
     }
 }

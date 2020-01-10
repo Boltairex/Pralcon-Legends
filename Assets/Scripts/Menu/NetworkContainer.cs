@@ -38,7 +38,7 @@ public class NetworkContainer : NetworkBehaviour
 
         if (MenuC != null && SceneManager.GetActiveScene().name != "Menu")
         {
-            Destroy(MenuC);
+            Destroy(gameObject);
         }
     }
 

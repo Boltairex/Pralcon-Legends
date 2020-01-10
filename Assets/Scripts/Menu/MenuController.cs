@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class MenuController : MonoBehaviour
 {
@@ -103,24 +104,27 @@ public class MenuController : MonoBehaviour
         else if (PlayerSize.text == "")
         { PlayerSize.text = "2"; }
 
-        if(Data == null)
+        if (SceneManager.GetActiveScene().name == "Menu")
         {
-            Data = GameObject.Find("DataManager").GetComponent<DataManagement>();
-        }
+            if (Data == null)
+            {
+                Data = GameObject.Find("DataManager").GetComponent<DataManagement>();
+            }
 
-        if(NetC == null)
-        {
-            NetC = GameObject.Find("LobbyManager").GetComponent<NetworkController>();
-        }
+            if (NetC == null)
+            {
+                NetC = GameObject.Find("LobbyManager").GetComponent<NetworkController>();
+            }
 
-        if(NetR == null)
-        {
-            NetR = GameObject.Find("NetworkContainer").GetComponent<NetworkContainer>();
-        }
+            if (NetR == null)
+            {
+                NetR = GameObject.Find("NetworkContainer").GetComponent<NetworkContainer>();
+            }
 
-        if (Input.GetKeyDown(KeyCode.Semicolon) || Input.GetKeyUp(KeyCode.Semicolon))
-        {
-            Port.ActivateInputField();
+            if (Input.GetKeyDown(KeyCode.Semicolon) || Input.GetKeyUp(KeyCode.Semicolon))
+            {
+                Port.ActivateInputField();
+            }
         }
         if (NetC.Hosting == true || NetC.Connect == true)
         {
