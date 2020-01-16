@@ -2012,7 +2012,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.000036792524, y: 198.39172}
+  m_AnchoredPosition: {x: -0.000036792524, y: 14.54165}
   m_SizeDelta: {x: 0, y: 300}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &219210749
@@ -2222,8 +2222,11 @@ GameObject:
   m_Component:
   - component: {fileID: 252097820}
   - component: {fileID: 252097821}
+  - component: {fileID: 252097822}
+  - component: {fileID: 252097824}
+  - component: {fileID: 252097823}
   m_Layer: 0
-  m_Name: LobbyManager
+  m_Name: NetworkController
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2257,88 +2260,89 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 988fcdbfc2a09b64b92dc93a0e3dbdaf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_NetworkPort: 7777
-  m_ServerBindToIP: 0
-  m_ServerBindAddress: 
-  m_NetworkAddress: localhost
-  m_DontDestroyOnLoad: 1
-  m_RunInBackground: 1
-  m_ScriptCRCCheck: 1
-  m_MaxDelay: 0.01
-  m_LogLevel: 2
-  m_PlayerPrefab: {fileID: 1759673236577665197, guid: 567828884589c354da99eda444a7de60,
+  dontDestroyOnLoad: 1
+  runInBackground: 1
+  startOnHeadless: 1
+  serverTickRate: 30
+  showDebugMessages: 0
+  offlineScene: Menu
+  onlineScene: Menu
+  transport: {fileID: 252097822}
+  networkAddress: localhost
+  maxConnections: 10
+  authenticator: {fileID: 0}
+  playerPrefab: {fileID: 1759673236577665197, guid: 567828884589c354da99eda444a7de60,
     type: 3}
-  m_AutoCreatePlayer: 1
-  m_PlayerSpawnMethod: 0
-  m_OfflineScene: Menu
-  m_OnlineScene: Menu
-  m_SpawnPrefabs:
-  - {fileID: 1210265850180692707, guid: c83c37e2b251a5a40a7d0b0307063738, type: 3}
-  - {fileID: 6963083744184492987, guid: 0566a562fa0fd58488a394bd54c8f4b8, type: 3}
-  m_CustomConfig: 1
-  m_MaxConnections: 10
-  m_ConnectionConfig:
-    m_PacketSize: 1440
-    m_FragmentSize: 500
-    m_ResendTimeout: 1200
-    m_DisconnectTimeout: 5000
-    m_ConnectTimeout: 2000
-    m_MinUpdateTimeout: 10
-    m_PingTimeout: 1000
-    m_ReducedPingTimeout: 100
-    m_AllCostTimeout: 20
-    m_NetworkDropThreshold: 5
-    m_OverflowDropThreshold: 5
-    m_MaxConnectionAttempt: 10
-    m_AckDelay: 33
-    m_SendDelay: 10
-    m_MaxCombinedReliableMessageSize: 100
-    m_MaxCombinedReliableMessageCount: 10
-    m_MaxSentMessageQueueSize: 512
-    m_AcksType: 1
-    m_UsePlatformSpecificProtocols: 0
-    m_InitialBandwidth: 0
-    m_BandwidthPeakFactor: 2
-    m_WebSocketReceiveBufferMaxSize: 0
-    m_UdpSocketReceiveBufferMaxSize: 0
-    m_SSLCertFilePath: 
-    m_SSLPrivateKeyFilePath: 
-    m_SSLCAFilePath: 
-    m_Channels: []
-  m_GlobalConfig:
-    m_ThreadAwakeTimeout: 1
-    m_ReactorModel: 0
-    m_ReactorMaximumReceivedMessages: 1024
-    m_ReactorMaximumSentMessages: 1024
-    m_MaxPacketSize: 2000
-    m_MaxHosts: 16
-    m_ThreadPoolSize: 1
-    m_MinTimerTimeout: 1
-    m_MaxTimerTimeout: 12000
-    m_MinNetSimulatorTimeout: 1
-    m_MaxNetSimulatorTimeout: 12000
-  m_Channels: 0500000008000000
-  m_UseWebSockets: 0
-  m_UseSimulator: 0
-  m_SimulatedLatency: 1
-  m_PacketLossPercentage: 0
-  m_MaxBufferedPackets: 16
-  m_AllowFragmentation: 1
-  m_MatchHost: mm.unet.unity3d.com
-  m_MatchPort: 443
-  matchName: default
-  matchSize: 4
-  isNetworkActive: 0
-  matchMaker: {fileID: 0}
-  MenuC: {fileID: 1658830010}
-  MenuG: {fileID: 733261774}
-  Discord: {fileID: 1658830008}
-  Data: {fileID: 275880581}
-  Players: 0
-  Init: 0
-  Hosting: 0
-  Connect: 0
-  Online: 0
+  autoCreatePlayer: 1
+  playerSpawnMethod: 0
+  spawnPrefabs: []
+--- !u!114 &252097822
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 252097819}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7424c1070fad4ba2a7a96b02fbeb4bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnClientConnected:
+    m_PersistentCalls:
+      m_Calls: []
+  OnClientDataReceived:
+    m_PersistentCalls:
+      m_Calls: []
+  OnClientError:
+    m_PersistentCalls:
+      m_Calls: []
+  OnClientDisconnected:
+    m_PersistentCalls:
+      m_Calls: []
+  OnServerConnected:
+    m_PersistentCalls:
+      m_Calls: []
+  OnServerDataReceived:
+    m_PersistentCalls:
+      m_Calls: []
+  OnServerError:
+    m_PersistentCalls:
+      m_Calls: []
+  OnServerDisconnected:
+    m_PersistentCalls:
+      m_Calls: []
+  port: 7777
+  NoDelay: 1
+  serverMaxMessageSize: 16384
+  clientMaxMessageSize: 16384
+--- !u!114 &252097823
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 252097819}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ba50f29cfc19c745bd242d029da713b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &252097824
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 252097819}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 66c29589b54467347b45fef69d767b6a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Nickname: 
+  UserID: 
+  lplyInitiated: 0
 --- !u!1 &275880580
 GameObject:
   m_ObjectHideFlags: 0
@@ -2348,10 +2352,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 275880582}
-  - component: {fileID: 275880583}
   - component: {fileID: 275880581}
+  - component: {fileID: 275880583}
   m_Layer: 0
-  m_Name: DataManager
+  m_Name: DataManagement
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2369,19 +2373,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f283970170dd6a449a390b1097d7c62b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MenuC: {fileID: 1658830010}
-  NetC: {fileID: 252097821}
-  NetR: {fileID: 1976918703}
-  Players: []
-  FirstTeamName: 
-  SecondTeamName: 
-  FirstTeamColor: {r: 0, g: 0, b: 0, a: 0}
-  SecondTeamColor: {r: 0, g: 0, b: 0, a: 0}
-  GameName: 
+  syncMode: 0
+  syncInterval: 0.1
+  FirstTeamName: Uno
+  SecondTeamName: Dos
+  FirstTeamColor: {r: 1, g: 0, b: 0, a: 1}
+  SecondTeamColor: {r: 0, g: 0.23211932, b: 1, a: 1}
+  GameName: Default
   GamePass: 
-  PlayerMax: 
+  PlayerMax: 10
   Check: 0
-  recAv: {fileID: 0}
 --- !u!4 &275880582
 Transform:
   m_ObjectHideFlags: 0
@@ -2405,30 +2406,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 275880580}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_SceneId:
-    m_Value: 0
-  m_AssetId:
-    i0: 0
-    i1: 0
-    i2: 0
-    i3: 0
-    i4: 0
-    i5: 0
-    i6: 0
-    i7: 0
-    i8: 0
-    i9: 0
-    i10: 0
-    i11: 0
-    i12: 0
-    i13: 0
-    i14: 0
-    i15: 0
-  m_ServerOnly: 0
-  m_LocalPlayerAuthority: 0
+  serverOnly: 0
+  m_AssetId: 
+  m_SceneId: 3232349035
 --- !u!1 &285278916
 GameObject:
   m_ObjectHideFlags: 0
@@ -3222,7 +3205,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 733261774}
+      - m_Target: {fileID: 1658830010}
         m_MethodName: ListClose
         m_Mode: 1
         m_Arguments:
@@ -4109,7 +4092,7 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: 0
+  m_Value: 1
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
@@ -4430,7 +4413,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 1487284633}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0.7255892
+  m_Size: 0.9711833
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -4949,7 +4932,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 733261774}
+      - m_Target: {fileID: 0}
         m_MethodName: InputArea
         m_Mode: 1
         m_Arguments:
@@ -5015,52 +4998,6 @@ RectTransform:
   m_AnchoredPosition: {x: -683, y: -434.91995}
   m_SizeDelta: {x: 462.2, y: 111.7}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!1 &733261772
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 733261773}
-  - component: {fileID: 733261774}
-  m_Layer: 0
-  m_Name: ButtonsController
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &733261773
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 733261772}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1658830009}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &733261774
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 733261772}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d52d10dea4b76f04a9f9650c14feb796, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Buttons: {fileID: 2122545673}
-  List: {fileID: 927965285}
-  IA: {fileID: 990999235}
 --- !u!1 &733876308
 GameObject:
   m_ObjectHideFlags: 0
@@ -5713,7 +5650,7 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: 0
+  m_Value: 1
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
@@ -9992,7 +9929,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Connecting...
+  m_text: Unconnected
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -10061,7 +9998,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: -23.163084, w: 0}
   m_textInfo:
     textComponent: {fileID: 1612749521}
-    characterCount: 13
+    characterCount: 11
     spriteCount: 0
     spaceCount: 0
     wordCount: 1
@@ -10242,7 +10179,7 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: 0
+  m_Value: 1
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
@@ -10266,7 +10203,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1658830009}
-  - component: {fileID: 1658830008}
   - component: {fileID: 1658830010}
   m_Layer: 0
   m_Name: MenuController
@@ -10275,27 +10211,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1658830008
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1658830007}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 66c29589b54467347b45fef69d767b6a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Avatar: {fileID: 0}
-  Nickname: 
-  UserID: 
-  Players: 0
-  MaxPlayers: 0
-  RoomName: 
-  Team: First
-  InLobby: 0
-  lplyInitiated: 0
 --- !u!4 &1658830009
 Transform:
   m_ObjectHideFlags: 0
@@ -10306,8 +10221,7 @@ Transform:
   m_LocalRotation: {x: 0.40821788, y: -0.23456968, z: 0.10938163, w: 0.8754261}
   m_LocalPosition: {x: 0, y: 3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 733261773}
+  m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -10334,6 +10248,9 @@ MonoBehaviour:
   PlayerSize: {fileID: 1114672412}
   GameName: {fileID: 457382616}
   GamePass: {fileID: 529280934}
+  Buttons: {fileID: 2122545673}
+  List: {fileID: 927965285}
+  IA: {fileID: 0}
   Dot: {fileID: 30910744}
   Avatar: {fileID: 81177643}
   Name: {fileID: 1612749520}
@@ -10344,18 +10261,15 @@ MonoBehaviour:
   Green: {fileID: 548104365}
   Blue: {fileID: 817692880}
   ColorPicker: {fileID: 294857845}
-  FirstColour: {r: 1, g: 0, b: 0, a: 1}
-  SecondColour: {r: 0, g: 0, b: 1, a: 1}
   Team1: {fileID: 745473335}
   Team2: {fileID: 1159500528}
-  DSAvatar: {fileID: 0}
-  DSName: 
   anim: {fileID: 344291628}
-  NetC: {fileID: 252097821}
-  Data: {fileID: 275880581}
-  NetR: {fileID: 1976918703}
+  ArrowSide: 0
   Check: 0
+  Mode: 0
+  Block: 0
   Switch: 0
+  Colour: 0
   DevMode: 0
 --- !u!1 &1664661498
 GameObject:
@@ -11822,7 +11736,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 733261774}
+      - m_Target: {fileID: 1658830010}
         m_MethodName: ListOpen
         m_Mode: 1
         m_Arguments:
@@ -11832,7 +11746,7 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: Gamemodes
           m_BoolArgument: 0
-        m_CallState: 1
+        m_CallState: 2
 --- !u!114 &1914963871
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12415,8 +12329,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1976918702}
-  - component: {fileID: 1976918704}
   - component: {fileID: 1976918703}
+  - component: {fileID: 1976918704}
   m_Layer: 0
   m_Name: NetworkContainer
   m_TagString: Untagged
@@ -12450,12 +12364,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 017229f0e89112e42ab003130e367b39, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Discord: {fileID: 1658830008}
-  MenuC: {fileID: 1658830010}
-  NetC: {fileID: 252097821}
-  Data: {fileID: 275880581}
+  syncMode: 0
+  syncInterval: 0.1
   BarPref: {fileID: 7624567612700135524, guid: c689266017fb76441bfc9855b550c973, type: 3}
-  Team: 0
   Init: 0
   LocalPlayerBar: {fileID: 0}
   LocalPlayer: {fileID: 0}
@@ -12469,30 +12380,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1976918701}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 372142912, guid: dc443db3e92b4983b9738c1131f555cb, type: 3}
+  m_Script: {fileID: 11500000, guid: 9b91ecbcc199f4492b9a91e820070131, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_SceneId:
-    m_Value: 0
-  m_AssetId:
-    i0: 0
-    i1: 0
-    i2: 0
-    i3: 0
-    i4: 0
-    i5: 0
-    i6: 0
-    i7: 0
-    i8: 0
-    i9: 0
-    i10: 0
-    i11: 0
-    i12: 0
-    i13: 0
-    i14: 0
-    i15: 0
-  m_ServerOnly: 0
-  m_LocalPlayerAuthority: 0
+  serverOnly: 0
+  m_AssetId: 
+  m_SceneId: 2714389176
 --- !u!1 &2004693423
 GameObject:
   m_ObjectHideFlags: 0

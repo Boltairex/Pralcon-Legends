@@ -1,76 +1,64 @@
-﻿using UnityEngine.Networking;
+﻿using Mirror;
 using UnityEngine;
+using static Dictionary;
 
 public class NetworkController : NetworkManager
 {
-    [Header("Menu")]
-    public MenuController MenuC;
-    public MenuGUI MenuG;
-
-    [Header("Unbreakable")]
-    public PRDiscordRPC Discord;
-    public DataManagement Data;
-
-    [Header("Variables")]
-    public int Players = 0;
-
-    public bool Init = false;
-    public bool Hosting = false;
-    public bool Connect = false;
-    public bool Online = false;
-
     void Update()
     {
         if (Hosting || Connect)
         {
-            Discord.Players = Players;
-            Discord.InLobby = true;
+            InLobby = true;
             Online = true;
         }
         else
         {
-            Discord.InLobby = false;
+            InLobby = false;
             Online = false;
         }
     }
 
     public void ServerStart()
     {
-        if (!Hosting && !Connect && MenuC.DSName != "Connecting...")
+        if (!Hosting && !Connect && Name != "Unconnected")
         {
             if (MenuC.Port.text == "" || MenuC.Port.text == null)
-            { networkPort = 7777; }
+                GetComponent<TelepathyTransport>().port = 7777;
             else
-            { networkPort = int.Parse(MenuC.Port.text); }
+                GetComponent<TelepathyTransport>().port = ushort.Parse(MenuC.Port.text);
 
             networkAddress = "localhost";
 
             Connect = false;
             Hosting = true;
             StartHost();
-            MenuG.ListClose();
+            MenuC.ListClose();
+
+            DontDestroyOnLoad(Data.gameObject);
+            DontDestroyOnLoad(NetR.gameObject);
         }
     }
 
     public void ServerConnection()
     {
-        if (!Hosting && !Connect && MenuC.DSName != "Connecting...")
+        if (!Hosting && !Connect && Name != "Unconnected")
         {
             if (MenuC.Port.text == "" || MenuC.Port.text == null)
-            { networkPort = 7777; }
+                GetComponent<TelepathyTransport>().port = 7777;
             else
-            { networkPort = int.Parse(MenuC.Port.text); }
+                GetComponent<TelepathyTransport>().port = ushort.Parse(MenuC.Port.text);
 
             networkAddress = MenuC.IP.text;
-            if (MenuC.IP.text == "") { networkAddress = "localhost"; }
+            if (MenuC.IP.text == "")
+                networkAddress = "localhost";
 
             Connect = true;
             Hosting = false;
             StartClient();
-            MenuG.ListClose();
+            MenuC.ListClose();
 
             DontDestroyOnLoad(Data.gameObject);
-            DontDestroyOnLoad(Data.NetR.gameObject);
+            DontDestroyOnLoad(NetR.gameObject);
         }
     }
 

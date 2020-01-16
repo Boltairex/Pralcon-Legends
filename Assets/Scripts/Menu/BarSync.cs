@@ -24,7 +24,7 @@ public class BarSync : MonoBehaviour
         }
         else
         {
-            Avatar.sprite = Owner.GetComponent<PlayersInfo>().Avatar;
+            Avatar.sprite = Owner.GetComponent<PlayersInfo>().PlayerAvatar;
             Name.text = Owner.GetComponent<PlayersInfo>().Name;
             Color.color = Owner.GetComponent<PlayersInfo>().TeamColor;
         }

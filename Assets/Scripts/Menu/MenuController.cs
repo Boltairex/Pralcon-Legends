@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using UnityEngine.SceneManagement;
+using static Dictionary;
+
 
 public class MenuController : MonoBehaviour
 {
@@ -21,6 +22,9 @@ public class MenuController : MonoBehaviour
     public TMP_InputField GameName;
     public TMP_InputField GamePass;
     [Header("Menu")]
+    public GameObject Buttons;
+    public GameObject List;
+    public GameObject IA;
     public Image Dot;
     public GameObject Avatar;
     public GameObject Name;
@@ -32,101 +36,93 @@ public class MenuController : MonoBehaviour
     public Slider Green;
     public Slider Blue;
     public GameObject ColorPicker;
-    public Color FirstColour = new Color(1, 0, 0, 1);
-    public Color SecondColour = new Color(0, 0, 1, 1);
     public TMP_InputField Team1;
     public TMP_InputField Team2;
     [Header("Inne")]
-    public Sprite DSAvatar;
-    public string DSName;
     public Animator anim;
-    public NetworkController NetC;
-    public DataManagement Data;
-    public NetworkContainer NetR;
+    public bool ArrowSide = false;
+    public bool Check = false;
+    public bool Mode = false;
+    public bool Block = false;
+    public bool Switch = false;
+    public bool Colour = false;
+    public bool DevMode = false;
     #endregion List
-    bool ArrowSide;
-    public bool Check;
-    bool Mode;
-    bool Block;
-    public bool Switch;
-    bool Colour;
-    public bool DevMode;
-
-    PRDiscordRPC Discord;
 
     void Start()
     {
         anim.Play("Exit");
-        Discord = gameObject.GetComponent<PRDiscordRPC>();
-        First.color = FirstColour;
-        Second.color = SecondColour;
+        First.color = Data.FirstTeamColor;
+        Second.color = Data.SecondTeamColor;
     }
 
     void Update()
     {
+        RoomName = GameName.text;
+
+        if (MenuTeamColor != null)
+        {
+            if (!Team && Online) //Kolor klienta
+                MenuTeamColor.color = TeamOneColor;
+            else if (Team && Online)
+                MenuTeamColor.color = TeamTwoColor;
+            else if (!Online)
+                MenuTeamColor.color = new Color(1,1,1,1);
+        }
+
         if (Discord.Nickname == "" && !DevMode)
         {
-            DSName = "Connecting...";
+            Dictionary.Name = "Unconnected";
+            Name.GetComponent<TextMeshProUGUI>().text = Dictionary.Name;
             Dot.color = new Color32(255, 0, 0, 255);
         }
-        else if (Discord.Nickname != "" && !DevMode && Discord.Nickname != DSName)
+        else if (Discord.Nickname != "" && !DevMode && Discord.Nickname != Dictionary.Name)
         {
-            DSName = Discord.Nickname;
-            Name.GetComponent<TextMeshProUGUI>().text = DSName;
+            Dictionary.Name = Discord.Nickname;
+            Name.GetComponent<TextMeshProUGUI>().text = Dictionary.Name;
         }
         else if (DevMode)
         {
-            DSName = "Testowa nazwa";
-            Name.GetComponent<TextMeshProUGUI>().text = DSName;
+            Dictionary.Name = "Testowa nazwa";
+            Name.GetComponent<TextMeshProUGUI>().text = Dictionary.Name;
         }
 
-        if (Discord.Avatar != null && !DevMode && Discord.Avatar != DSAvatar)
+        if (Dictionary.Name == "Unconnected" && !DevMode)
         {
-            DSAvatar = Discord.Avatar;
-            Avatar.GetComponent<Image>().sprite = DSAvatar;
+            Avatar.GetComponent<Image>().sprite = Resources.Load<Sprite>("Logo");
+            print("Avatar sztuczny");
+        }
+        else if (Dictionary.Name != "Unconnected" && !DevMode)
+        {
+            Avatar.GetComponent<Image>().sprite = Dictionary.Avatar;
         }
         else if (DevMode)
         {
-            DSAvatar = Resources.Load<Sprite>("Checkoff");
-            Avatar.GetComponent<Image>().sprite = DSAvatar;
+            Avatar.GetComponent<Image>().sprite = Resources.Load<Sprite>("Checkoff");
         }
 
-        if (DSName != "Connecting..." && NetC.Hosting == false && NetC.Connect == false)
-        { Dot.color = new Color32(255, 255, 0, 255); }
-        else if (NetC.Hosting == true || NetC.Connect == true)
-        { Dot.color = new Color32(0, 255, 0, 255); }
-
-        Discord.RoomName = GameName.text;
-        Discord.MaxPlayers = int.Parse(PlayerSize.text);
+        if (Dictionary.Name != "Unconnected" && Hosting == false && Connect == false)
+            Dot.color = new Color32(255, 255, 0, 255);
+        else if (Hosting == true || Connect == true)
+            Dot.color = new Color32(0, 255, 0, 255);
 
         if (int.Parse(PlayerSize.text) > 10)
-        { PlayerSize.text = "10"; }
-        else if (PlayerSize.text == "")
-        { PlayerSize.text = "2"; }
-
-        if (SceneManager.GetActiveScene().name == "Menu")
         {
-            if (Data == null)
-            {
-                Data = GameObject.Find("DataManager").GetComponent<DataManagement>();
-            }
-
-            if (NetC == null)
-            {
-                NetC = GameObject.Find("LobbyManager").GetComponent<NetworkController>();
-            }
-
-            if (NetR == null)
-            {
-                NetR = GameObject.Find("NetworkContainer").GetComponent<NetworkContainer>();
-            }
-
-            if (Input.GetKeyDown(KeyCode.Semicolon) || Input.GetKeyUp(KeyCode.Semicolon))
-            {
-                Port.ActivateInputField();
-            }
+            PlayerSize.text = "10";
+            MaxPlayers = int.Parse(PlayerSize.text);
         }
-        if (NetC.Hosting == true || NetC.Connect == true)
+        else if (PlayerSize.text == "")
+        {
+            PlayerSize.text = "2";
+            MaxPlayers = int.Parse(PlayerSize.text);
+        }
+        else if (int.Parse(PlayerSize.text) < 2)
+        {
+            PlayerSize.text = "2";
+            MaxPlayers = int.Parse(PlayerSize.text);
+        } 
+
+        if (Hosting == true || Connect == true)
         {
             if (!Block)
             {
@@ -146,7 +142,7 @@ public class MenuController : MonoBehaviour
             LobbyOpt.SetActive(false);
         }
 
-        if (NetC.Hosting)
+        if (Hosting)
         {
             GameName.readOnly = false;
             GamePass.readOnly = false;
@@ -155,8 +151,8 @@ public class MenuController : MonoBehaviour
             Red.interactable = true;
             Green.interactable = true;
             Blue.interactable = true;
-            Data.FirstTeamColor = FirstColour;
-            Data.SecondTeamColor = SecondColour;
+            Data.FirstTeamColor = TeamOneColor;
+            Data.SecondTeamColor = TeamTwoColor;
         }
         else
         {
@@ -180,6 +176,7 @@ public class MenuController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
+            IA.SetActive(false);
             ColorPicker.SetActive(false);
         }
 
@@ -189,7 +186,6 @@ public class MenuController : MonoBehaviour
         }
         else if (Input.GetKey(KeyCode.D) && Input.GetKey(KeyCode.V) && DevMode)
         {
-
             DevMode = false;
         }
     }
@@ -226,6 +222,24 @@ public class MenuController : MonoBehaviour
         Game.GetComponent<Image>().color = new Color32(255, 255, 255, 255);
     }
 
+    public void ListOpen()
+    {
+        Buttons.SetActive(false);
+        List.SetActive(true);
+        IA.SetActive(false);
+    }
+
+    public void ListClose()
+    {
+        Buttons.SetActive(true);
+        List.SetActive(false);
+    }
+
+    public void InputArea()
+    {
+        IA.SetActive(true);
+    }
+
     public void OnCheckboxClick()
     {
         if (Check)
@@ -236,7 +250,7 @@ public class MenuController : MonoBehaviour
 
     public void SwitchFirst()
     {
-        if (NetC.Hosting)
+        if (Hosting)
         {
             Switch = false;
             ChangeColor();
@@ -244,7 +258,7 @@ public class MenuController : MonoBehaviour
     }
     public void SwitchSecond()
     {
-        if (NetC.Hosting)
+        if (Hosting)
         {
             Switch = true;
             ChangeColor();
@@ -256,41 +270,45 @@ public class MenuController : MonoBehaviour
         {
             Colour = false;
             ColorPicker.SetActive(true);
-            Red.value = FirstColour.r;
-            Green.value = FirstColour.g;
-            Blue.value = FirstColour.b;
-            print("Zmiana na " + FirstColour);
+            Red.value = TeamOneColor.r;
+            Green.value = TeamOneColor.g;
+            Blue.value = TeamOneColor.b;
+            TeamOneColor.r = 1;
+            print("Zmiana na " + TeamOneColor);
             Colour = true;
         }
         else //2 Team
         {
             Colour = false;
             ColorPicker.SetActive(true);
-            Red.value = SecondColour.r;
-            Green.value = SecondColour.g;
-            Blue.value = SecondColour.b;
-            print("Zmiana na "+ SecondColour);
+            Red.value = TeamTwoColor.r;
+            Green.value = TeamTwoColor.g;
+            Blue.value = TeamTwoColor.b;
+            TeamTwoColor.r = 1;
+            print("Zmiana na "+ TeamTwoColor);
             Colour = true;
         }
     }
+
     public void UpdateColor()
     {
         if (!Switch && Colour)
         {
-            FirstColour = new Color(Red.value, Green.value, Blue.value, 1);
-            First.color = FirstColour; //Ustawianie bloczku 1
-            print("Zmiana na " + FirstColour);
+            TeamOneColor = new Color(Red.value, Green.value, Blue.value, 1);
+            First.color = TeamOneColor; //Ustawianie bloczku 1
+            print("Zmiana na " + TeamOneColor + "UpdateColor 1");
         }
         else if (Switch && Colour)
         {
-            SecondColour = new Color(Red.value, Green.value, Blue.value, 1);
-            Second.color = SecondColour; //Ustawianie bloczku 2
-            print("Zmiana na " + SecondColour);
+            TeamTwoColor = new Color(Red.value, Green.value, Blue.value, 1);
+            Second.color = TeamTwoColor; //Ustawianie bloczku 2
+            print("Zmiana na " + TeamTwoColor + "UpdateColor 2");
         }
     }
     public void TeamSynchro()
     {
-        First.color = FirstColour;
-        Second.color = SecondColour;
+        First.color = TeamOneColor;
+        Second.color = TeamTwoColor;
+        print("TeamSynchro");
     }
 }

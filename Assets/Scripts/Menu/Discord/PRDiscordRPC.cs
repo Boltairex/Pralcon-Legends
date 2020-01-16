@@ -1,25 +1,16 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
-using System;
+using static Dictionary;
 
 public class PRDiscordRPC : MonoBehaviour
 {
-    DiscordRpc.EventHandlers handlers;
+    DiscordRpc.EventHandlers Handlers;
+    DiscordRpc.RichPresence Presence;
 
-    public Sprite Avatar;
     public string Nickname;
     public string UserID;
-
-    public int Players;
-    public int MaxPlayers;
-    public string RoomName;
-    public string Team = "First";
-    public bool InLobby;
-
-    DiscordRpc.RichPresence presence;
 
     string gamestate;
 
@@ -33,15 +24,15 @@ public class PRDiscordRPC : MonoBehaviour
 
     void OnEnable()
     {
-        presence = new DiscordRpc.RichPresence();
+        Presence = new DiscordRpc.RichPresence();
 
-            Debug.Log("Discord: Now Initiating");
+        Debug.Log("Discord: Now Initiating");
 
-            handlers = new DiscordRpc.EventHandlers();
-            handlers.readyCallback += ReadyCallback;
-            handlers.errorCallback += ErrorCallback;
-            DiscordRpc.Initialize("655464840222998537", ref handlers, true, "");
-            StartCoroutine(UpdatePresence());
+        Handlers = new DiscordRpc.EventHandlers();
+        Handlers.readyCallback += ReadyCallback;
+        Handlers.errorCallback += ErrorCallback;
+        DiscordRpc.Initialize("655464840222998537", ref Handlers, true, "");
+        StartCoroutine(UpdatePresence());
     }
 
     public void ReadyCallback(ref DiscordRpc.DiscordUser user)
@@ -50,8 +41,6 @@ public class PRDiscordRPC : MonoBehaviour
         Nickname = user.username;
         UserID = user.userId;
         StartCoroutine(LoadPlayerAvatar("cdn.discordapp.com/avatars/" + user.userId + "/" + user.avatar + ".png"));
-        //print(user.avatar);
-
     }
 
     public void ErrorCallback(int errorCode, string message)
@@ -65,30 +54,28 @@ public class PRDiscordRPC : MonoBehaviour
 
         if(SceneManager.GetActiveScene().name == "Menu" && !InLobby)
         {
-            presence.largeImageKey = "logo";
-            presence.largeImageText = "Pralcon Legends";
-            presence.state = "In Menu, waiting for friends";
-            presence.details = "The best fanmade MOBA!";
+            Presence.largeImageKey = "logo";
+            Presence.largeImageText = "Pralcon Legends";
+            Presence.state = "In Menu, waiting for friends";
+            Presence.details = "The best fanmade MOBA!";
             gamestate = "menu";
-            presence.startTimestamp = 0;
+            Presence.startTimestamp = 0;
 
-            presence.smallImageKey = "plogo";
-            presence.smallImageText = "Pralcon Legends";
+            Presence.smallImageKey = "plogo";
+            Presence.smallImageText = "Pralcon Legends";
         }
         else if (SceneManager.GetActiveScene().name == "Menu" && InLobby)
         {
-
-            presence.largeImageKey = "logo";
-            presence.largeImageText = RoomName;
-            presence.state = Players + "/"+MaxPlayers+" Players";
-            presence.details = Team;
+            Presence.largeImageKey = "logo";
+            Presence.largeImageText = RoomName;
+            Presence.state = Players.Length + "/"+ MaxPlayers +" Players";
+            Presence.details = TeamName;
             gamestate = "lobby";
-            presence.startTimestamp = 0;
+            Presence.startTimestamp = 0;
 
-            presence.smallImageKey = "plogo";
-            presence.smallImageText = "In Lobby";
+            Presence.smallImageKey = "plogo";
+            Presence.smallImageText = "In Lobby";
         }
-
     }
 
     void OnDisable()
@@ -101,9 +88,7 @@ public class PRDiscordRPC : MonoBehaviour
         print("initiating avatar");
         using (UnityWebRequest uwr = UnityWebRequestTexture.GetTexture(url))
         {
-
             yield return uwr.SendWebRequest();
-
             if (uwr.isNetworkError || uwr.isHttpError)
             {
                 Debug.Log(uwr.error);
@@ -112,8 +97,7 @@ public class PRDiscordRPC : MonoBehaviour
             {
                 print("working");
                 Texture2D tex = DownloadHandlerTexture.GetContent(uwr);
-                Sprite avatar = Sprite.Create(tex, new Rect(0.0f, 0.0f, tex.width, tex.height), new Vector2(0.5f, 0.5f), 100.0f);
-                Avatar = avatar;
+                Dictionary.Avatar = Sprite.Create(tex, new Rect(0.0f, 0.0f, tex.width, tex.height), new Vector2(0.5f, 0.5f), 100.0f);
                 lplyInitiated = true;
             }
         }
@@ -124,7 +108,7 @@ public class PRDiscordRPC : MonoBehaviour
         while (true)
         {
             yield return new WaitForSeconds(20);
-            DiscordRpc.UpdatePresence(presence);
+            DiscordRpc.UpdatePresence(Presence);
         }
     }
 }

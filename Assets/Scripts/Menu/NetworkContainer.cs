@@ -1,20 +1,12 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.Networking;
+using Mirror;
+using static Dictionary;
 
 public class NetworkContainer : NetworkBehaviour
 {
-    //Skrypt wysyłający z klienta do serwera
-    //Nie dawać SyncVarów
-
-    public PRDiscordRPC Discord;
-    public MenuController MenuC;
-    public NetworkController NetC;
-    public DataManagement Data;
-
     public GameObject BarPref;
 
-    public bool Team;
     public bool Init;
 
     public BarSync LocalPlayerBar;
@@ -24,17 +16,10 @@ public class NetworkContainer : NetworkBehaviour
 
     void Update()
     {
-        if (!Init && LocalPlayer != null)
-        {
-            LocalPlayer.name = "LocalPlayer";
-            LocalPlayer.GetComponent<PlayersInfo>().Name = MenuC.DSName;
-            LocalPlayer.GetComponent<PlayersInfo>().Avatar = MenuC.DSAvatar;
-        }
-
         if (!Team)
-        { Discord.Team = Data.FirstTeamName; }
+        { TeamName = Data.FirstTeamName; }
         else
-        { Discord.Team = Data.SecondTeamName; }
+        { TeamName = Data.SecondTeamName; }
 
         if (MenuC != null && SceneManager.GetActiveScene().name != "Menu")
         {
@@ -44,11 +29,11 @@ public class NetworkContainer : NetworkBehaviour
 
     public void ChangeColor()
     {
-        if (Team && NetC.Online)
+        if (Team && Online)
         {
             Team = false;
         }
-        else if (!Team && NetC.Online)
+        else if (!Team && Online)
         {
             Team = true;
         }
