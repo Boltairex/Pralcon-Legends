@@ -47,7 +47,7 @@ public class PlayersInfo : NetworkBehaviour
             if (PlayerAvatar.name == "none")
                 PlayerAvatar = Dictionary.Avatar;
 
-            if (ByteAvatar == null && PlayerAvatar.name != "none" && PlayerAvatar.name != "CheckOff" && !Lock)
+            if (ByteAvatar == null && PlayerAvatar == Dictionary.Avatar && !Lock)
                 ByteAvatar = Dictionary.Avatar.texture.EncodeToJPG();
                 Lock = true;
 

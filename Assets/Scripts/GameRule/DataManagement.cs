@@ -17,20 +17,14 @@ public class DataManagement : NetworkBehaviour
     [SyncVar] public bool Check;
     //[Header("Lobby")]
 
-    private void Start()
-    {
-        FirstTeamColor = new Color(1, 0, 0, 1);
-        SecondTeamColor = new Color(0, 0, 1, 1);
-    }
-
     void Update()
     {
         if (Hosting && SceneManager.GetActiveScene().name == "Menu" && Online)
         {
             FirstTeamName = MenuC.Team1.text;
             SecondTeamName = MenuC.Team2.text;
-            FirstTeamColor = TeamOneColor;
-            SecondTeamColor = TeamTwoColor;
+            FirstTeamColor = new Color(TeamOneColor.r, TeamOneColor.g , TeamOneColor.b ,1);
+            SecondTeamColor = new Color(TeamTwoColor.r, TeamTwoColor.g, TeamTwoColor.b, 1);
             GameName = MenuC.GameName.text;
             GamePass = MenuC.GamePass.text;
             PlayerMax = MenuC.PlayerSize.text;

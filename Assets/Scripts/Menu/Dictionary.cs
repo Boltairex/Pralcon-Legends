@@ -33,6 +33,8 @@ public class Dictionary : MonoBehaviour
 
     private void Start()
     {
+        TeamOneColor = new Color(1, 0, 0, 1);
+        TeamTwoColor = new Color(0, 0, 1, 1);
         SetComponent();
     }
 

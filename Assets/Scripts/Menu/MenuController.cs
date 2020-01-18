@@ -24,7 +24,6 @@ public class MenuController : MonoBehaviour
     [Header("Menu")]
     public GameObject Buttons;
     public GameObject List;
-    public GameObject IA;
     public Image Dot;
     public GameObject Avatar;
     public GameObject Name;
@@ -176,7 +175,6 @@ public class MenuController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            IA.SetActive(false);
             ColorPicker.SetActive(false);
         }
 
@@ -226,18 +224,12 @@ public class MenuController : MonoBehaviour
     {
         Buttons.SetActive(false);
         List.SetActive(true);
-        IA.SetActive(false);
     }
 
     public void ListClose()
     {
         Buttons.SetActive(true);
         List.SetActive(false);
-    }
-
-    public void InputArea()
-    {
-        IA.SetActive(true);
     }
 
     public void OnCheckboxClick()
