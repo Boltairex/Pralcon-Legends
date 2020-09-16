@@ -7,12 +7,10 @@ public class PlayerController : MonoBehaviour
 
     Ray ray;
     RaycastHit hit;
-    OpenCloseButton ocb;
 
     private void Start()
     {
         cam = GameObject.Find("MainCamera").GetComponent<Camera>();
-        ocb = GameObject.Find("ButtonHandler").GetComponent<OpenCloseButton>();
     }
     void Update()
     {
@@ -27,17 +25,5 @@ public class PlayerController : MonoBehaviour
         }
 
         gameObject.GetComponent<NavMeshAgent>().speed = GameObject.Find("PlayerStuff").GetComponent<PlayerStats>().MV;
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.name == "ShopCollider")
-            ocb.isNearShop = true;
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.gameObject.name == "ShopCollider")
-            ocb.isNearShop = false;
     }
 }

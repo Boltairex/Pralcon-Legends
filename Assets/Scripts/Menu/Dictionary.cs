@@ -2,10 +2,10 @@
 
 public class Dictionary : MonoBehaviour
 {
-    static public NetworkController NetC;
-    static public NetworkContainer NetR;
+    //static public NetworkController NetC;
+    //static public NetworkContainer NetR;
     static public DataManagement Data;
-    static public PRDiscordRPC Discord;
+    //static public PRDiscordRPC Discord;
     static public MenuController MenuC;
 
     static public GameObject[] Players;
@@ -40,10 +40,10 @@ public class Dictionary : MonoBehaviour
 
     private void SetComponent()
     {
-        NetC = GameObject.Find("NetworkController").GetComponent<NetworkController>();
-        NetR = GameObject.Find("NetworkContainer").GetComponent<NetworkContainer>();
+        //NetC = GameObject.Find("NetworkController").GetComponent<NetworkController>();
+        //NetR = GameObject.Find("NetworkContainer").GetComponent<NetworkContainer>();
         Data = GameObject.Find("DataManagement").GetComponent<DataManagement>();
-        Discord = GameObject.Find("NetworkController").GetComponent<PRDiscordRPC>();
+        //Discord = GameObject.Find("NetworkController").GetComponent<PRDiscordRPC>();
         MenuC = GameObject.Find("MenuController").GetComponent<MenuController>();
     }
 
@@ -55,6 +55,6 @@ public class Dictionary : MonoBehaviour
             Players[i].GetComponent<PlayersInfo>().DestroyBar();
             Players[i].GetComponent<PlayersInfo>().Ready = false;
         }
-        NetR.Range = 0;
+        //NetR.Range = 0;
     }
 }

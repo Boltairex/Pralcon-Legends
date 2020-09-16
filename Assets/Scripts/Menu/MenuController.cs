@@ -68,7 +68,7 @@ public class MenuController : MonoBehaviour
             else if (!Online)
                 MenuTeamColor.color = new Color(1,1,1,1);
         }
-
+        /*
         if (Discord.Nickname == "" && !DevMode)
         {
             Dictionary.Name = "Unconnected";
@@ -85,7 +85,7 @@ public class MenuController : MonoBehaviour
             Dictionary.Name = "Testowa nazwa";
             Name.GetComponent<TextMeshProUGUI>().text = Dictionary.Name;
         }
-
+        */
         if (Dictionary.Name == "Unconnected" && !DevMode)
         {
             Avatar.GetComponent<Image>().sprite = Resources.Load<Sprite>("Logo");

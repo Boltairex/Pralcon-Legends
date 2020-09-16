@@ -18,15 +18,15 @@ public class LobbyController : MonoBehaviour
     [Header("Wybór Postaci")]
     public RawImage CenterCharacter;
     [Header("Inne")]
-    public NetworkController NetC;
+    //public NetworkController NetC;
     public DataManagement Data;
-    public NetworkContainer NetR;
+    //public NetworkContainer NetR;
 
     void Start()
     {
-        NetC = GameObject.Find("LobbyManager").GetComponent<NetworkController>();
+        //NetC = GameObject.Find("LobbyManager").GetComponent<NetworkController>();
         Data = GameObject.Find("DataManager").GetComponent<DataManagement>();
-        NetR = GameObject.Find("NetworkContainer").GetComponent<NetworkContainer>();
+        //NetR = GameObject.Find("NetworkContainer").GetComponent<NetworkContainer>();
 
         if (Players.Length >= 1 && Players.Length <= 10)
         {

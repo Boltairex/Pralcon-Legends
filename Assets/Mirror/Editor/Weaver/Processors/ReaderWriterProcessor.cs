@@ -1,13 +1,13 @@
+// finds all readers and writers and register them
+using System.IO;
 using Mono.CecilX;
 using UnityEditor.Compilation;
-using System.IO;
 
 namespace Mirror.Weaver
 {
     public static class ReaderWriterProcessor
     {
-        // find all readers and writers and register them
-        public static void ProcessReadersAndWriters(AssemblyDefinition CurrentAssembly)
+        public static void Process(AssemblyDefinition CurrentAssembly)
         {
             Readers.Init();
             Writers.Init();

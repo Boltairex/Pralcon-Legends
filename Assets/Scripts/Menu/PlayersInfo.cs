@@ -50,20 +50,21 @@ public class PlayersInfo : NetworkBehaviour
             if (ByteAvatar == null && PlayerAvatar == Dictionary.Avatar && !Lock)
                 ByteAvatar = Dictionary.Avatar.texture.EncodeToJPG();
                 Lock = true;
-
+            /*
             if (NetR.LocalPlayer == null)
                 NetR.LocalPlayer = gameObject;
-
+            */
             if (!Init)
                 CmdAvatarSync(ByteAvatar, gameObject, Name);
                 Init = true;
         }
         else if (!isLocalPlayer)
         {
+            /*
             if (!Ready)
                 NetR.CreatePlayer(gameObject);
                 Ready = true;
-
+            */
             if (Bar == null)
                 Ready = false;
 
