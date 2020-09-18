@@ -4,6 +4,7 @@ using UnityEngine.EventSystems;
 public class Detector : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     public GameObject MGUI;
+    
     public void OnPointerEnter(PointerEventData data)
     {
         MGUI.GetComponent<GUISet>().IsOn = true;

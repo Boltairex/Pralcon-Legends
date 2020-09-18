@@ -41,7 +41,6 @@ public class CameraMovement : MonoBehaviour
                 BlockedCamera = true;
         }
         else if (BlockedCamera == true && Character != null)
-
         {
             vec3.z = Character.transform.position.z - 10;
             vec3.x = Character.transform.position.x;
