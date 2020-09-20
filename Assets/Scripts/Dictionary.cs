@@ -10,11 +10,20 @@ public class Dictionary : MonoBehaviour
 
     static public Dictionary This;
 
+    static public NetworkBase NB;
+    static public Mirror.NetworkManager NM;
+    static public Mirror.TelepathyTransport TT;
+    static public Mirror.Discovery.NetworkDiscovery ND;
+
+    static public Console CS;
+
     static public VariableContainer VC;
     static public DRPC DS;
     static public MenuController MenuC;
     static public ServersScript ServS;
     static public int MaxPlayers = 0;
+
+    static public bool ColorActive = false;
 
     static public ConnectionType CT
     {
@@ -33,11 +42,16 @@ public class Dictionary : MonoBehaviour
     static public bool ESCTimer = false;
     int Timer = 0;
 
-    private void Start()
+    void Awake()
     {
         This = this;
+
         TeamOneColor = new Color(1, 0, 0, 1);
         TeamTwoColor = new Color(0, 0, 1, 1);
+
+        NM = this.GetComponent<Mirror.NetworkManager>();
+        TT = this.GetComponent<Mirror.TelepathyTransport>();
+        ND = this.GetComponent<Mirror.Discovery.NetworkDiscovery>();
     }
 
     public static Sprite Logo;

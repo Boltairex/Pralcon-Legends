@@ -1,13 +1,13 @@
-﻿using System.Collections;
+﻿using UnityEngine;
 using System.Collections.Generic;
-using UnityEngine;
 
 public class VariableContainer : MonoBehaviour
 {
+    public List<Player> P = new List<Player>();
 
-    
     void Start()
     {
         Dictionary.VC = this;
+        DontDestroyOnLoad(this);
     }
 }

@@ -26,21 +26,21 @@ public class MenuController : MonoBehaviour
         }
     }
 
-    void Start()
+    void Awake()
     {
         Dictionary.MenuC = this;
         UpdatePlayerGUI();
         DotUpdate();
-        DS.UpdatePresence("logo","None","","","In menu","",0,0,"");
+        //DS.UpdatePresence("logo","None","","","In menu","",0,0,"");
     }
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape) && CurLayer != Layers.ServerTab && !ESCTimer)
+        if (Input.GetKeyDown(KeyCode.Escape) && CurLayer != Layers.ServerTab && !Dictionary.ColorActive && !ESCTimer)
         {
             ESCTimer = true;
             CurLayer = Layers.Buttons;
-        }   
+        }
     }
 
     void OnLayerChange(Layers LocalLayer)

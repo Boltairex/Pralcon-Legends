@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine.UI;
+using System;
+using Mirror;
 
 public class ServersScript : MonoBehaviour
 {
@@ -123,7 +125,7 @@ public class ServersScript : MonoBehaviour
 
         This.transform.localPosition = new Vector2(0, y);
 
-        if (Input.GetKeyDown(KeyCode.Escape) && Dictionary.MenuC.CurLayer == MenuController.Layers.ServerTab && !Dictionary.ESCTimer)
+        if (Input.GetKeyDown(KeyCode.Escape) && Dictionary.MenuC.CurLayer == MenuController.Layers.ServerTab && !Dictionary.ColorActive && !Dictionary.ESCTimer)
         {
             Modes = ServerTabModes.None;
             Dictionary.ESCTimer = true;
@@ -158,6 +160,11 @@ public class ServersScript : MonoBehaviour
             Destroy(s.gameObject);
         }
         ActiveServers.Clear();
+    }
+
+    public void ServerFound()
+    {
+        print("Janek kurwa serwer mamy");
     }
 
     public void UpdateList()
@@ -196,24 +203,32 @@ public class ServersScript : MonoBehaviour
         }
     }
 
-    public void DirectConnection()
+    public void TabDirectConnection()
     {
         Modes = ServerTabModes.DirectConnect;
     }
 
-    public void Host()
+    public void TabHost()
     {
         Modes = ServerTabModes.Host;
+    }
+    
+    public void Host()
+    {
+        try
+        {
+            Dictionary.NB.HostServer(HName.text,int.Parse(HPort.text),HPassword.text,int.Parse(HPlayers.text),false);
+        }catch(Exception E) {print(E);}
     }
 
     public void Join()
     {
-
+        Dictionary.NB.JoinServer(DIP.text,int.Parse(DPort.text),DPassword.text);
     }
-
-    public void SetupServer()
+    
+    public void Join(bool b)
     {
-
+        Dictionary.NB.JoinServer(CurrentServer.IP,CurrentServer.Port,Password.text,CurrentServer.NeedPassword);
     }
 
     public void CheckPlayersCount()

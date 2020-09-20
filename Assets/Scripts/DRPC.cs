@@ -20,7 +20,7 @@ public class DRPC : MonoBehaviour
         Dictionary.DS = this;
         DontDestroyOnLoad(gameObject);
         presence = new DiscordRpc.RichPresence();
-        PlayerPrefs.SetInt("USE_DISCORD", 1);
+        PlayerPrefs.SetInt("USE_DISCORD", 0);
         if (PlayerPrefs.GetInt("USE_DISCORD") == 1) //do zmiany wylaczone dla testów
         {
             Debug.Log("Discord: Now Initiating");
