@@ -21,6 +21,8 @@ public class Dictionary : MonoBehaviour
     static public DRPC DS;
     static public MenuController MenuC;
     static public ServersScript ServS;
+    static public RightMenu RMenu;
+
     static public int MaxPlayers = 0;
 
     static public bool ColorActive = false;
@@ -57,6 +59,8 @@ public class Dictionary : MonoBehaviour
     public static Sprite Logo;
     public static Sprite CheckOn;
     public static Sprite CheckOff;
+    
+    public static GameObject PlayerBarPref;
 
     void Update()
     {
@@ -73,9 +77,9 @@ public class Dictionary : MonoBehaviour
 
     public Sprite BytesToSprite(byte[] Bytes)
     {
-        Texture2D T = new Texture2D(512,512);
+        Texture2D T = new Texture2D(128,128);
         T.LoadImage(Bytes);
-        return Sprite.Create(T,new Rect(0,0,512,512),Vector2.zero);
+        return Sprite.Create(T,new Rect(0,0,128,128),Vector2.zero);
     }
 
     public enum GUIState

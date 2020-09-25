@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class RightMenu : MonoBehaviour
@@ -10,6 +8,7 @@ public class RightMenu : MonoBehaviour
     public Image FirstTeam;
     public Image SecondTeam;
     public ColorScript ColorS;
+    public Button Disconnect;
 
     [Header("PlayerList")]
     public GameObject PL;
@@ -29,6 +28,8 @@ public class RightMenu : MonoBehaviour
         else if(x == 1)
             Modes = BarModes.PlayerList;
     }
+
+    void Awake() => Dictionary.RMenu = this;
 
     public void Update()
     {

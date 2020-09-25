@@ -1,16 +1,20 @@
 ﻿using UnityEngine;
+using static Dictionary;
 
 public class LoadToDictionary : MonoBehaviour
 {
-    public Sprite CheckOn;
-    public Sprite CheckOff;
-    public Sprite Logo;
+    public Sprite checkon;
+    public Sprite checkoff;
+    public Sprite logo;
+
+    public GameObject playerbarpref;
 
     void Awake()
     {
-        Dictionary.CheckOn = CheckOn;
-        Dictionary.CheckOff = CheckOff;
-        Dictionary.Logo = Logo;
+        CheckOn = checkon;
+        CheckOff = checkoff;
+        Logo = logo;
+        PlayerBarPref = playerbarpref;
 
 
         Destroy(this);

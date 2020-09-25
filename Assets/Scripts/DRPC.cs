@@ -16,11 +16,11 @@ public class DRPC : MonoBehaviour
     bool update20SecLoop = true;
 
     void OnEnable()
-    {   
+    {       
         Dictionary.DS = this;
         DontDestroyOnLoad(gameObject);
         presence = new DiscordRpc.RichPresence();
-        PlayerPrefs.SetInt("USE_DISCORD", 0);
+        PlayerPrefs.SetInt("USE_DISCORD", 1);
         if (PlayerPrefs.GetInt("USE_DISCORD") == 1) //do zmiany wylaczone dla testów
         {
             Debug.Log("Discord: Now Initiating");

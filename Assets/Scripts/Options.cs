@@ -28,7 +28,7 @@ public class Options : MonoBehaviour
     {
         if (Dictionary.MenuC.CurLayer == MenuController.Layers.Options)
         {
-            Y += Input.GetAxis("Mouse ScrollWheel") * -200;
+            Y += Input.GetAxis("Mouse ScrollWheel") * -340;
             Y = Mathf.Clamp(Y, 0, 1000);
         }
         print(Y);

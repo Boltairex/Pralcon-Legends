@@ -47,11 +47,8 @@ public class ServersScript : MonoBehaviour
 
     public TMP_InputField HName;
     public TMP_InputField HPlayers;
-    public TMP_InputField HIP;
     public TMP_InputField HPort;
     public TMP_InputField HPassword;
-    public Image UPNP;
-    bool IsUPNP;
 
     float Y = 470;
     float y = 470;
@@ -99,25 +96,11 @@ public class ServersScript : MonoBehaviour
             Dictionary.MenuC.CurLayer = MenuController.Layers.Servers;
     }
 
-    public void ChangeUPnP()
-    {
-        if (IsUPNP)
-        {
-            UPNP.sprite = Dictionary.CheckOff;
-            IsUPNP = false;
-        }
-        else
-        {
-            UPNP.sprite = Dictionary.CheckOn;
-            IsUPNP = true;
-        }
-    }
-
     void Update()
     {
         if (Dictionary.MenuC.CurLayer != MenuController.Layers.ServerTab)
         {
-            Y += Input.GetAxis("Mouse ScrollWheel") * -200;
+            Y += Input.GetAxis("Mouse ScrollWheel") * -340;
             Y = Mathf.Clamp(Y, 470, 3000);
         }
 
@@ -170,14 +153,16 @@ public class ServersScript : MonoBehaviour
     public void UpdateList()
     {
         ResetServers();
-        for (int X = 0; X < Count; X++)
+
+        for (int X = 0; X < 3; X++)
         {
-            GameObject S = CreateServerObject(X, "Dupa", "1.0.0.0", true, 0, 10);
+            GameObject S = CreateServerObject(X, "Serwer Hydra Gaming", "1.0.0.0", true, 0, 10);
             S.transform.SetParent(This.transform);
 
-            S.transform.localScale = new Vector3(2,2,1);
+            S.transform.localScale = new Vector3(2, 2, 1);
             S.transform.localPosition = new Vector2(0, (X * -70) + (-10 * X));
         }
+        
     }
 
     public void ClickedOnServer(Server S)
@@ -212,23 +197,31 @@ public class ServersScript : MonoBehaviour
     {
         Modes = ServerTabModes.Host;
     }
-    
+
     public void Host()
     {
-        try
-        {
-            Dictionary.NB.HostServer(HName.text,int.Parse(HPort.text),HPassword.text,int.Parse(HPlayers.text),false);
-        }catch(Exception E) {print(E);}
+        ushort port = 0;
+        ushort players = ushort.Parse(HPlayers.text);
+
+        if (!String.IsNullOrWhiteSpace(HPort.text))
+            port = ushort.Parse(HPort.text);
+
+        Dictionary.NB.HostServer(HName.text, port, HPassword.text, players);
     }
 
     public void Join()
     {
-        Dictionary.NB.JoinServer(DIP.text,int.Parse(DPort.text),DPassword.text);
+        ushort _port = 0;
+
+        if (!String.IsNullOrWhiteSpace(DPort.text))
+            _port = ushort.Parse(DPort.text);
+                
+        Dictionary.NB.JoinServer(DIP.text, _port, DPassword.text);
     }
-    
+
     public void Join(bool b)
     {
-        Dictionary.NB.JoinServer(CurrentServer.IP,CurrentServer.Port,Password.text,CurrentServer.NeedPassword);
+        Dictionary.NB.JoinServer(CurrentServer.IP, Convert.ToUInt16(CurrentServer.Port), Password.text, false);
     }
 
     public void CheckPlayersCount()

@@ -78,6 +78,12 @@ public class MenuController : MonoBehaviour
             Dot.color = new Color(0,0,1,1);
         else if(Dictionary.CT == ConnectionType.Joined)
             Dot.color = new Color(0,1,0,1);
+
+        if(Dictionary.CT == ConnectionType.Joined)
+            Dictionary.RMenu.Disconnect.interactable = true;
+        else
+            Dictionary.RMenu.Disconnect.interactable = false;
+
     }
 
     public void UpdatePlayerGUI()

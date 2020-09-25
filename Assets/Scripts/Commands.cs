@@ -1,10 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
-using System;
-using UnityEngine;
-using System.Reflection;
-using System.IO;
 
 public class Commands : MonoBehaviour
 {

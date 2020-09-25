@@ -10,56 +10,63 @@ public class NetworkBase : Mirror.NetworkBehaviour
     {
         Dictionary.NB = this;
         ConnectedServer = this.GetComponent<Server>();
+
+        //try { HostServer("",7777,"",2); } catch(Exception e) { print(e); }
     }
 
     public void UpdatePlayersCount() => ConnectedServer.PlayersC = Dictionary.VC.P.Count;
 
-    public void HostServer(string SName, int Port, string Password, int MaxP, bool IsUPnP = false)
+    public void HostServer(string _sname, ushort _port, string _password, ushort _maxp)
     {
-        if (!base.isServer)
+        if (!base.isClient)
         {
-            ConnectedServer.Name = SName;
-
-            if (Password != string.Empty)
-                ConnectedServer.NeedPassword = true;
-
-            ConnectedServer.MaxP = MaxP;
-            NM.maxConnections = MaxP;
-
             NM.StartHost();
 
-            if (Port != 0)
-                TT.port = Convert.ToUInt16(Port);
-            else
-                TT.port = 7777;
+            ConnectedServer.Name = _sname;
 
-            ConnectedServer.Port = TT.port;
+            if (string.IsNullOrWhiteSpace(_password))
+                ConnectedServer.NeedPassword = true;
+
+            ConnectedServer.MaxP = NM.maxConnections = _maxp;
+            
+            NM.networkAddress = "localhost";
 
             ConnectedServer.IP = NM.networkAddress;
 
-            this.Password = Password;
+            ConnectedServer.Port = TT.port;
+
+            this.Password = _password;    
         }
         else
             print("Serwer jest już włączony");
     }
 
-    public void JoinServer(string IP, int Port, string Password, bool NeedPass = false)
+    public void JoinServer(string _ip, ushort _port, string _password, bool _needPass = false)
     {
         NM.StartClient();
 
-        TT.port = Convert.ToUInt16(Port);
-        NM.networkAddress = IP;
+        TT.port = _port;
+        NM.networkAddress = _ip;
     }
 
-    public override void OnStopClient()
+    public void Disconnect()
     {
-        base.connectionToServer.Disconnect();
-        base.connectionToServer.Dispose();
+        if(base.isServer)
+            NM.StopServer();
+        if(base.isClient)
+            NM.StopClient();
+
+        if(Dictionary.LocalPlayer.ID != 0)
+            Dictionary.CT = ConnectionType.Connected;
+        else
+            Dictionary.CT = ConnectionType.Unconnected;
     }
 
-    void OnConnectedToServer()
+    public void OnConnectedToServer()
     {
-        UpdatePlayersCount();
+        Dictionary.MenuC.CurLayer = MenuController.Layers.Buttons;
+        Dictionary.RMenu.GetComponent<GUIAnim>().Switch("In");
+        Dictionary.CT = ConnectionType.Joined;
     }
 
     public bool AskForPassword(string Pass)
