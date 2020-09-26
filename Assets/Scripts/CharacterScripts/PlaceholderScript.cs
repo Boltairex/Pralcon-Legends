@@ -2,17 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlaceholderScript : Champion
+namespace Characters
 {
-    // Start is called before the first frame update
-    void Start()
+    public class PlaceholderScript : Champion
     {
-        
-    }
+        public override void Animations()
+        {
+            if (CurrentAnimation == AnimState.Movement)
+            {
+                
+            }
+        }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        public override void LoadBasicStats()
+        {
+
+        }
     }
 }

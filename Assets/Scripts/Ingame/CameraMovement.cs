@@ -1,53 +1,63 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class CameraMovement : MonoBehaviour
 {
-    //Wszystkie potrzebne wartosci, mozesz zrobic tak, aby byly ustawiane w void Start()
+
     public float speed;
     public float cameraMargin;
-    public Camera cam;
-    GameObject Character;
-    //Wartosci sluzace do dzialan/ustawien NIE ZMIENIAC I NIE BAWIC SIE
-    bool BlockedCamera;
+    public static GameObject Character;
+
+    public bool BlockedCamera;
+    public Vector3 vec3correct = new Vector3(0,100,-70);
     Vector3 vec3;
 
-    void Start()
+    void Awake()
     {
-        Character = GameObject.Find("Character");
-        gameObject.transform.rotation = Quaternion.Euler(60f, 0, 0);
+        Application.targetFrameRate = 90;
+
+        if (Character == null)
+        {
+            var o = GameObject.FindGameObjectsWithTag("Character");
+            foreach (GameObject O in o)
+            {
+                if (O.GetComponent<CharacterController>().IsLocalController)
+                    Character = O;
+            }
+        }
+        gameObject.transform.rotation = Quaternion.Euler(55f, 0, 0);
+        vec3 = Character.transform.position + vec3correct;
     }
 
     void Update()
     {
         if (BlockedCamera == false)
         {
-            vec3 = cam.transform.position;
-
             //Obliczenia kamery
             if (Input.mousePosition.x > Screen.width - cameraMargin)
                 vec3.x += speed * Time.deltaTime;
-            if (Input.mousePosition.x < cameraMargin)
+            else if (Input.mousePosition.x < cameraMargin)
                 vec3.x -= speed * Time.deltaTime;
             if (Input.mousePosition.y < cameraMargin)
                 vec3.z -= speed * Time.deltaTime;
-            if (Input.mousePosition.y > Screen.height - cameraMargin)
+            else if (Input.mousePosition.y > Screen.height - cameraMargin)
                 vec3.z += speed * Time.deltaTime;
 
-            cam.transform.position = vec3;
+            this.transform.position = vec3;
 
-            if (Input.GetButtonDown("BlockCamera"))
+            if (Input.GetKeyDown(KeyCode.R))
                 BlockedCamera = true;
         }
         else if (BlockedCamera == true && Character != null)
         {
             vec3.z = Character.transform.position.z - 10;
             vec3.x = Character.transform.position.x;
-            cam.transform.position = vec3;
+            this.transform.position = Character.transform.position + vec3correct;
 
-            if (Input.GetButtonDown("BlockCamera"))
+            if (Input.GetKeyDown(KeyCode.R))
+            {
+                vec3 = Character.transform.position + vec3correct;
                 BlockedCamera = false;
+            }
         }
     }
 }

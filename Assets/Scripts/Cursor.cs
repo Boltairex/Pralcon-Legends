@@ -2,26 +2,42 @@
 
 public class Cursor : MonoBehaviour
 {
-    public RaycastHit Ray;
     public static Vector3 WorldPointer;
+    public static RaycastHit HitObject;
+    
+    public static Material FriendlyOutline;
+    public static Material EnemyOutline;
     //
     public LayerMask layer;
+    public LayerMask layer2;
 
-    Camera Cam;
+    public RaycastHit Ray;
 
-    void Start()
+    public Material friendlyoutline;
+    public Material enemyoutline;
+
+    private Camera Cam;
+    private RaycastHit NullHit;
+
+    void Awake()
     {
+        FriendlyOutline = friendlyoutline;
+        EnemyOutline = enemyoutline;
         Cam = this.GetComponent<Camera>();
     }
 
     void Update()
     {
         Ray ray = Cam.ScreenPointToRay(Input.mousePosition);
-        if (Physics.Raycast(ray, out Ray, 1000f,layer))
+        if (Physics.Raycast(ray, out Ray, 1000f, layer))
         {
             WorldPointer = Ray.point;
-            WorldPointer = new Vector3(WorldPointer.x, 1.5f, WorldPointer.z);
+            WorldPointer = new Vector3(WorldPointer.x, 0.5f, WorldPointer.z);
             Debug.DrawLine(Cam.transform.position, WorldPointer);
         }
+        if (Physics.Raycast(ray, out Ray, 1000f, layer2))
+            HitObject = Ray;
+        else
+            HitObject = NullHit;
     }
 }
