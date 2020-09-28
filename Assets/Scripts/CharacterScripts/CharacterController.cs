@@ -66,10 +66,10 @@ public abstract class Champion : Entity
     //Property
     public Vector3 MoveTarget
     {
-        get => movetarget;
+        get => moveTarget;
         protected set
         {
-            movetarget = value;
+            moveTarget = value;
             IsMoving = true;
             IsAttacking = false;
             CurrentAnimation = AnimState.Movement;
@@ -78,10 +78,10 @@ public abstract class Champion : Entity
 
     public GameObject AttackTarget
     {
-        get => attacktarget;
+        get => attackTarget;
         protected set
         {
-            attacktarget = value;
+            attackTarget = value;
             IsMoving = false;
             if (value != null)
             {
@@ -90,11 +90,6 @@ public abstract class Champion : Entity
             }
         }
     }
-
-    //Odwołania property
-
-    private Vector3 movetarget;
-    private GameObject attacktarget;
 
     //Fieldy
 
@@ -110,16 +105,41 @@ public abstract class Champion : Entity
     public bool NextAACrit { get; private set; }
     public bool WaitForResurrect { get; private set; }
 
+    public bool canUseFirstAbility { get; private set; }
+    public bool canUseSecondAbility { get; private set; }
+    public bool canUseThirdAbility { get; private set; }
+    public bool canUseUltimate { get; private set; }
+
+    public float firstAbilityCDCap { get; protected set; }
+    public float secondAbilityCDCap { get; protected set; }
+    public float thirdAbilityCDCap { get; protected set; }
+    public float UltimateCDCap { get; protected set; }
+
+    public float RessurectTimer { get; private set; }
+
+    //Prywatne lokalne zmienne
+
+    private Vector3 moveTarget;
+    private GameObject attackTarget;
+
     private Vector3 targetDirection;
     private Vector3 newDirection;
 
-    public virtual void OnStart()
+    private float firstAbilityCD;
+    private float secondAbilityCD;
+    private float thirdAbilityCD;
+    private float UltimateCD;
+
+    private float seconds;
+
+    public override void OnStart()
     {
         IsMoving = false;
         IsAttacking = false;
         AnimationRun = false;
         WaitForResurrect = false;
         CalculateCritChance();
+
         MaxHealth = 100;
         MovementSpeed = 340;
         AttackRange = 10f;
@@ -128,9 +148,9 @@ public abstract class Champion : Entity
         base.SetEntityObject(charactercontroller.gameObject);
     }
 
-    public void OnUpdate()
+    public override void OnUpdate()
     {
-        if (!WaitForResurrect)
+        if (!WaitForResurrect) // Wszystko w czasie życia
         {
             this.Animations();
             if (!AnimationRun)
@@ -178,7 +198,7 @@ public abstract class Champion : Entity
                     Vector3 _attacktarget = AttackTarget.transform.position;
                     _attacktarget.y = 0.5f;
                     charactercontroller.transform.LookAt(_attacktarget);
-                    DoBasicAttack(AttackTarget);
+                    DoBasicAttack();
                     IsAttacking = false;
                 }
                 else
@@ -198,6 +218,58 @@ public abstract class Champion : Entity
 
             if (Input.GetKeyDown(KeyCode.R))
                 Debug.Log($"{Vector3.Distance(charactercontroller.transform.position, Cursor.WorldPointer)},{Cursor.HitObject.collider?.name}");
+
+            AbilityController();
+            EverySecond();
+            CharacterUpdate();
+        }
+        else //Wszystko podczas śmierci
+        {
+            RessurectTimer -= Time.deltaTime;
+            if (RessurectTimer <= 0)
+                Resurrect();
+        }
+    }
+
+    public void AbilityController()
+    {
+        if (firstAbilityCD < 0 && !canUseFirstAbility)
+            canUseFirstAbility = true;
+        else
+            firstAbilityCD -= Time.deltaTime;
+
+        if (secondAbilityCD < 0 && !canUseSecondAbility)
+            canUseSecondAbility = true;
+        else
+            secondAbilityCD -= Time.deltaTime;
+
+        if (thirdAbilityCD < 0 && !canUseThirdAbility)
+            canUseThirdAbility = true;
+        else
+            thirdAbilityCD -= Time.deltaTime;
+
+        if (UltimateCD < 0 && !canUseUltimate)
+            canUseUltimate = true;
+        else
+            UltimateCD -= Time.deltaTime;
+
+        if (Input.GetKeyDown(Settings.Q) && canUseFirstAbility)
+            UseFirstAbility();
+        else if (Input.GetKeyDown(Settings.W))
+            UseSecondAbility();
+        else if (Input.GetKeyDown(Settings.E))
+            UseThirdAbility();
+        else if (Input.GetKeyDown(Settings.R))
+            UseUltimate();
+    }
+
+    public void EverySecond()
+    {
+        seconds += Time.deltaTime;
+        if (seconds >= 1) // Tutaj wszystko co sekundę :P
+        {
+            Health += HealthRegen;
+            Mana += ManaRegen;
         }
     }
 
@@ -224,65 +296,88 @@ public abstract class Champion : Entity
         }
     }
 
-    public abstract void LoadBasicStats();
-
-    public abstract void Animations();
-
     public override void Heal(float heal)
     {
-        throw new System.NotImplementedException();
+        Health += heal;
     }
 
     public override void Die()
     {
         charactercontroller.transform.localRotation = new Quaternion(90, 0, 0, 0);
+        RessurectTimer = 10 * (2 / Level);
+        RessurectTimer = Mathf.Clamp(RessurectTimer, 10, 80);
     }
 
-    public override void SwitchAttack()
-    {
-        throw new System.NotImplementedException();
-    }
-
-    public override void Resurrect()
+    public virtual void Resurrect()
     {
         Health = MaxHealth;
         Mana = MaxMana;
         WaitForResurrect = false;
+
+        //Potem się go przeniesie do bazy xD
     }
 
-    public virtual void MoveTo(Vector3 Point) => MoveTarget = Point;
+    public virtual void SwitchAttack()
+    {
+        if (AttackMode == AttackType.Melee)
+            AttackMode = AttackType.Ranged;
+        else
+            AttackMode = AttackType.Melee;
+    }
 
-    public virtual void AttackMove(GameObject Target) => AttackTarget = Target;
+    public void MoveTo(Vector3 Point) => MoveTarget = Point;
 
-    public virtual void DoBasicAttack(GameObject Target) => CurrentAnimation = AnimState.BasicAttack;
+    public void AttackMove(GameObject Target) => AttackTarget = Target;
 
-    public virtual void Attack(GameObject Target, bool IsCrit)
+    public void DoBasicAttack() => CurrentAnimation = AnimState.BasicAttack;
+
+    public void Attack(GameObject Target, bool IsCrit)
     {
         float Damage = AttackDamage;
         if (IsCrit)
             Damage *= 2;
 
-        charactercontroller.StartCoroutine(CalculateDamage(Target, DamageType.TrueDamage, Damage,IsCrit));
+        charactercontroller.StartCoroutine(CalculateDamage(Target, DamageType.TrueDamage, Damage, IsCrit));
     }
 
     public IEnumerator CalculateDamage(GameObject Target, DamageType Type, float Damage, bool IsCrit)
     {
         yield return new WaitForSeconds((1 / AttackSpeed) / 3);
-        Target?.GetComponent<CharacterController>().GetEntity().DoDamage(Damage,Type,IsCrit);
+        Target?.GetComponent<CharacterController>().GetEntity().DoDamage(Damage, Type, IsCrit);
     }
+
+    //Klasy abstrakcyjne
+
+    public abstract void LoadBasicStats();
+
+    public abstract void Animations();
+
+    public abstract void CharacterUpdate();
+
+    //Odpalanie umiejek
+    public abstract void UseFirstAbility();
+    public abstract void UseSecondAbility();
+    public abstract void UseThirdAbility();
+    public abstract void UseUltimate();
+
+    //Opisy umiejek
+    public abstract string PassiveDesc { get; }
+    public abstract string FirstAbilityDesc { get; }
+    public abstract string SecondAbilityDesc { get; }
+    public abstract string ThirdAbilityDesc { get; }
+    public abstract string UltimateDesc { get; }
 }
 
-public struct BasicAttack
+public struct BasicRangeAttack
 {
-    GameObject Prefab;
-    float Speed;
+    GameObject prefab;
+    float velocity;
 }
 
 public enum AttackType
 {
     Melee,
-    Ranged,
-    Switched
+    Ranged
 }
 
 public enum AnimState

@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngineInternal;
 
 public abstract class Entity
 {
@@ -16,13 +17,33 @@ public abstract class Entity
     public float Mana
     {
         get => mana;
-        protected set
+        protected set => mana = Mathf.Clamp(value, 0, MaxMana);
+    }
+
+    public int Level
+    { 
+        get => level;
+        private set
         {
-            mana = Mathf.Clamp(value, 0, MaxMana);
+            level = Mathf.Clamp(value, 1, 26);
+            Experience -= ExperienceCap;
+            ExperienceCap = level * 150f;
         }
     }
 
-    public ManaTypes ManaType { get; protected set; }
+    public float Experience
+    {
+        get => experience;
+        private set
+        {
+            experience = Mathf.Clamp(value,0,99999);
+            if (Experience >= ExperienceCap && Level < 26)
+                Level++;
+        }
+    }
+
+    public bool Team { get; protected set; } // 0 = pierwszy, 1 = drugi
+    public ManaTypes ManaType { get; protected set; } // Nie ma wpływu na gameplay, tylko na wyświetlanie na UI :P
 
     public int AttackDamage { get; protected set; }
     public int AbilityPower { get; protected set; }
@@ -38,10 +59,14 @@ public abstract class Entity
     public float CooldownReduction { get; protected set; }
     public float AttackSpeed { get; protected set; }
     public float MovementSpeed { get; protected set; }
+    public float ExperienceCap { get; private set; }
 
-    private float health { get; set; }
-    private float mana { get; set; }
+    //Prywatne zmienne lokalne
 
+    private float experience;
+    private int level;
+    private float health;
+    private float mana;
     private GameObject EntityObject;
 
     protected void SetEntityObject(GameObject G) => EntityObject = G;
@@ -66,13 +91,17 @@ public abstract class Entity
         Health -= _dmg;
     }
 
-    public abstract void Heal(float heal);
+    public void GetExperience(float f) => Experience += f;
 
-    public abstract void SwitchAttack();
+    //Klasy abstrajcyjne
 
-    public abstract void Die();
+    public abstract void OnStart(); // Każdy
 
-    public abstract void Resurrect();
+    public abstract void OnUpdate(); // Każdy
+
+    public abstract void Die(); // Każdy
+
+    public abstract void Heal(float heal); // Miniony i Championy
 }
 
 public interface IEntity
@@ -87,4 +116,3 @@ public enum ManaTypes
     Another,
     None
 }
-

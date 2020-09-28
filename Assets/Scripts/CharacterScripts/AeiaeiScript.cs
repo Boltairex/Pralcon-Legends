@@ -7,16 +7,22 @@ namespace Characters
         public override void LoadBasicStats()
         {
             MaxHealth = 670;
-            AttackDamage = 69;
+            AttackDamage = 69; //Dla testów!
             AbilityPower = 0;
-            Armor = 69;
+            Armor = 69; // Dla testów!
             MagicResist = 56;
             MaxMana = 100;
             ManaType = ManaTypes.Stamina;
             MovementSpeed = 330;
-            AttackRange = 4f;
+            AttackRange = 4f; // Dla testów!
             AttackSpeed = 0.64f;
-            CriticalChance = 30;
+            CriticalChance = 30; // Dla testów!
+
+        }
+
+        public override void CharacterUpdate()
+        {
+            
         }
 
         int _aastate = 0;
@@ -79,5 +85,39 @@ namespace Characters
                 if (charactercontroller.Anim.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.5f)
                     AnimationRun = false;
         }
+
+        //Używanie umiejętności
+
+        public override void UseFirstAbility()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public override void UseSecondAbility()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public override void UseThirdAbility()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public override void UseUltimate()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        //Zwracanie opisów umiejętności
+
+        public override string PassiveDesc => throw new System.NotImplementedException();
+
+        public override string FirstAbilityDesc => throw new System.NotImplementedException();
+
+        public override string SecondAbilityDesc => throw new System.NotImplementedException();
+
+        public override string ThirdAbilityDesc => throw new System.NotImplementedException();
+
+        public override string UltimateDesc => throw new System.NotImplementedException();
     }
 }
