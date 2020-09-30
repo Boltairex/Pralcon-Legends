@@ -76,7 +76,17 @@ public abstract class Champion : Entity
         }
     }
 
-    public GameObject AttackTarget
+    public Vector3 AttackTarget
+    {
+        get
+        {
+            Vector3 V = attackTarget.transform.position;
+            V.y = 0.5f;
+            return V;
+        }
+    }
+
+    public GameObject AttackTargetSet
     {
         get => attackTarget;
         protected set
@@ -115,10 +125,13 @@ public abstract class Champion : Entity
     public float thirdAbilityCDCap { get; protected set; }
     public float UltimateCDCap { get; protected set; }
 
+    public bool CancelNextAutoattack { get; protected set; }
+
     public float RessurectTimer { get; private set; }
 
     //Prywatne lokalne zmienne
 
+    private bool debug = false;
     private Vector3 moveTarget;
     private GameObject attackTarget;
 
@@ -140,10 +153,17 @@ public abstract class Champion : Entity
         WaitForResurrect = false;
         CalculateCritChance();
 
-        MaxHealth = 100;
+        MaxHealth = 2000;
         MovementSpeed = 340;
         AttackRange = 10f;
-        LoadBasicStats();
+
+        if(charactercontroller.IsLocalController)
+            LoadBasicStats();
+
+        Health = MaxHealth;
+        Mana = MaxMana;
+
+        Untargetable = false;
 
         base.SetEntityObject(charactercontroller.gameObject);
     }
@@ -155,24 +175,26 @@ public abstract class Champion : Entity
             this.Animations();
             if (!AnimationRun)
             {
-                if (Input.GetMouseButtonDown(1) && Cursor.HitObject.transform?.GetComponent<IEntity>().GetEntity() is Entity)
+                if (Input.GetMouseButtonDown(1))
                 {
-                    AttackMove(Cursor.HitObject.transform.gameObject);
-                    Debug.Log("Ta");
-                }
-                else if (Input.GetMouseButtonDown(1))
-                {
-                    MoveTo(Cursor.WorldPointer);
-                    Debug.Log("Ta2");
+                    var entity = Cursor.HitObject.transform?.GetComponent<IEntity>().GetEntity();
+                    if (entity != null && !entity.Untargetable)
+                    {
+                        AttackMove(Cursor.HitObject.transform.gameObject);
+                        Debug.Log("Ta");
+                    }
+                    else
+                    {
+                        MoveTo(Cursor.WorldPointer);
+                        Debug.Log("Ta2");
+                    }
                 }
 
                 if (IsAttacking)
                 {
                     CurrentAnimation = AnimState.Movement;
 
-                    Vector3 _attacktarget = AttackTarget.transform.position;
-                    _attacktarget.y = 0.5f;
-                    targetDirection = _attacktarget - charactercontroller.transform.position;
+                    targetDirection = AttackTarget - charactercontroller.transform.position;
                     float singleStep = 10 * Time.deltaTime;
                     newDirection = Vector3.RotateTowards(charactercontroller.transform.forward, targetDirection, singleStep, 0.0f);
 
@@ -181,6 +203,7 @@ public abstract class Champion : Entity
                 else if (IsMoving)
                 {
                     CurrentAnimation = AnimState.Movement;
+
                     targetDirection = MoveTarget - charactercontroller.transform.position;
                     float singleStep = 10 * Time.deltaTime;
                     newDirection = Vector3.RotateTowards(charactercontroller.transform.forward, targetDirection, singleStep, 0.0f);
@@ -191,22 +214,16 @@ public abstract class Champion : Entity
                     CurrentAnimation = AnimState.Stay;
             }
 
-            if (IsAttacking && AttackTarget != null)
+            if (IsAttacking && AttackTarget != null && CurrentAnimation != AnimState.BasicAttack)
             {
-                if (Vector3.Distance(charactercontroller.transform.position, AttackTarget.transform.position) < AttackRange)
+                if (Vector3.Distance(charactercontroller.transform.position, AttackTarget) <= AttackRange)
                 {
-                    Vector3 _attacktarget = AttackTarget.transform.position;
-                    _attacktarget.y = 0.5f;
-                    charactercontroller.transform.LookAt(_attacktarget);
+                    charactercontroller.transform.LookAt(AttackTarget);
                     DoBasicAttack();
                     IsAttacking = false;
                 }
                 else
-                {
-                    Vector3 _attacktarget = AttackTarget.transform.position;
-                    _attacktarget.y = 0.5f;
-                    charactercontroller.transform.position = Vector3.MoveTowards(charactercontroller.transform.position, _attacktarget, (MovementSpeed * Time.deltaTime) / 40);// / 30000);
-                }
+                    charactercontroller.transform.position = Vector3.MoveTowards(charactercontroller.transform.position, AttackTarget, (MovementSpeed * Time.deltaTime) / 40);// / 30000);
             }
             else if (IsMoving && MoveTarget != Vector3.zero)
             {
@@ -216,8 +233,19 @@ public abstract class Champion : Entity
                     charactercontroller.transform.position = Vector3.MoveTowards(charactercontroller.transform.position, MoveTarget, (MovementSpeed * Time.deltaTime) / 40);// / 30000);
             }
 
-            if (Input.GetKeyDown(KeyCode.R))
+            if (AttackTargetSet != null)
+            {
+                if (!CancelNextAutoattack && CurrentAnimation == AnimState.BasicAttack && Vector3.Distance(charactercontroller.transform.position, AttackTarget) > AttackRange || AttackTargetSet.GetComponent<IEntity>().GetEntity().Untargetable)
+                    CancelNextAutoattack = true;
+            }
+
+            if(debug)
+                Debug.Log($"Animacja: {CurrentAnimation}, Atakowanie: {IsAttacking}, Poruszanie: {IsMoving}, Target: {MoveTarget}");
+
+            if (Input.GetKeyDown(KeyCode.Z))
                 Debug.Log($"{Vector3.Distance(charactercontroller.transform.position, Cursor.WorldPointer)},{Cursor.HitObject.collider?.name}");
+            if (Input.GetKeyDown(KeyCode.X))
+                Debug.Log($"{AttackTarget}");
 
             AbilityController();
             EverySecond();
@@ -255,11 +283,11 @@ public abstract class Champion : Entity
 
         if (Input.GetKeyDown(Settings.Q) && canUseFirstAbility)
             UseFirstAbility();
-        else if (Input.GetKeyDown(Settings.W))
+        else if (Input.GetKeyDown(Settings.W) && canUseSecondAbility)
             UseSecondAbility();
-        else if (Input.GetKeyDown(Settings.E))
+        else if (Input.GetKeyDown(Settings.E) && canUseThirdAbility)
             UseThirdAbility();
-        else if (Input.GetKeyDown(Settings.R))
+        else if (Input.GetKeyDown(Settings.R) && canUseUltimate)
             UseUltimate();
     }
 
@@ -303,9 +331,10 @@ public abstract class Champion : Entity
 
     public override void Die()
     {
-        charactercontroller.transform.localRotation = new Quaternion(90, 0, 0, 0);
+        charactercontroller.transform.localRotation = new Quaternion(90, 0, 0, 90);
         RessurectTimer = 10 * (2 / Level);
         RessurectTimer = Mathf.Clamp(RessurectTimer, 10, 80);
+        WaitForResurrect = true;
     }
 
     public virtual void Resurrect()
@@ -313,6 +342,7 @@ public abstract class Champion : Entity
         Health = MaxHealth;
         Mana = MaxMana;
         WaitForResurrect = false;
+        Untargetable = false;
 
         //Potem się go przeniesie do bazy xD
     }
@@ -327,7 +357,7 @@ public abstract class Champion : Entity
 
     public void MoveTo(Vector3 Point) => MoveTarget = Point;
 
-    public void AttackMove(GameObject Target) => AttackTarget = Target;
+    public void AttackMove(GameObject Target) => AttackTargetSet = Target;
 
     public void DoBasicAttack() => CurrentAnimation = AnimState.BasicAttack;
 

@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngineInternal;
 
 public abstract class Entity
 {
@@ -10,7 +9,11 @@ public abstract class Entity
         {
             health = Mathf.Clamp(value,-1, MaxHealth);
             if (health <= 0)
+            {
                 Die();
+                Debug.Log($"{EntityObject.name} died");
+                Untargetable = true;
+            }
         }
     }
 
@@ -42,6 +45,7 @@ public abstract class Entity
         }
     }
 
+    public bool Untargetable { get; protected set; }
     public bool Team { get; protected set; } // 0 = pierwszy, 1 = drugi
     public ManaTypes ManaType { get; protected set; } // Nie ma wpływu na gameplay, tylko na wyświetlanie na UI :P
 
@@ -63,8 +67,8 @@ public abstract class Entity
 
     //Prywatne zmienne lokalne
 
-    private float experience;
-    private int level;
+    private float experience = 0;
+    private int level = 1;
     private float health;
     private float mana;
     private GameObject EntityObject;
@@ -89,6 +93,8 @@ public abstract class Entity
 
         FloatingDamage.CreateFloatingText(EntityObject.transform.position, _dmg.ToString(), C);
         Health -= _dmg;
+
+        Debug.Log($"{EntityObject.name}, {Health}");
     }
 
     public void GetExperience(float f) => Experience += f;

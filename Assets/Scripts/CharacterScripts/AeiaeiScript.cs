@@ -7,15 +7,16 @@ namespace Characters
         public override void LoadBasicStats()
         {
             MaxHealth = 670;
-            AttackDamage = 69; //Dla testów!
+            AttackDamage = 690; //Dla testów!
             AbilityPower = 0;
             Armor = 69; // Dla testów!
             MagicResist = 56;
             MaxMana = 100;
+            AttackMode = AttackType.Melee;
             ManaType = ManaTypes.Stamina;
-            MovementSpeed = 330;
+            MovementSpeed = 660;
             AttackRange = 4f; // Dla testów!
-            AttackSpeed = 0.64f;
+            AttackSpeed = 1.64f;
             CriticalChance = 30; // Dla testów!
 
         }
@@ -31,7 +32,11 @@ namespace Characters
             Debug.Log(CurrentAnimation);
             if (!AnimationRun)
             {
+                float _movementspeed = MovementSpeed / 400;
                 float _attackspeed = Mathf.Clamp(AttackSpeed, 1, 2);
+
+                _movementspeed = Mathf.Clamp(_movementspeed, 0.9f, 2);
+                charactercontroller.Anim.SetFloat("MovementSpeed", _movementspeed);
                 charactercontroller.Anim.SetFloat("AttackSpeed", _attackspeed / 1.4f);
 
                 charactercontroller.Anim.ResetTrigger("Stay");
@@ -41,12 +46,14 @@ namespace Characters
 
                 if (CurrentAnimation == AnimState.Stay) charactercontroller.Anim.SetTrigger("Stay");
                 else if (CurrentAnimation == AnimState.Movement) charactercontroller.Anim.SetTrigger("Movement");
-                else if (CurrentAnimation == AnimState.BasicAttack && !AACooldown)
+                else if (CurrentAnimation == AnimState.BasicAttack && !AACooldown )
                 {
-                    if (!NextAACrit)
+                    charactercontroller.transform.LookAt(AttackTarget);
+
+                    if (!NextAACrit && !CancelNextAutoattack)
                     {
                         AnimationRun = true;
-                        Attack(AttackTarget, false);
+                        Attack(AttackTargetSet, false);
                         switch (_aastate)
                         {
                             case 0:
@@ -72,17 +79,23 @@ namespace Characters
                         }
                         charactercontroller.StartCoroutine(AATimerCooldown(1 / AttackSpeed));
                     }
-                    else
+                    else if (NextAACrit && !CancelNextAutoattack)
                     {
                         AnimationRun = true;
-                        Attack(AttackTarget, true);
+                        Attack(AttackTargetSet, true);
                         charactercontroller.Anim.CrossFade("Critical", 0.3f, 0, 0);
                         charactercontroller.StartCoroutine(AATimerCooldown(1 / AttackSpeed));
+                    }
+                    else if (CancelNextAutoattack)
+                    {
+                        CurrentAnimation = AnimState.Movement;
+                        IsAttacking = true;
+                        CancelNextAutoattack = false;
                     }
                 }
             }
             if (CurrentAnimation != AnimState.Stay)
-                if (charactercontroller.Anim.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.5f)
+                if (charactercontroller.Anim.GetCurrentAnimatorStateInfo(0).normalizedTime > 0.3f)
                     AnimationRun = false;
         }
 
