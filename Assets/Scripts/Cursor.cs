@@ -2,6 +2,8 @@
 
 public class Cursor : MonoBehaviour
 {
+    public static Cursor This;
+
     public static Vector3 WorldPointer;
     public static RaycastHit HitObject;
     
@@ -21,6 +23,7 @@ public class Cursor : MonoBehaviour
 
     void Awake()
     {
+        This = this;
         FriendlyOutline = friendlyoutline;
         EnemyOutline = enemyoutline;
         Cam = this.GetComponent<Camera>();
@@ -32,7 +35,7 @@ public class Cursor : MonoBehaviour
         if (Physics.Raycast(ray, out Ray, 1000f, layer))
         {
             WorldPointer = Ray.point;
-            WorldPointer = new Vector3(WorldPointer.x, 0.5f, WorldPointer.z);
+            WorldPointer = new Vector3(WorldPointer.x, 2.5f, WorldPointer.z);
             Debug.DrawLine(Cam.transform.position, WorldPointer);
         }
         if (Physics.Raycast(ray, out Ray, 1000f, layer2))

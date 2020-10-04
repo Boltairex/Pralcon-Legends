@@ -30,12 +30,53 @@ ModelImporter:
   - first:
       74: -6584319087052036279
     second: Armature|Stay
+  - first:
+      74: 7254438864796020489
+    second: Armature|QAbility
+  - first:
+      74: 4594303134292970328
+    second: Armature|EAbility
+  - first:
+      74: -8612994791844490777
+    second: Armature|Q2Ability
+  - first:
+      74: 1514034474604835432
+    second: Armature|AA1Return
+  - first:
+      74: 2331653042390345349
+    second: Armature|AA2Return
+  - first:
+      74: 696592656387030503
+    second: Armature|AA3Return
+  - first:
+      74: 427448907392451913
+    second: Armature|AA4Return
+  - first:
+      74: -4951718124148186516
+    second: Armature|AA5Return
+  - first:
+      74: -983638818401652888
+    second: Armature|E2Ability
+  - first:
+      74: -4365031518508027860
+    second: Armature|Ultimate
+  - first:
+      74: 463064525060671836
+    second: Armature|Ultimate2
+  - first:
+      74: 8354677232117737857
+    second: Armature|Test
   externalObjects:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: Material.002
     second: {fileID: 2100000, guid: ec1543cb270476b4ba7663b1417759c1, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material.005
+    second: {fileID: 2100000, guid: 24c49f911add8bf489fe7f36d53f09fd, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
@@ -51,7 +92,7 @@ ModelImporter:
     bakeSimulation: 0
     resampleCurves: 1
     optimizeGameObjects: 0
-    motionNodeName: 
+    motionNodeName: Armature
     rigImportErrors: 
     rigImportWarnings: 
     animationImportErrors: 
@@ -59,8 +100,8 @@ ModelImporter:
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0
-    importConstraints: 0
-    animationCompression: 3
+    importConstraints: 1
+    animationCompression: 0
     animationRotationError: 0
     animationPositionError: 0
     animationScaleError: 0
@@ -72,8 +113,8 @@ ModelImporter:
       name: Armature|AA1
       takeName: Armature|ArmatureAction
       internalID: 0
-      firstFrame: 90
-      lastFrame: 120
+      firstFrame: 110
+      lastFrame: 130
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -101,8 +142,8 @@ ModelImporter:
       name: Armature|AA2
       takeName: Armature|ArmatureAction
       internalID: 0
-      firstFrame: 120
-      lastFrame: 150
+      firstFrame: 150
+      lastFrame: 170
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -130,8 +171,8 @@ ModelImporter:
       name: Armature|AA3
       takeName: Armature|ArmatureAction
       internalID: 0
-      firstFrame: 150
-      lastFrame: 180
+      firstFrame: 170
+      lastFrame: 190
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -159,8 +200,8 @@ ModelImporter:
       name: Armature|AA4
       takeName: Armature|ArmatureAction
       internalID: 0
-      firstFrame: 180
-      lastFrame: 210
+      firstFrame: 205
+      lastFrame: 230
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -188,8 +229,8 @@ ModelImporter:
       name: Armature|AA5
       takeName: Armature|ArmatureAction
       internalID: 0
-      firstFrame: 210
-      lastFrame: 240
+      firstFrame: 230
+      lastFrame: 250
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -217,8 +258,8 @@ ModelImporter:
       name: Armature|Movement
       takeName: Armature|ArmatureAction
       internalID: 0
-      firstFrame: 320
-      lastFrame: 380
+      firstFrame: 340
+      lastFrame: 400
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -226,7 +267,7 @@ ModelImporter:
       loop: 0
       hasAdditiveReferencePose: 0
       loopTime: 1
-      loopBlend: 0
+      loopBlend: 1
       loopBlendOrientation: 0
       loopBlendPositionY: 0
       loopBlendPositionXZ: 0
@@ -246,8 +287,8 @@ ModelImporter:
       name: Armature|CriticalHit
       takeName: Armature|ArmatureAction
       internalID: 0
-      firstFrame: 250
-      lastFrame: 310
+      firstFrame: 270
+      lastFrame: 330
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -304,8 +345,211 @@ ModelImporter:
       name: Armature|Stay
       takeName: Armature|ArmatureAction
       internalID: 0
-      firstFrame: 90
-      lastFrame: 91
+      firstFrame: 109
+      lastFrame: 110
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Armature|QAbility
+      takeName: Armature|ArmatureAction
+      internalID: 0
+      firstFrame: 410
+      lastFrame: 490
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Armature|EAbility
+      takeName: Armature|ArmatureAction
+      internalID: 0
+      firstFrame: 510
+      lastFrame: 590
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Armature|Q2Ability
+      takeName: Armature|ArmatureAction
+      internalID: 0
+      firstFrame: 600
+      lastFrame: 660
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Armature|E2Ability
+      takeName: Armature|ArmatureAction
+      internalID: 0
+      firstFrame: 670
+      lastFrame: 750
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Armature|Ultimate
+      takeName: Armature|ArmatureAction
+      internalID: 0
+      firstFrame: 750
+      lastFrame: 800
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Armature|Ultimate2
+      takeName: Armature|ArmatureAction
+      internalID: 0
+      firstFrame: 810
+      lastFrame: 870
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 3
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: Armature|Test
+      takeName: Armature|ArmatureAction
+      internalID: 0
+      firstFrame: 190
+      lastFrame: 200
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
