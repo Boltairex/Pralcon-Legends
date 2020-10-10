@@ -391,11 +391,11 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1604741821, guid: ab75208cdb30b8649850ca97ce407b9f, type: 3}
-      propertyPath: DebugGizmo
+      propertyPath: IsLocalController
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1604741821, guid: ab75208cdb30b8649850ca97ce407b9f, type: 3}
-      propertyPath: IsLocalController
+      propertyPath: DebugGizmo
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2604930816964953968, guid: ab75208cdb30b8649850ca97ce407b9f,
@@ -468,11 +468,11 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1604741821, guid: ab75208cdb30b8649850ca97ce407b9f, type: 3}
-      propertyPath: DebugGizmo
+      propertyPath: IsLocalController
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1604741821, guid: ab75208cdb30b8649850ca97ce407b9f, type: 3}
-      propertyPath: IsLocalController
+      propertyPath: DebugGizmo
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2604930816964953968, guid: ab75208cdb30b8649850ca97ce407b9f,
@@ -544,10 +544,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1604741821, guid: ab75208cdb30b8649850ca97ce407b9f, type: 3}
-      propertyPath: DebugGizmo
-      value: 12
-      objectReference: {fileID: 0}
     - target: {fileID: 2604930816964953968, guid: ab75208cdb30b8649850ca97ce407b9f,
         type: 3}
       propertyPath: m_Name
@@ -788,11 +784,11 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1604741821, guid: ab75208cdb30b8649850ca97ce407b9f, type: 3}
-      propertyPath: DebugGizmo
+      propertyPath: IsLocalController
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1604741821, guid: ab75208cdb30b8649850ca97ce407b9f, type: 3}
-      propertyPath: IsLocalController
+      propertyPath: DebugGizmo
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2604930816964953968, guid: ab75208cdb30b8649850ca97ce407b9f,
@@ -1053,6 +1049,7 @@ MonoBehaviour:
     m_Bits: 1024
   friendlyoutline: {fileID: 2100000, guid: 2e7e086d69b2b66478677a8d6ee35980, type: 2}
   enemyoutline: {fileID: 2100000, guid: 9aae47e331c3bc54ca5901d6a9006322, type: 2}
+  normaloutline: {fileID: 2100000, guid: 1e108af939eba0742be1879b24e3cfc2, type: 2}
 --- !u!81 &1838700036
 AudioListener:
   m_ObjectHideFlags: 0
@@ -1169,7 +1166,7 @@ MonoBehaviour:
     m_Bits: 4294967295
   stopNaNPropagation: 1
   finalBlitToCameraTarget: 0
-  antialiasingMode: 3
+  antialiasingMode: 1
   temporalAntialiasing:
     jitterSpread: 0.75
     sharpness: 0.25

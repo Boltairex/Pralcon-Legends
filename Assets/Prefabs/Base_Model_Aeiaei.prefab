@@ -199,7 +199,7 @@ GameObject:
   - component: {fileID: 3089747833799278196}
   - component: {fileID: 7302754105376132981}
   m_Layer: 10
-  m_Name: Cube
+  m_Name: Viewmodel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -238,7 +238,8 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: ec1543cb270476b4ba7663b1417759c1, type: 2}
+  - {fileID: 2100004, guid: 5dc97066ac91f294893ce30c4736e4ab, type: 3}
+  - {fileID: 2100000, guid: 1e108af939eba0742be1879b24e3cfc2, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -921,7 +922,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   IsLocalController: 1
-  DebugGizmo: 2
+  DebugGizmo: 12
   Anim: {fileID: 8758778616225433520}
 --- !u!1 &2678907711597187678
 GameObject:

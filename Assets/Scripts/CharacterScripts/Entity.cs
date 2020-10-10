@@ -228,6 +228,7 @@ public abstract class Entity
 public interface IEntity
 {
     Entity GetEntity();
+    SkinnedMeshRenderer GetViewmodel();
 }
 
 public enum ManaTypes

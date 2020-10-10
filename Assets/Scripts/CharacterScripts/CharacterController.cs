@@ -13,12 +13,15 @@ public class CharacterController : MonoBehaviour, IEntity
     public Animator Anim;
     protected Champion currChampion = new Characters.AeiaeiScript();
 
+    protected SkinnedMeshRenderer Viewmodel;
     protected int segments = 50;
     protected float radius = 2;
     protected LineRenderer line;
 
     void Awake()
     {
+        FindViewmodel();
+
         line = gameObject.GetComponent<LineRenderer>();
         line.SetVertexCount(segments + 1);
         line.useWorldSpace = false;
@@ -41,11 +44,18 @@ public class CharacterController : MonoBehaviour, IEntity
         }
     }
 
+    void FindViewmodel()
+    {
+        Viewmodel = transform.GetChild(0).Find("Viewmodel").GetComponent<SkinnedMeshRenderer>();
+    }
+
     public GameObject LocalInstantiate(GameObject G) => Instantiate(G);
 
     public void DestroyMe(GameObject G) => Destroy(G);
 
     public Entity GetEntity() => currChampion as Champion;
+
+    public SkinnedMeshRenderer GetViewmodel() => Viewmodel;
 
     void Update()
     {

@@ -6,10 +6,11 @@ public class Cursor : MonoBehaviour
 
     public static Vector3 WorldPointer;
     public static RaycastHit HitObject;
-    
+
     public static Material FriendlyOutline;
     public static Material EnemyOutline;
-    //
+    public static Material NormalOutline;
+
     public LayerMask layer;
     public LayerMask layer2;
 
@@ -17,15 +18,20 @@ public class Cursor : MonoBehaviour
 
     public Material friendlyoutline;
     public Material enemyoutline;
+    public Material normaloutline;
 
     private Camera Cam;
     private RaycastHit NullHit;
+
+    private GameObject lastObject;
+    private SkinnedMeshRenderer lastObjectMesh;
 
     void Awake()
     {
         This = this;
         FriendlyOutline = friendlyoutline;
         EnemyOutline = enemyoutline;
+        NormalOutline = normaloutline;
         Cam = this.GetComponent<Camera>();
     }
 
@@ -42,5 +48,6 @@ public class Cursor : MonoBehaviour
             HitObject = Ray;
         else
             HitObject = NullHit;
+        
     }
 }
